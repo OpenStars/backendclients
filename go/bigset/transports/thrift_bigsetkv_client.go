@@ -5,7 +5,7 @@ import (
 	bs "github.com/OpenStars/backendclients/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic"
 	"git.apache.org/thrift.git/lib/go/thrift"
 	"fmt"
-	thriftpool "github.com/OpenStars/ThriftPool/src/thriftpool"	
+	thriftpool "github.com/OpenStars/thriftpool"	
 	)
 
 
