@@ -4,7 +4,6 @@ package transports
 import (
 	ss "github.com/OpenStars/backendclients/go/simplesession/thrift/gen-go/simplesession"
 	"git.apache.org/thrift.git/lib/go/thrift"
-	"fmt"
 	thriftpool "github.com/OpenStars/thriftpool"	
 	)
 
