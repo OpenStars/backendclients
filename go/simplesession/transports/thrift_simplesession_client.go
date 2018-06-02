@@ -20,11 +20,11 @@ var (
 
 
 func init(){
-	fmt.Println("init thrift bigsetkv client ");
+	
 }
 
 //Get client by host:port
-func GetBSClient(bsHost, bsPort string) *thriftpool.ThriftSocketClient{
+func GetSimpleSessionClient(bsHost, bsPort string) *thriftpool.ThriftSocketClient{
 	client, _ := bsMapPool.Get(bsHost, bsPort).Get()
 	return client;
 }
