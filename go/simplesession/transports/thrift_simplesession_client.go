@@ -2,16 +2,17 @@ package transports
 
 
 import (
-	bs "github.com/OpenStars/backendclients/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic"
+	ss "github.com/OpenStars/backendclients/go/simplesession/thrift/gen-go/simplesession"
 	"git.apache.org/thrift.git/lib/go/thrift"
 	"fmt"
 	thriftpool "github.com/OpenStars/thriftpool"	
 	)
 
 
+
 var (
 	bsMapPool = thriftpool.NewMapPool(1000, 3600, 3600, 
-		thriftpool.GetThriftClientCreatorFunc( func(t thrift.TTransport, f thrift.TProtocolFactory) (interface{}) { return  (bs.NewTStringBigSetKVServiceClientFactory(t,f)) }),
+		thriftpool.GetThriftClientCreatorFunc( func(t thrift.TTransport, f thrift.TProtocolFactory) (interface{}) { return  (ss.NewTSimpleSessionServiceClientFactory(t,f)) }),
 		thriftpool.DefaultClose)
 	)
 
