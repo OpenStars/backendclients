@@ -10,9 +10,14 @@ import (
 
 
 var (
-	bsMapPool = thriftpool.NewMapPool(1000, 3600, 3600, 
-		thriftpool.GetThriftClientCreatorFunc( func(t thrift.TTransport, f thrift.TProtocolFactory) (interface{}) { return  (ss.NewTSimpleSessionServiceClientFactory(t,f)) }),
+	ssMapPool = thriftpool.NewMapPool(1000, 3600, 3600, 
+		thriftpool.GetThriftClientCreatorFunc( func(c thrift.TClient) (interface{}) { return  (ss.NewTSimpleSessionServiceClient(c)) }),
 		thriftpool.DefaultClose)
+	
+	ssMapPoolCompact = thriftpool.NewMapPool(1000, 3600, 3600, 
+			thriftpool.GetThriftClientCreatorFuncCompactProtocol( func(c thrift.TClient) (interface{}) { return  (ss.NewTSimpleSessionServiceClient(c)) }),
+			thriftpool.DefaultClose)
+			
 	)
 
  
@@ -22,8 +27,14 @@ func init(){
 	
 }
 
-//Get client by host:port
-func GetSimpleSessionClient(bsHost, bsPort string) *thriftpool.ThriftSocketClient{
-	client, _ := bsMapPool.Get(bsHost, bsPort).Get()
+//GetSimpleSessionBinaryClient Get binary client by host:port
+func GetSimpleSessionBinaryClient(bsHost, bsPort string) *thriftpool.ThriftSocketClient{
+	client, _ := ssMapPool.Get(bsHost, bsPort).Get()
+	return client;
+}
+
+//GetSimpleSessionCompactClient Get compact client by host:port
+func GetSimpleSessionCompactClient(bsHost, bsPort string) *thriftpool.ThriftSocketClient{
+	client, _ := ssMapPoolCompact.Get(bsHost, bsPort).Get()
 	return client;
 }

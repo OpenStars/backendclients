@@ -11,7 +11,7 @@ import (
 
 var (
 	bsMapPool = thriftpool.NewMapPool(1000, 3600, 3600, 
-		thriftpool.GetThriftClientCreatorFunc( func(t thrift.TTransport, f thrift.TProtocolFactory) (interface{}) { return  (bs.NewTStringBigSetKVServiceClientFactory(t,f)) }),
+		thriftpool.GetThriftClientCreatorFunc( func(c thrift.TClient) (interface{}) { return  (bs.NewTStringBigSetKVServiceClient(c)) }),
 		thriftpool.DefaultClose)
 	)
 
