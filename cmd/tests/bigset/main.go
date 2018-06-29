@@ -12,6 +12,7 @@ func main(){
 	fmt.Println("Client: ", aClient);
 	aClient.Client.(*bs.TStringBigSetKVServiceClient).BsPutItem(context.Background(), "x"  , &bs.TItem{[]byte( "hello" ), []byte("lau lam khong gap")}) 
 	for i:=0 ; i<10 ; i++ {
-		// fmt.Println(aClient.Client.(*KVStepCounter.KVStepCounterServiceClient).GetValue(context.Background(), "hello") )
+
 	}
+	
 }

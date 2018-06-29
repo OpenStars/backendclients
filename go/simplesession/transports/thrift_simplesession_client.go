@@ -11,20 +11,19 @@ import (
 
 var (
 	ssMapPool = thriftpool.NewMapPool(1000, 3600, 3600, 
-		thriftpool.GetThriftClientCreatorFunc( func(c thrift.TClient) (interface{}) { return  (ss.NewTSimpleSessionServiceClient(c)) }),
+		thriftpool.GetThriftClientCreatorFunc( func(c thrift.TClient) (interface{}) { return  (ss.NewTSimpleSessionService_WClient(c)) }),
 		thriftpool.DefaultClose)
-	
+
 	ssMapPoolCompact = thriftpool.NewMapPool(1000, 3600, 3600, 
-			thriftpool.GetThriftClientCreatorFuncCompactProtocol( func(c thrift.TClient) (interface{}) { return  (ss.NewTSimpleSessionServiceClient(c)) }),
+			thriftpool.GetThriftClientCreatorFuncCompactProtocol( func(c thrift.TClient) (interface{}) { return  (ss.NewTSimpleSessionService_WClient(c)) }),
 			thriftpool.DefaultClose)
-			
 	)
 
  
 
 
 func init(){
-	
+
 }
 
 //GetSimpleSessionBinaryClient Get binary client by host:port
