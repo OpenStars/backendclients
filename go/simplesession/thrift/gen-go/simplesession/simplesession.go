@@ -1096,6 +1096,9 @@ TSimpleSessionService
   // Parameters:
   //  - UserInfo
   CreateSession(ctx context.Context, userInfo *TUserSessionInfo) (r *TSessionKeyResult_, err error)
+  // Parameters:
+  //  - SessionKey
+  RemoveSession(ctx context.Context, sessionKey TSessionKey) (r bool, err error)
 }
 
 type TSimpleSessionService_WClient struct {
@@ -1131,14 +1134,27 @@ func (p *TSimpleSessionService_WClient) CreateSession(ctx context.Context, userI
   return _result6.GetSuccess(), nil
 }
 
+// Parameters:
+//  - SessionKey
+func (p *TSimpleSessionService_WClient) RemoveSession(ctx context.Context, sessionKey TSessionKey) (r bool, err error) {
+  var _args7 TSimpleSessionService_WRemoveSessionArgs
+  _args7.SessionKey = sessionKey
+  var _result8 TSimpleSessionService_WRemoveSessionResult
+  if err = p.c.Call(ctx, "removeSession", &_args7, &_result8); err != nil {
+    return
+  }
+  return _result8.GetSuccess(), nil
+}
+
 type TSimpleSessionService_WProcessor struct {
   *TSimpleSessionServiceProcessor
 }
 
 func NewTSimpleSessionService_WProcessor(handler TSimpleSessionService_W) *TSimpleSessionService_WProcessor {
-  self7 := &TSimpleSessionService_WProcessor{NewTSimpleSessionServiceProcessor(handler)}
-  self7.AddToProcessorMap("createSession", &tSimpleSessionService_WProcessorCreateSession{handler:handler})
-  return self7
+  self9 := &TSimpleSessionService_WProcessor{NewTSimpleSessionServiceProcessor(handler)}
+  self9.AddToProcessorMap("createSession", &tSimpleSessionService_WProcessorCreateSession{handler:handler})
+  self9.AddToProcessorMap("removeSession", &tSimpleSessionService_WProcessorRemoveSession{handler:handler})
+  return self9
 }
 
 type tSimpleSessionService_WProcessorCreateSession struct {
@@ -1172,6 +1188,54 @@ var retval *TSessionKeyResult_
     result.Success = retval
 }
   if err2 = oprot.WriteMessageBegin("createSession", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
+type tSimpleSessionService_WProcessorRemoveSession struct {
+  handler TSimpleSessionService_W
+}
+
+func (p *tSimpleSessionService_WProcessorRemoveSession) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := TSimpleSessionService_WRemoveSessionArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("removeSession", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := TSimpleSessionService_WRemoveSessionResult{}
+var retval bool
+  var err2 error
+  if retval, err2 = p.handler.RemoveSession(ctx, args.SessionKey); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing removeSession: " + err2.Error())
+    oprot.WriteMessageBegin("removeSession", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return true, err2
+  } else {
+    result.Success = &retval
+}
+  if err2 = oprot.WriteMessageBegin("removeSession", thrift.REPLY, seqId); err2 != nil {
     err = err2
   }
   if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -1388,6 +1452,198 @@ func (p *TSimpleSessionService_WCreateSessionResult) String() string {
     return "<nil>"
   }
   return fmt.Sprintf("TSimpleSessionService_WCreateSessionResult(%+v)", *p)
+}
+
+// Attributes:
+//  - SessionKey
+type TSimpleSessionService_WRemoveSessionArgs struct {
+  SessionKey TSessionKey `thrift:"sessionKey,1" db:"sessionKey" json:"sessionKey"`
+}
+
+func NewTSimpleSessionService_WRemoveSessionArgs() *TSimpleSessionService_WRemoveSessionArgs {
+  return &TSimpleSessionService_WRemoveSessionArgs{}
+}
+
+
+func (p *TSimpleSessionService_WRemoveSessionArgs) GetSessionKey() TSessionKey {
+  return p.SessionKey
+}
+func (p *TSimpleSessionService_WRemoveSessionArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TSimpleSessionService_WRemoveSessionArgs)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := TSessionKey(v)
+  p.SessionKey = temp
+}
+  return nil
+}
+
+func (p *TSimpleSessionService_WRemoveSessionArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("removeSession_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TSimpleSessionService_WRemoveSessionArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("sessionKey", thrift.STRING, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:sessionKey: ", p), err) }
+  if err := oprot.WriteString(string(p.SessionKey)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.sessionKey (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:sessionKey: ", p), err) }
+  return err
+}
+
+func (p *TSimpleSessionService_WRemoveSessionArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TSimpleSessionService_WRemoveSessionArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type TSimpleSessionService_WRemoveSessionResult struct {
+  Success *bool `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewTSimpleSessionService_WRemoveSessionResult() *TSimpleSessionService_WRemoveSessionResult {
+  return &TSimpleSessionService_WRemoveSessionResult{}
+}
+
+var TSimpleSessionService_WRemoveSessionResult_Success_DEFAULT bool
+func (p *TSimpleSessionService_WRemoveSessionResult) GetSuccess() bool {
+  if !p.IsSetSuccess() {
+    return TSimpleSessionService_WRemoveSessionResult_Success_DEFAULT
+  }
+return *p.Success
+}
+func (p *TSimpleSessionService_WRemoveSessionResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *TSimpleSessionService_WRemoveSessionResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TSimpleSessionService_WRemoveSessionResult)  ReadField0(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 0: ", err)
+} else {
+  p.Success = &v
+}
+  return nil
+}
+
+func (p *TSimpleSessionService_WRemoveSessionResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("removeSession_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TSimpleSessionService_WRemoveSessionResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.BOOL, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := oprot.WriteBool(bool(*p.Success)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.success (0) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *TSimpleSessionService_WRemoveSessionResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TSimpleSessionService_WRemoveSessionResult(%+v)", *p)
 }
 
 

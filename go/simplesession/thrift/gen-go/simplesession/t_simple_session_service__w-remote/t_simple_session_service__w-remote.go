@@ -23,6 +23,7 @@ func Usage() {
   flag.PrintDefaults()
   fmt.Fprintln(os.Stderr, "\nFunctions:")
   fmt.Fprintln(os.Stderr, "  TSessionKeyResult createSession(TUserSessionInfo userInfo)")
+  fmt.Fprintln(os.Stderr, "  bool removeSession(TSessionKey sessionKey)")
   fmt.Fprintln(os.Stderr, "  TUserResult getSession(TSessionKey sessionKey)")
   fmt.Fprintln(os.Stderr)
   os.Exit(0)
@@ -126,24 +127,34 @@ func main() {
       fmt.Fprintln(os.Stderr, "CreateSession requires 1 args")
       flag.Usage()
     }
-    arg8 := flag.Arg(1)
-    mbTrans9 := thrift.NewTMemoryBufferLen(len(arg8))
-    defer mbTrans9.Close()
-    _, err10 := mbTrans9.WriteString(arg8)
-    if err10 != nil {
+    arg10 := flag.Arg(1)
+    mbTrans11 := thrift.NewTMemoryBufferLen(len(arg10))
+    defer mbTrans11.Close()
+    _, err12 := mbTrans11.WriteString(arg10)
+    if err12 != nil {
       Usage()
       return
     }
-    factory11 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt12 := factory11.GetProtocol(mbTrans9)
+    factory13 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt14 := factory13.GetProtocol(mbTrans11)
     argvalue0 := simplesession.NewTUserSessionInfo()
-    err13 := argvalue0.Read(jsProt12)
-    if err13 != nil {
+    err15 := argvalue0.Read(jsProt14)
+    if err15 != nil {
       Usage()
       return
     }
     value0 := argvalue0
     fmt.Print(client.CreateSession(context.Background(), value0))
+    fmt.Print("\n")
+    break
+  case "removeSession":
+    if flag.NArg() - 1 != 1 {
+      fmt.Fprintln(os.Stderr, "RemoveSession requires 1 args")
+      flag.Usage()
+    }
+    argvalue0 := flag.Arg(1)
+    value0 := simplesession.TSessionKey(argvalue0)
+    fmt.Print(client.RemoveSession(context.Background(), value0))
     fmt.Print("\n")
     break
   case "getSession":

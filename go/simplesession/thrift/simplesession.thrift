@@ -53,7 +53,7 @@ struct TUserResult{
     1: required TErrorCode error,
     2: optional TUserSessionInfo userInfo
 }
-
+    
 
 service TSimpleSessionService {
     TUserResult getSession(1: TSessionKey sessionKey), 
@@ -62,5 +62,5 @@ service TSimpleSessionService {
 
 service TSimpleSessionService_W extends TSimpleSessionService{
     TSessionKeyResult createSession(1: TUserSessionInfo userInfo),
-    
+    bool removeSession(1: TSessionKey sessionKey), 
 }
