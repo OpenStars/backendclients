@@ -126,25 +126,25 @@ func main() {
       fmt.Fprintln(os.Stderr, "PutData requires 2 args")
       flag.Usage()
     }
-    argvalue0, err15 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err15 != nil {
+    argvalue0, err17 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err17 != nil {
       Usage()
       return
     }
     value0 := Profile.TKey(argvalue0)
-    arg16 := flag.Arg(2)
-    mbTrans17 := thrift.NewTMemoryBufferLen(len(arg16))
-    defer mbTrans17.Close()
-    _, err18 := mbTrans17.WriteString(arg16)
-    if err18 != nil {
+    arg18 := flag.Arg(2)
+    mbTrans19 := thrift.NewTMemoryBufferLen(len(arg18))
+    defer mbTrans19.Close()
+    _, err20 := mbTrans19.WriteString(arg18)
+    if err20 != nil {
       Usage()
       return
     }
-    factory19 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt20 := factory19.GetProtocol(mbTrans17)
+    factory21 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt22 := factory21.GetProtocol(mbTrans19)
     argvalue1 := Profile.NewTPlatformProfile()
-    err21 := argvalue1.Read(jsProt20)
-    if err21 != nil {
+    err23 := argvalue1.Read(jsProt22)
+    if err23 != nil {
       Usage()
       return
     }
@@ -157,8 +157,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err22 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err22 != nil {
+    argvalue0, err24 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err24 != nil {
       Usage()
       return
     }

@@ -88,12 +88,176 @@ type TData *TPlatformProfile
 func TDataPtr(v TData) *TData { return &v }
 
 // Attributes:
+//  - Sid
+//  - Name
+//  - Email
+type TSocialProfile struct {
+  Sid string `thrift:"sid,1" db:"sid" json:"sid"`
+  Name string `thrift:"name,2" db:"name" json:"name"`
+  Email string `thrift:"email,3" db:"email" json:"email"`
+}
+
+func NewTSocialProfile() *TSocialProfile {
+  return &TSocialProfile{}
+}
+
+
+func (p *TSocialProfile) GetSid() string {
+  return p.Sid
+}
+
+func (p *TSocialProfile) GetName() string {
+  return p.Name
+}
+
+func (p *TSocialProfile) GetEmail() string {
+  return p.Email
+}
+func (p *TSocialProfile) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TSocialProfile)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  p.Sid = v
+}
+  return nil
+}
+
+func (p *TSocialProfile)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.Name = v
+}
+  return nil
+}
+
+func (p *TSocialProfile)  ReadField3(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 3: ", err)
+} else {
+  p.Email = v
+}
+  return nil
+}
+
+func (p *TSocialProfile) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("TSocialProfile"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TSocialProfile) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("sid", thrift.STRING, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:sid: ", p), err) }
+  if err := oprot.WriteString(string(p.Sid)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.sid (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:sid: ", p), err) }
+  return err
+}
+
+func (p *TSocialProfile) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("name", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:name: ", p), err) }
+  if err := oprot.WriteString(string(p.Name)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.name (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:name: ", p), err) }
+  return err
+}
+
+func (p *TSocialProfile) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("email", thrift.STRING, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:email: ", p), err) }
+  if err := oprot.WriteString(string(p.Email)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.email (3) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:email: ", p), err) }
+  return err
+}
+
+func (p *TSocialProfile) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TSocialProfile(%+v)", *p)
+}
+
+// Attributes:
 //  - Username
 //  - DisplayName
 //  - TrustedEmails
 //  - TrustedMobiles
 //  - PublicKeys
 //  - ExtData
+//  - ConnectedSocial
 type TPlatformProfile struct {
   Username string `thrift:"username,1" db:"username" json:"username"`
   DisplayName string `thrift:"displayName,2" db:"displayName" json:"displayName"`
@@ -101,6 +265,7 @@ type TPlatformProfile struct {
   TrustedMobiles map[string]bool `thrift:"trustedMobiles,4" db:"trustedMobiles" json:"trustedMobiles"`
   PublicKeys []string `thrift:"publicKeys,5" db:"publicKeys" json:"publicKeys"`
   ExtData map[string]string `thrift:"ExtData,6" db:"ExtData" json:"ExtData"`
+  ConnectedSocial map[string]*TSocialProfile `thrift:"connectedSocial,7" db:"connectedSocial" json:"connectedSocial"`
 }
 
 func NewTPlatformProfile() *TPlatformProfile {
@@ -130,6 +295,10 @@ func (p *TPlatformProfile) GetPublicKeys() []string {
 
 func (p *TPlatformProfile) GetExtData() map[string]string {
   return p.ExtData
+}
+
+func (p *TPlatformProfile) GetConnectedSocial() map[string]*TSocialProfile {
+  return p.ConnectedSocial
 }
 func (p *TPlatformProfile) Read(iprot thrift.TProtocol) error {
   if _, err := iprot.ReadStructBegin(); err != nil {
@@ -197,6 +366,16 @@ func (p *TPlatformProfile) Read(iprot thrift.TProtocol) error {
     case 6:
       if fieldTypeId == thrift.MAP {
         if err := p.ReadField6(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 7:
+      if fieldTypeId == thrift.MAP {
+        if err := p.ReadField7(iprot); err != nil {
           return err
         }
       } else {
@@ -343,6 +522,32 @@ var _val6 string
   return nil
 }
 
+func (p *TPlatformProfile)  ReadField7(iprot thrift.TProtocol) error {
+  _, _, size, err := iprot.ReadMapBegin()
+  if err != nil {
+    return thrift.PrependError("error reading map begin: ", err)
+  }
+  tMap := make(map[string]*TSocialProfile, size)
+  p.ConnectedSocial =  tMap
+  for i := 0; i < size; i ++ {
+var _key7 string
+    if v, err := iprot.ReadString(); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _key7 = v
+}
+    _val8 := &TSocialProfile{}
+    if err := _val8.Read(iprot); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _val8), err)
+    }
+    p.ConnectedSocial[_key7] = _val8
+  }
+  if err := iprot.ReadMapEnd(); err != nil {
+    return thrift.PrependError("error reading map end: ", err)
+  }
+  return nil
+}
+
 func (p *TPlatformProfile) Write(oprot thrift.TProtocol) error {
   if err := oprot.WriteStructBegin("TPlatformProfile"); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
@@ -353,6 +558,7 @@ func (p *TPlatformProfile) Write(oprot thrift.TProtocol) error {
     if err := p.writeField4(oprot); err != nil { return err }
     if err := p.writeField5(oprot); err != nil { return err }
     if err := p.writeField6(oprot); err != nil { return err }
+    if err := p.writeField7(oprot); err != nil { return err }
   }
   if err := oprot.WriteFieldStop(); err != nil {
     return thrift.PrependError("write field stop error: ", err) }
@@ -456,6 +662,27 @@ func (p *TPlatformProfile) writeField6(oprot thrift.TProtocol) (err error) {
   }
   if err := oprot.WriteFieldEnd(); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write field end error 6:ExtData: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfile) writeField7(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("connectedSocial", thrift.MAP, 7); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:connectedSocial: ", p), err) }
+  if err := oprot.WriteMapBegin(thrift.STRING, thrift.STRUCT, len(p.ConnectedSocial)); err != nil {
+    return thrift.PrependError("error writing map begin: ", err)
+  }
+  for k, v := range p.ConnectedSocial {
+    if err := oprot.WriteString(string(k)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+    if err := v.Write(oprot); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", v), err)
+    }
+  }
+  if err := oprot.WriteMapEnd(); err != nil {
+    return thrift.PrependError("error writing map end: ", err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 7:connectedSocial: ", p), err) }
   return err
 }
 
@@ -636,13 +863,13 @@ func NewTDataServiceRClient(c thrift.TClient) *TDataServiceRClient {
 // Parameters:
 //  - Key
 func (p *TDataServiceRClient) GetData(ctx context.Context, key TKey) (r *TDataResult_, err error) {
-  var _args7 TDataServiceRGetDataArgs
-  _args7.Key = key
-  var _result8 TDataServiceRGetDataResult
-  if err = p.c.Call(ctx, "getData", &_args7, &_result8); err != nil {
+  var _args9 TDataServiceRGetDataArgs
+  _args9.Key = key
+  var _result10 TDataServiceRGetDataResult
+  if err = p.c.Call(ctx, "getData", &_args9, &_result10); err != nil {
     return
   }
-  return _result8.GetSuccess(), nil
+  return _result10.GetSuccess(), nil
 }
 
 type TDataServiceRProcessor struct {
@@ -665,9 +892,9 @@ func (p *TDataServiceRProcessor) ProcessorMap() map[string]thrift.TProcessorFunc
 
 func NewTDataServiceRProcessor(handler TDataServiceR) *TDataServiceRProcessor {
 
-  self9 := &TDataServiceRProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
-  self9.processorMap["getData"] = &tDataServiceRProcessorGetData{handler:handler}
-return self9
+  self11 := &TDataServiceRProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
+  self11.processorMap["getData"] = &tDataServiceRProcessorGetData{handler:handler}
+return self11
 }
 
 func (p *TDataServiceRProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -678,12 +905,12 @@ func (p *TDataServiceRProcessor) Process(ctx context.Context, iprot, oprot thrif
   }
   iprot.Skip(thrift.STRUCT)
   iprot.ReadMessageEnd()
-  x10 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
+  x12 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
   oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-  x10.Write(oprot)
+  x12.Write(oprot)
   oprot.WriteMessageEnd()
   oprot.Flush()
-  return false, x10
+  return false, x12
 
 }
 
@@ -965,14 +1192,14 @@ func NewTDataServiceClient(c thrift.TClient) *TDataServiceClient {
 //  - Key
 //  - Data
 func (p *TDataServiceClient) PutData(ctx context.Context, key TKey, data *TPlatformProfile) (r TErrorCode, err error) {
-  var _args12 TDataServicePutDataArgs
-  _args12.Key = key
-  _args12.Data = data
-  var _result13 TDataServicePutDataResult
-  if err = p.c.Call(ctx, "putData", &_args12, &_result13); err != nil {
+  var _args14 TDataServicePutDataArgs
+  _args14.Key = key
+  _args14.Data = data
+  var _result15 TDataServicePutDataResult
+  if err = p.c.Call(ctx, "putData", &_args14, &_result15); err != nil {
     return
   }
-  return _result13.GetSuccess(), nil
+  return _result15.GetSuccess(), nil
 }
 
 type TDataServiceProcessor struct {
@@ -980,9 +1207,9 @@ type TDataServiceProcessor struct {
 }
 
 func NewTDataServiceProcessor(handler TDataService) *TDataServiceProcessor {
-  self14 := &TDataServiceProcessor{NewTDataServiceRProcessor(handler)}
-  self14.AddToProcessorMap("putData", &tDataServiceProcessorPutData{handler:handler})
-  return self14
+  self16 := &TDataServiceProcessor{NewTDataServiceRProcessor(handler)}
+  self16.AddToProcessorMap("putData", &tDataServiceProcessorPutData{handler:handler})
+  return self16
 }
 
 type tDataServiceProcessorPutData struct {
@@ -1285,6 +1512,16 @@ TDataService
   //  - UID
   //  - ExtKey
   GetExtData(ctx context.Context, uid TKey, extKey string) (r string, err error)
+  // Parameters:
+  //  - UID
+  //  - Email
+  //  - IsTrusted
+  SetTrustedEmail(ctx context.Context, uid TKey, email string, isTrusted bool) (r bool, err error)
+  // Parameters:
+  //  - UID
+  //  - SocialType
+  //  - SocialProfile
+  SetSocialInfo(ctx context.Context, uid TKey, socialType string, socialProfile *TSocialProfile) (r bool, err error)
 }
 
 type TPlatformProfileServiceClient struct {
@@ -1313,29 +1550,61 @@ func NewTPlatformProfileServiceClient(c thrift.TClient) *TPlatformProfileService
 //  - ExtKey
 //  - ExtValue
 func (p *TPlatformProfileServiceClient) SetExtData(ctx context.Context, uid TKey, extKey string, extValue string) (r string, err error) {
-  var _args23 TPlatformProfileServiceSetExtDataArgs
-  _args23.UID = uid
-  _args23.ExtKey = extKey
-  _args23.ExtValue = extValue
-  var _result24 TPlatformProfileServiceSetExtDataResult
-  if err = p.c.Call(ctx, "setExtData", &_args23, &_result24); err != nil {
+  var _args25 TPlatformProfileServiceSetExtDataArgs
+  _args25.UID = uid
+  _args25.ExtKey = extKey
+  _args25.ExtValue = extValue
+  var _result26 TPlatformProfileServiceSetExtDataResult
+  if err = p.c.Call(ctx, "setExtData", &_args25, &_result26); err != nil {
     return
   }
-  return _result24.GetSuccess(), nil
+  return _result26.GetSuccess(), nil
 }
 
 // Parameters:
 //  - UID
 //  - ExtKey
 func (p *TPlatformProfileServiceClient) GetExtData(ctx context.Context, uid TKey, extKey string) (r string, err error) {
-  var _args25 TPlatformProfileServiceGetExtDataArgs
-  _args25.UID = uid
-  _args25.ExtKey = extKey
-  var _result26 TPlatformProfileServiceGetExtDataResult
-  if err = p.c.Call(ctx, "getExtData", &_args25, &_result26); err != nil {
+  var _args27 TPlatformProfileServiceGetExtDataArgs
+  _args27.UID = uid
+  _args27.ExtKey = extKey
+  var _result28 TPlatformProfileServiceGetExtDataResult
+  if err = p.c.Call(ctx, "getExtData", &_args27, &_result28); err != nil {
     return
   }
-  return _result26.GetSuccess(), nil
+  return _result28.GetSuccess(), nil
+}
+
+// Parameters:
+//  - UID
+//  - Email
+//  - IsTrusted
+func (p *TPlatformProfileServiceClient) SetTrustedEmail(ctx context.Context, uid TKey, email string, isTrusted bool) (r bool, err error) {
+  var _args29 TPlatformProfileServiceSetTrustedEmailArgs
+  _args29.UID = uid
+  _args29.Email = email
+  _args29.IsTrusted = isTrusted
+  var _result30 TPlatformProfileServiceSetTrustedEmailResult
+  if err = p.c.Call(ctx, "setTrustedEmail", &_args29, &_result30); err != nil {
+    return
+  }
+  return _result30.GetSuccess(), nil
+}
+
+// Parameters:
+//  - UID
+//  - SocialType
+//  - SocialProfile
+func (p *TPlatformProfileServiceClient) SetSocialInfo(ctx context.Context, uid TKey, socialType string, socialProfile *TSocialProfile) (r bool, err error) {
+  var _args31 TPlatformProfileServiceSetSocialInfoArgs
+  _args31.UID = uid
+  _args31.SocialType = socialType
+  _args31.SocialProfile = socialProfile
+  var _result32 TPlatformProfileServiceSetSocialInfoResult
+  if err = p.c.Call(ctx, "setSocialInfo", &_args31, &_result32); err != nil {
+    return
+  }
+  return _result32.GetSuccess(), nil
 }
 
 type TPlatformProfileServiceProcessor struct {
@@ -1343,10 +1612,12 @@ type TPlatformProfileServiceProcessor struct {
 }
 
 func NewTPlatformProfileServiceProcessor(handler TPlatformProfileService) *TPlatformProfileServiceProcessor {
-  self27 := &TPlatformProfileServiceProcessor{NewTDataServiceProcessor(handler)}
-  self27.AddToProcessorMap("setExtData", &tPlatformProfileServiceProcessorSetExtData{handler:handler})
-  self27.AddToProcessorMap("getExtData", &tPlatformProfileServiceProcessorGetExtData{handler:handler})
-  return self27
+  self33 := &TPlatformProfileServiceProcessor{NewTDataServiceProcessor(handler)}
+  self33.AddToProcessorMap("setExtData", &tPlatformProfileServiceProcessorSetExtData{handler:handler})
+  self33.AddToProcessorMap("getExtData", &tPlatformProfileServiceProcessorGetExtData{handler:handler})
+  self33.AddToProcessorMap("setTrustedEmail", &tPlatformProfileServiceProcessorSetTrustedEmail{handler:handler})
+  self33.AddToProcessorMap("setSocialInfo", &tPlatformProfileServiceProcessorSetSocialInfo{handler:handler})
+  return self33
 }
 
 type tPlatformProfileServiceProcessorSetExtData struct {
@@ -1428,6 +1699,102 @@ var retval string
     result.Success = &retval
 }
   if err2 = oprot.WriteMessageBegin("getExtData", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
+type tPlatformProfileServiceProcessorSetTrustedEmail struct {
+  handler TPlatformProfileService
+}
+
+func (p *tPlatformProfileServiceProcessorSetTrustedEmail) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := TPlatformProfileServiceSetTrustedEmailArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("setTrustedEmail", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := TPlatformProfileServiceSetTrustedEmailResult{}
+var retval bool
+  var err2 error
+  if retval, err2 = p.handler.SetTrustedEmail(ctx, args.UID, args.Email, args.IsTrusted); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing setTrustedEmail: " + err2.Error())
+    oprot.WriteMessageBegin("setTrustedEmail", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return true, err2
+  } else {
+    result.Success = &retval
+}
+  if err2 = oprot.WriteMessageBegin("setTrustedEmail", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
+type tPlatformProfileServiceProcessorSetSocialInfo struct {
+  handler TPlatformProfileService
+}
+
+func (p *tPlatformProfileServiceProcessorSetSocialInfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := TPlatformProfileServiceSetSocialInfoArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("setSocialInfo", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := TPlatformProfileServiceSetSocialInfoResult{}
+var retval bool
+  var err2 error
+  if retval, err2 = p.handler.SetSocialInfo(ctx, args.UID, args.SocialType, args.SocialProfile); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing setSocialInfo: " + err2.Error())
+    oprot.WriteMessageBegin("setSocialInfo", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return true, err2
+  } else {
+    result.Success = &retval
+}
+  if err2 = oprot.WriteMessageBegin("setSocialInfo", thrift.REPLY, seqId); err2 != nil {
     err = err2
   }
   if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -1938,6 +2305,541 @@ func (p *TPlatformProfileServiceGetExtDataResult) String() string {
     return "<nil>"
   }
   return fmt.Sprintf("TPlatformProfileServiceGetExtDataResult(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - Email
+//  - IsTrusted
+type TPlatformProfileServiceSetTrustedEmailArgs struct {
+  UID TKey `thrift:"uid,1" db:"uid" json:"uid"`
+  Email string `thrift:"email,2" db:"email" json:"email"`
+  IsTrusted bool `thrift:"isTrusted,3" db:"isTrusted" json:"isTrusted"`
+}
+
+func NewTPlatformProfileServiceSetTrustedEmailArgs() *TPlatformProfileServiceSetTrustedEmailArgs {
+  return &TPlatformProfileServiceSetTrustedEmailArgs{}
+}
+
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) GetUID() TKey {
+  return p.UID
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) GetEmail() string {
+  return p.Email
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) GetIsTrusted() bool {
+  return p.IsTrusted
+}
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := TKey(v)
+  p.UID = temp
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.Email = v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs)  ReadField3(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 3: ", err)
+} else {
+  p.IsTrusted = v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("setTrustedEmail_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err) }
+  if err := oprot.WriteI64(int64(p.UID)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("email", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:email: ", p), err) }
+  if err := oprot.WriteString(string(p.Email)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.email (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:email: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("isTrusted", thrift.BOOL, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:isTrusted: ", p), err) }
+  if err := oprot.WriteBool(bool(p.IsTrusted)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.isTrusted (3) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:isTrusted: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceSetTrustedEmailArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type TPlatformProfileServiceSetTrustedEmailResult struct {
+  Success *bool `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewTPlatformProfileServiceSetTrustedEmailResult() *TPlatformProfileServiceSetTrustedEmailResult {
+  return &TPlatformProfileServiceSetTrustedEmailResult{}
+}
+
+var TPlatformProfileServiceSetTrustedEmailResult_Success_DEFAULT bool
+func (p *TPlatformProfileServiceSetTrustedEmailResult) GetSuccess() bool {
+  if !p.IsSetSuccess() {
+    return TPlatformProfileServiceSetTrustedEmailResult_Success_DEFAULT
+  }
+return *p.Success
+}
+func (p *TPlatformProfileServiceSetTrustedEmailResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailResult)  ReadField0(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 0: ", err)
+} else {
+  p.Success = &v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("setTrustedEmail_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.BOOL, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := oprot.WriteBool(bool(*p.Success)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.success (0) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetTrustedEmailResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceSetTrustedEmailResult(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - SocialType
+//  - SocialProfile
+type TPlatformProfileServiceSetSocialInfoArgs struct {
+  UID TKey `thrift:"uid,1" db:"uid" json:"uid"`
+  SocialType string `thrift:"socialType,2" db:"socialType" json:"socialType"`
+  SocialProfile *TSocialProfile `thrift:"socialProfile,3" db:"socialProfile" json:"socialProfile"`
+}
+
+func NewTPlatformProfileServiceSetSocialInfoArgs() *TPlatformProfileServiceSetSocialInfoArgs {
+  return &TPlatformProfileServiceSetSocialInfoArgs{}
+}
+
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs) GetUID() TKey {
+  return p.UID
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs) GetSocialType() string {
+  return p.SocialType
+}
+var TPlatformProfileServiceSetSocialInfoArgs_SocialProfile_DEFAULT *TSocialProfile
+func (p *TPlatformProfileServiceSetSocialInfoArgs) GetSocialProfile() *TSocialProfile {
+  if !p.IsSetSocialProfile() {
+    return TPlatformProfileServiceSetSocialInfoArgs_SocialProfile_DEFAULT
+  }
+return p.SocialProfile
+}
+func (p *TPlatformProfileServiceSetSocialInfoArgs) IsSetSocialProfile() bool {
+  return p.SocialProfile != nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.STRUCT {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := TKey(v)
+  p.UID = temp
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.SocialType = v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs)  ReadField3(iprot thrift.TProtocol) error {
+  p.SocialProfile = &TSocialProfile{}
+  if err := p.SocialProfile.Read(iprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.SocialProfile), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("setSocialInfo_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err) }
+  if err := oprot.WriteI64(int64(p.UID)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("socialType", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:socialType: ", p), err) }
+  if err := oprot.WriteString(string(p.SocialType)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.socialType (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:socialType: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("socialProfile", thrift.STRUCT, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:socialProfile: ", p), err) }
+  if err := p.SocialProfile.Write(oprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.SocialProfile), err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:socialProfile: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceSetSocialInfoArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type TPlatformProfileServiceSetSocialInfoResult struct {
+  Success *bool `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewTPlatformProfileServiceSetSocialInfoResult() *TPlatformProfileServiceSetSocialInfoResult {
+  return &TPlatformProfileServiceSetSocialInfoResult{}
+}
+
+var TPlatformProfileServiceSetSocialInfoResult_Success_DEFAULT bool
+func (p *TPlatformProfileServiceSetSocialInfoResult) GetSuccess() bool {
+  if !p.IsSetSuccess() {
+    return TPlatformProfileServiceSetSocialInfoResult_Success_DEFAULT
+  }
+return *p.Success
+}
+func (p *TPlatformProfileServiceSetSocialInfoResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoResult)  ReadField0(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 0: ", err)
+} else {
+  p.Success = &v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("setSocialInfo_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.BOOL, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := oprot.WriteBool(bool(*p.Success)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.success (0) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetSocialInfoResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceSetSocialInfoResult(%+v)", *p)
 }
 
 

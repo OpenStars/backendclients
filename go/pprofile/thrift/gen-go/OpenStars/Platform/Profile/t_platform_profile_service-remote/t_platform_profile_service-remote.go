@@ -24,6 +24,8 @@ func Usage() {
   fmt.Fprintln(os.Stderr, "\nFunctions:")
   fmt.Fprintln(os.Stderr, "  string setExtData(TKey uid, string extKey, string extValue)")
   fmt.Fprintln(os.Stderr, "  string getExtData(TKey uid, string extKey)")
+  fmt.Fprintln(os.Stderr, "  bool setTrustedEmail(TKey uid, string email, bool isTrusted)")
+  fmt.Fprintln(os.Stderr, "  bool setSocialInfo(TKey uid, string socialType, TSocialProfile socialProfile)")
   fmt.Fprintln(os.Stderr, "  TErrorCode putData(TKey key, TPlatformProfile data)")
   fmt.Fprintln(os.Stderr, "  TDataResult getData(TKey key)")
   fmt.Fprintln(os.Stderr)
@@ -128,8 +130,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "SetExtData requires 3 args")
       flag.Usage()
     }
-    argvalue0, err28 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err28 != nil {
+    argvalue0, err34 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err34 != nil {
       Usage()
       return
     }
@@ -146,8 +148,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetExtData requires 2 args")
       flag.Usage()
     }
-    argvalue0, err31 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err31 != nil {
+    argvalue0, err37 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err37 != nil {
       Usage()
       return
     }
@@ -157,30 +159,81 @@ func main() {
     fmt.Print(client.GetExtData(context.Background(), value0, value1))
     fmt.Print("\n")
     break
+  case "setTrustedEmail":
+    if flag.NArg() - 1 != 3 {
+      fmt.Fprintln(os.Stderr, "SetTrustedEmail requires 3 args")
+      flag.Usage()
+    }
+    argvalue0, err39 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err39 != nil {
+      Usage()
+      return
+    }
+    value0 := Profile.TKey(argvalue0)
+    argvalue1 := flag.Arg(2)
+    value1 := argvalue1
+    argvalue2 := flag.Arg(3) == "true"
+    value2 := argvalue2
+    fmt.Print(client.SetTrustedEmail(context.Background(), value0, value1, value2))
+    fmt.Print("\n")
+    break
+  case "setSocialInfo":
+    if flag.NArg() - 1 != 3 {
+      fmt.Fprintln(os.Stderr, "SetSocialInfo requires 3 args")
+      flag.Usage()
+    }
+    argvalue0, err42 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err42 != nil {
+      Usage()
+      return
+    }
+    value0 := Profile.TKey(argvalue0)
+    argvalue1 := flag.Arg(2)
+    value1 := argvalue1
+    arg44 := flag.Arg(3)
+    mbTrans45 := thrift.NewTMemoryBufferLen(len(arg44))
+    defer mbTrans45.Close()
+    _, err46 := mbTrans45.WriteString(arg44)
+    if err46 != nil {
+      Usage()
+      return
+    }
+    factory47 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt48 := factory47.GetProtocol(mbTrans45)
+    argvalue2 := Profile.NewTSocialProfile()
+    err49 := argvalue2.Read(jsProt48)
+    if err49 != nil {
+      Usage()
+      return
+    }
+    value2 := argvalue2
+    fmt.Print(client.SetSocialInfo(context.Background(), value0, value1, value2))
+    fmt.Print("\n")
+    break
   case "putData":
     if flag.NArg() - 1 != 2 {
       fmt.Fprintln(os.Stderr, "PutData requires 2 args")
       flag.Usage()
     }
-    argvalue0, err33 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err33 != nil {
+    argvalue0, err50 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err50 != nil {
       Usage()
       return
     }
     value0 := Profile.TKey(argvalue0)
-    arg34 := flag.Arg(2)
-    mbTrans35 := thrift.NewTMemoryBufferLen(len(arg34))
-    defer mbTrans35.Close()
-    _, err36 := mbTrans35.WriteString(arg34)
-    if err36 != nil {
+    arg51 := flag.Arg(2)
+    mbTrans52 := thrift.NewTMemoryBufferLen(len(arg51))
+    defer mbTrans52.Close()
+    _, err53 := mbTrans52.WriteString(arg51)
+    if err53 != nil {
       Usage()
       return
     }
-    factory37 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt38 := factory37.GetProtocol(mbTrans35)
+    factory54 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt55 := factory54.GetProtocol(mbTrans52)
     argvalue1 := Profile.NewTPlatformProfile()
-    err39 := argvalue1.Read(jsProt38)
-    if err39 != nil {
+    err56 := argvalue1.Read(jsProt55)
+    if err56 != nil {
       Usage()
       return
     }
@@ -193,8 +246,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err40 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err40 != nil {
+    argvalue0, err57 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err57 != nil {
       Usage()
       return
     }
