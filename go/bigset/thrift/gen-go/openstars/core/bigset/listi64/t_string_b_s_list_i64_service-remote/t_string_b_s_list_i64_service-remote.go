@@ -14,7 +14,7 @@ import (
         "strconv"
         "strings"
         "git.apache.org/thrift.git/lib/go/thrift"
-        "openstars/core/bigset/generic"
+        "openstars/core/bigset/listi64"
 )
 
 
@@ -26,6 +26,9 @@ func Usage() {
   fmt.Fprintln(os.Stderr, "  TBigSetInfoResult getBigSetInfoByName(TStringKey bsName)")
   fmt.Fprintln(os.Stderr, "  TBigSetInfoResult assignBigSetName(TStringKey bsName, TContainerKey bigsetID)")
   fmt.Fprintln(os.Stderr, "  TPutItemResult bsPutItem(TStringKey bsName, TItem item)")
+  fmt.Fprintln(os.Stderr, "  TChildItemResult addChildItem(TStringKey bsName, TItemKey itemKey, TItemChild aChild, TChildItemOptions opOption)")
+  fmt.Fprintln(os.Stderr, "  TChildItemResult addChildrenItem(TStringKey bsName, TItemKey itemKey,  aChild, TChildItemOptions opOption)")
+  fmt.Fprintln(os.Stderr, "  TChildItemResult removeChildItem(TStringKey bsName, TItemKey itemKey, TItemChild aChild, TChildItemOptions opOption)")
   fmt.Fprintln(os.Stderr, "  bool bsRemoveItem(TStringKey bsName, TItemKey itemKey)")
   fmt.Fprintln(os.Stderr, "  TExistedResult bsExisted(TStringKey bsName, TItemKey itemKey)")
   fmt.Fprintln(os.Stderr, "  TItemResult bsGetItem(TStringKey bsName, TItemKey itemKey)")
@@ -131,7 +134,7 @@ func main() {
   }
   iprot := protocolFactory.GetProtocol(trans)
   oprot := protocolFactory.GetProtocol(trans)
-  client := generic.NewTStringBigSetKVServiceClient(thrift.NewTStandardClient(iprot, oprot))
+  client := listi64.NewTStringBSListI64ServiceClient(thrift.NewTStandardClient(iprot, oprot))
   if err := trans.Open(); err != nil {
     fmt.Fprintln(os.Stderr, "Error opening socket to ", host, ":", port, " ", err)
     os.Exit(1)
@@ -144,7 +147,7 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     fmt.Print(client.CreateStringBigSet(context.Background(), value0))
     fmt.Print("\n")
     break
@@ -154,7 +157,7 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     fmt.Print(client.GetBigSetInfoByName(context.Background(), value0))
     fmt.Print("\n")
     break
@@ -164,13 +167,13 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
-    argvalue1, err152 := (strconv.ParseInt(flag.Arg(2), 10, 64))
-    if err152 != nil {
+    value0 := listi64.TStringKey(argvalue0)
+    argvalue1, err160 := (strconv.ParseInt(flag.Arg(2), 10, 64))
+    if err160 != nil {
       Usage()
       return
     }
-    value1 := generic.TContainerKey(argvalue1)
+    value1 := listi64.TContainerKey(argvalue1)
     fmt.Print(client.AssignBigSetName(context.Background(), value0, value1))
     fmt.Print("\n")
     break
@@ -180,25 +183,112 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
-    arg154 := flag.Arg(2)
-    mbTrans155 := thrift.NewTMemoryBufferLen(len(arg154))
-    defer mbTrans155.Close()
-    _, err156 := mbTrans155.WriteString(arg154)
-    if err156 != nil {
+    value0 := listi64.TStringKey(argvalue0)
+    arg162 := flag.Arg(2)
+    mbTrans163 := thrift.NewTMemoryBufferLen(len(arg162))
+    defer mbTrans163.Close()
+    _, err164 := mbTrans163.WriteString(arg162)
+    if err164 != nil {
       Usage()
       return
     }
-    factory157 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt158 := factory157.GetProtocol(mbTrans155)
-    argvalue1 := generic.NewTItem()
-    err159 := argvalue1.Read(jsProt158)
-    if err159 != nil {
+    factory165 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt166 := factory165.GetProtocol(mbTrans163)
+    argvalue1 := listi64.NewTItem()
+    err167 := argvalue1.Read(jsProt166)
+    if err167 != nil {
       Usage()
       return
     }
     value1 := argvalue1
     fmt.Print(client.BsPutItem(context.Background(), value0, value1))
+    fmt.Print("\n")
+    break
+  case "addChildItem":
+    if flag.NArg() - 1 != 4 {
+      fmt.Fprintln(os.Stderr, "AddChildItem requires 4 args")
+      flag.Usage()
+    }
+    argvalue0 := flag.Arg(1)
+    value0 := listi64.TStringKey(argvalue0)
+    argvalue1 := []byte(flag.Arg(2))
+    value1 := listi64.TItemKey(argvalue1)
+    argvalue2, err170 := (strconv.ParseInt(flag.Arg(3), 10, 64))
+    if err170 != nil {
+      Usage()
+      return
+    }
+    value2 := listi64.TItemChild(argvalue2)
+    tmp3, err := (strconv.Atoi(flag.Arg(4)))
+    if err != nil {
+      Usage()
+     return
+    }
+    argvalue3 := listi64.TChildItemOptions(tmp3)
+    value3 := argvalue3
+    fmt.Print(client.AddChildItem(context.Background(), value0, value1, value2, value3))
+    fmt.Print("\n")
+    break
+  case "addChildrenItem":
+    if flag.NArg() - 1 != 4 {
+      fmt.Fprintln(os.Stderr, "AddChildrenItem requires 4 args")
+      flag.Usage()
+    }
+    argvalue0 := flag.Arg(1)
+    value0 := listi64.TStringKey(argvalue0)
+    argvalue1 := []byte(flag.Arg(2))
+    value1 := listi64.TItemKey(argvalue1)
+    arg173 := flag.Arg(3)
+    mbTrans174 := thrift.NewTMemoryBufferLen(len(arg173))
+    defer mbTrans174.Close()
+    _, err175 := mbTrans174.WriteString(arg173)
+    if err175 != nil { 
+      Usage()
+      return
+    }
+    factory176 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt177 := factory176.GetProtocol(mbTrans174)
+    containerStruct2 := listi64.NewTStringBSListI64ServiceAddChildrenItemArgs()
+    err178 := containerStruct2.ReadField3(jsProt177)
+    if err178 != nil {
+      Usage()
+      return
+    }
+    argvalue2 := containerStruct2.AChild
+    value2 := argvalue2
+    tmp3, err := (strconv.Atoi(flag.Arg(4)))
+    if err != nil {
+      Usage()
+     return
+    }
+    argvalue3 := listi64.TChildItemOptions(tmp3)
+    value3 := argvalue3
+    fmt.Print(client.AddChildrenItem(context.Background(), value0, value1, value2, value3))
+    fmt.Print("\n")
+    break
+  case "removeChildItem":
+    if flag.NArg() - 1 != 4 {
+      fmt.Fprintln(os.Stderr, "RemoveChildItem requires 4 args")
+      flag.Usage()
+    }
+    argvalue0 := flag.Arg(1)
+    value0 := listi64.TStringKey(argvalue0)
+    argvalue1 := []byte(flag.Arg(2))
+    value1 := listi64.TItemKey(argvalue1)
+    argvalue2, err181 := (strconv.ParseInt(flag.Arg(3), 10, 64))
+    if err181 != nil {
+      Usage()
+      return
+    }
+    value2 := listi64.TItemChild(argvalue2)
+    tmp3, err := (strconv.Atoi(flag.Arg(4)))
+    if err != nil {
+      Usage()
+     return
+    }
+    argvalue3 := listi64.TChildItemOptions(tmp3)
+    value3 := argvalue3
+    fmt.Print(client.RemoveChildItem(context.Background(), value0, value1, value2, value3))
     fmt.Print("\n")
     break
   case "bsRemoveItem":
@@ -207,9 +297,9 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
+    value1 := listi64.TItemKey(argvalue1)
     fmt.Print(client.BsRemoveItem(context.Background(), value0, value1))
     fmt.Print("\n")
     break
@@ -219,9 +309,9 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
+    value1 := listi64.TItemKey(argvalue1)
     fmt.Print(client.BsExisted(context.Background(), value0, value1))
     fmt.Print("\n")
     break
@@ -231,9 +321,9 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
+    value1 := listi64.TItemKey(argvalue1)
     fmt.Print(client.BsGetItem(context.Background(), value0, value1))
     fmt.Print("\n")
     break
@@ -243,16 +333,16 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
-    tmp1, err167 := (strconv.Atoi(flag.Arg(2)))
-    if err167 != nil {
+    value0 := listi64.TStringKey(argvalue0)
+    tmp1, err189 := (strconv.Atoi(flag.Arg(2)))
+    if err189 != nil {
       Usage()
       return
     }
     argvalue1 := int32(tmp1)
     value1 := argvalue1
-    tmp2, err168 := (strconv.Atoi(flag.Arg(3)))
-    if err168 != nil {
+    tmp2, err190 := (strconv.Atoi(flag.Arg(3)))
+    if err190 != nil {
       Usage()
       return
     }
@@ -267,11 +357,11 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
-    tmp2, err171 := (strconv.Atoi(flag.Arg(3)))
-    if err171 != nil {
+    value1 := listi64.TItemKey(argvalue1)
+    tmp2, err193 := (strconv.Atoi(flag.Arg(3)))
+    if err193 != nil {
       Usage()
       return
     }
@@ -286,16 +376,16 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
-    tmp1, err173 := (strconv.Atoi(flag.Arg(2)))
-    if err173 != nil {
+    value0 := listi64.TStringKey(argvalue0)
+    tmp1, err195 := (strconv.Atoi(flag.Arg(2)))
+    if err195 != nil {
       Usage()
       return
     }
     argvalue1 := int32(tmp1)
     value1 := argvalue1
-    tmp2, err174 := (strconv.Atoi(flag.Arg(3)))
-    if err174 != nil {
+    tmp2, err196 := (strconv.Atoi(flag.Arg(3)))
+    if err196 != nil {
       Usage()
       return
     }
@@ -310,11 +400,11 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
-    tmp2, err177 := (strconv.Atoi(flag.Arg(3)))
-    if err177 != nil {
+    value1 := listi64.TItemKey(argvalue1)
+    tmp2, err199 := (strconv.Atoi(flag.Arg(3)))
+    if err199 != nil {
       Usage()
       return
     }
@@ -329,11 +419,11 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
+    value1 := listi64.TItemKey(argvalue1)
     argvalue2 := []byte(flag.Arg(3))
-    value2 := generic.TItemKey(argvalue2)
+    value2 := listi64.TItemKey(argvalue2)
     fmt.Print(client.BsRangeQuery(context.Background(), value0, value1, value2))
     fmt.Print("\n")
     break
@@ -343,20 +433,20 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
-    arg182 := flag.Arg(2)
-    mbTrans183 := thrift.NewTMemoryBufferLen(len(arg182))
-    defer mbTrans183.Close()
-    _, err184 := mbTrans183.WriteString(arg182)
-    if err184 != nil {
+    value0 := listi64.TStringKey(argvalue0)
+    arg204 := flag.Arg(2)
+    mbTrans205 := thrift.NewTMemoryBufferLen(len(arg204))
+    defer mbTrans205.Close()
+    _, err206 := mbTrans205.WriteString(arg204)
+    if err206 != nil {
       Usage()
       return
     }
-    factory185 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt186 := factory185.GetProtocol(mbTrans183)
-    argvalue1 := generic.NewTItemSet()
-    err187 := argvalue1.Read(jsProt186)
-    if err187 != nil {
+    factory207 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt208 := factory207.GetProtocol(mbTrans205)
+    argvalue1 := listi64.NewTItemSet()
+    err209 := argvalue1.Read(jsProt208)
+    if err209 != nil {
       Usage()
       return
     }
@@ -370,20 +460,20 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
-    arg189 := flag.Arg(2)
-    mbTrans190 := thrift.NewTMemoryBufferLen(len(arg189))
-    defer mbTrans190.Close()
-    _, err191 := mbTrans190.WriteString(arg189)
-    if err191 != nil {
+    value0 := listi64.TStringKey(argvalue0)
+    arg211 := flag.Arg(2)
+    mbTrans212 := thrift.NewTMemoryBufferLen(len(arg211))
+    defer mbTrans212.Close()
+    _, err213 := mbTrans212.WriteString(arg211)
+    if err213 != nil {
       Usage()
       return
     }
-    factory192 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt193 := factory192.GetProtocol(mbTrans190)
-    argvalue1 := generic.NewTItemSet()
-    err194 := argvalue1.Read(jsProt193)
-    if err194 != nil {
+    factory214 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt215 := factory214.GetProtocol(mbTrans212)
+    argvalue1 := listi64.NewTItemSet()
+    err216 := argvalue1.Read(jsProt215)
+    if err216 != nil {
       Usage()
       return
     }
@@ -401,7 +491,7 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     fmt.Print(client.GetTotalCount(context.Background(), value0))
     fmt.Print("\n")
     break
@@ -411,7 +501,7 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
+    value0 := listi64.TStringKey(argvalue0)
     fmt.Print(client.RemoveAll(context.Background(), value0))
     fmt.Print("\n")
     break
@@ -428,14 +518,14 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetListKey requires 2 args")
       flag.Usage()
     }
-    argvalue0, err199 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err199 != nil {
+    argvalue0, err221 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err221 != nil {
       Usage()
       return
     }
     value0 := argvalue0
-    tmp1, err200 := (strconv.Atoi(flag.Arg(2)))
-    if err200 != nil {
+    tmp1, err222 := (strconv.Atoi(flag.Arg(2)))
+    if err222 != nil {
       Usage()
       return
     }
@@ -450,9 +540,9 @@ func main() {
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := generic.TStringKey(argvalue0)
-    tmp1, err202 := (strconv.Atoi(flag.Arg(2)))
-    if err202 != nil {
+    value0 := listi64.TStringKey(argvalue0)
+    tmp1, err224 := (strconv.Atoi(flag.Arg(2)))
+    if err224 != nil {
       Usage()
       return
     }

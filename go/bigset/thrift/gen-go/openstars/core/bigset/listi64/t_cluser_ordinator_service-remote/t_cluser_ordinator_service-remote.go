@@ -14,7 +14,7 @@ import (
         "strconv"
         "strings"
         "git.apache.org/thrift.git/lib/go/thrift"
-        "openstars/core/bigset/generic"
+        "openstars/core/bigset/listi64"
 )
 
 
@@ -22,8 +22,8 @@ func Usage() {
   fmt.Fprintln(os.Stderr, "Usage of ", os.Args[0], " [-h host:port] [-u url] [-f[ramed]] function [arg1 [arg2...]]:")
   flag.PrintDefaults()
   fmt.Fprintln(os.Stderr, "\nFunctions:")
-  fmt.Fprintln(os.Stderr, "  TMetaKey getMetaID(TKey key)")
-  fmt.Fprintln(os.Stderr, "  bool setMetaID(TKey key, TMetaKey metaID)")
+  fmt.Fprintln(os.Stderr, "  void removeCache(TContainerKey key)")
+  fmt.Fprintln(os.Stderr, "  i32 put(string key, string value)")
   fmt.Fprintln(os.Stderr)
   os.Exit(0)
 }
@@ -114,45 +114,37 @@ func main() {
   }
   iprot := protocolFactory.GetProtocol(trans)
   oprot := protocolFactory.GetProtocol(trans)
-  client := generic.NewMasterMetaServiceClient(thrift.NewTStandardClient(iprot, oprot))
+  client := listi64.NewTCluserOrdinatorServiceClient(thrift.NewTStandardClient(iprot, oprot))
   if err := trans.Open(); err != nil {
     fmt.Fprintln(os.Stderr, "Error opening socket to ", host, ":", port, " ", err)
     os.Exit(1)
   }
   
   switch cmd {
-  case "getMetaID":
+  case "removeCache":
     if flag.NArg() - 1 != 1 {
-      fmt.Fprintln(os.Stderr, "GetMetaID requires 1 args")
+      fmt.Fprintln(os.Stderr, "RemoveCache requires 1 args")
       flag.Usage()
     }
-    argvalue0, err13 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err13 != nil {
+    argvalue0, err341 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err341 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
-    fmt.Print(client.GetMetaID(context.Background(), value0))
+    value0 := listi64.TContainerKey(argvalue0)
+    fmt.Print(client.RemoveCache(context.Background(), value0))
     fmt.Print("\n")
     break
-  case "setMetaID":
+  case "put":
     if flag.NArg() - 1 != 2 {
-      fmt.Fprintln(os.Stderr, "SetMetaID requires 2 args")
+      fmt.Fprintln(os.Stderr, "Put requires 2 args")
       flag.Usage()
     }
-    argvalue0, err14 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err14 != nil {
-      Usage()
-      return
-    }
-    value0 := generic.TKey(argvalue0)
-    argvalue1, err15 := (strconv.ParseInt(flag.Arg(2), 10, 64))
-    if err15 != nil {
-      Usage()
-      return
-    }
-    value1 := generic.TMetaKey(argvalue1)
-    fmt.Print(client.SetMetaID(context.Background(), value0, value1))
+    argvalue0 := []byte(flag.Arg(1))
+    value0 := argvalue0
+    argvalue1 := []byte(flag.Arg(2))
+    value1 := argvalue1
+    fmt.Print(client.Put(context.Background(), value0, value1))
     fmt.Print("\n")
     break
   case "":

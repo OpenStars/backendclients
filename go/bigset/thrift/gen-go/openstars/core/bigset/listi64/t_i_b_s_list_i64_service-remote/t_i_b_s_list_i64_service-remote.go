@@ -14,7 +14,7 @@ import (
         "strconv"
         "strings"
         "git.apache.org/thrift.git/lib/go/thrift"
-        "openstars/core/bigset/generic"
+        "openstars/core/bigset/listi64"
 )
 
 
@@ -23,12 +23,15 @@ func Usage() {
   flag.PrintDefaults()
   fmt.Fprintln(os.Stderr, "\nFunctions:")
   fmt.Fprintln(os.Stderr, "  TPutItemResult putItem(TKey bigsetID, TItem item)")
+  fmt.Fprintln(os.Stderr, "  TChildItemResult addChildItem(TKey bsName, TItemKey itemKey, TItemChild aChild, TChildItemOptions opOption)")
+  fmt.Fprintln(os.Stderr, "  TChildItemResult addChildrenItem(TKey bsName, TItemKey itemKey,  aChild, TChildItemOptions opOption)")
+  fmt.Fprintln(os.Stderr, "  TChildItemResult removeChildItem(TKey bsName, TItemKey itemKey, TItemChild aChild, TChildItemOptions opOption)")
   fmt.Fprintln(os.Stderr, "  bool removeItem(TKey bigsetID, TItemKey itemKey)")
   fmt.Fprintln(os.Stderr, "  TExistedResult existed(TKey bigsetID, TItemKey itemKey)")
   fmt.Fprintln(os.Stderr, "  TItemResult getItem(TKey bigsetID, TItemKey itemKey)")
-  fmt.Fprintln(os.Stderr, "  TItemSetResult getSlice(TKey bigsetID, i32 fromPos, i32 count)")
+  fmt.Fprintln(os.Stderr, "  TItemSetResult getSlice(TKey bigsetID, i32 fromIDX, i32 count)")
   fmt.Fprintln(os.Stderr, "  TItemSetResult getSliceFromItem(TKey bigsetID, TItemKey fromKey, i32 count)")
-  fmt.Fprintln(os.Stderr, "  TItemSetResult getSliceR(TKey bigsetID, i32 fromPos, i32 count)")
+  fmt.Fprintln(os.Stderr, "  TItemSetResult getSliceR(TKey bigsetID, i32 fromIDX, i32 count)")
   fmt.Fprintln(os.Stderr, "  TItemSetResult getSliceFromItemR(TKey bigsetID, TItemKey fromKey, i32 count)")
   fmt.Fprintln(os.Stderr, "  TItemSetResult rangeQuery(TKey bigsetID, TItemKey startKey, TItemKey endKey)")
   fmt.Fprintln(os.Stderr, "  bool bulkLoad(TKey bigsetID, TItemSet setData)")
@@ -125,7 +128,7 @@ func main() {
   }
   iprot := protocolFactory.GetProtocol(trans)
   oprot := protocolFactory.GetProtocol(trans)
-  client := generic.NewTIBSDataServiceClient(thrift.NewTStandardClient(iprot, oprot))
+  client := listi64.NewTIBSListI64ServiceClient(thrift.NewTStandardClient(iprot, oprot))
   if err := trans.Open(); err != nil {
     fmt.Fprintln(os.Stderr, "Error opening socket to ", host, ":", port, " ", err)
     os.Exit(1)
@@ -137,25 +140,25 @@ func main() {
       fmt.Fprintln(os.Stderr, "PutItem requires 2 args")
       flag.Usage()
     }
-    argvalue0, err233 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err233 != nil {
+    argvalue0, err260 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err260 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
-    arg234 := flag.Arg(2)
-    mbTrans235 := thrift.NewTMemoryBufferLen(len(arg234))
-    defer mbTrans235.Close()
-    _, err236 := mbTrans235.WriteString(arg234)
-    if err236 != nil {
+    value0 := listi64.TKey(argvalue0)
+    arg261 := flag.Arg(2)
+    mbTrans262 := thrift.NewTMemoryBufferLen(len(arg261))
+    defer mbTrans262.Close()
+    _, err263 := mbTrans262.WriteString(arg261)
+    if err263 != nil {
       Usage()
       return
     }
-    factory237 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt238 := factory237.GetProtocol(mbTrans235)
-    argvalue1 := generic.NewTItem()
-    err239 := argvalue1.Read(jsProt238)
-    if err239 != nil {
+    factory264 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt265 := factory264.GetProtocol(mbTrans262)
+    argvalue1 := listi64.NewTItem()
+    err266 := argvalue1.Read(jsProt265)
+    if err266 != nil {
       Usage()
       return
     }
@@ -163,19 +166,118 @@ func main() {
     fmt.Print(client.PutItem(context.Background(), value0, value1))
     fmt.Print("\n")
     break
+  case "addChildItem":
+    if flag.NArg() - 1 != 4 {
+      fmt.Fprintln(os.Stderr, "AddChildItem requires 4 args")
+      flag.Usage()
+    }
+    argvalue0, err267 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err267 != nil {
+      Usage()
+      return
+    }
+    value0 := listi64.TKey(argvalue0)
+    argvalue1 := []byte(flag.Arg(2))
+    value1 := listi64.TItemKey(argvalue1)
+    argvalue2, err269 := (strconv.ParseInt(flag.Arg(3), 10, 64))
+    if err269 != nil {
+      Usage()
+      return
+    }
+    value2 := listi64.TItemChild(argvalue2)
+    tmp3, err := (strconv.Atoi(flag.Arg(4)))
+    if err != nil {
+      Usage()
+     return
+    }
+    argvalue3 := listi64.TChildItemOptions(tmp3)
+    value3 := argvalue3
+    fmt.Print(client.AddChildItem(context.Background(), value0, value1, value2, value3))
+    fmt.Print("\n")
+    break
+  case "addChildrenItem":
+    if flag.NArg() - 1 != 4 {
+      fmt.Fprintln(os.Stderr, "AddChildrenItem requires 4 args")
+      flag.Usage()
+    }
+    argvalue0, err270 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err270 != nil {
+      Usage()
+      return
+    }
+    value0 := listi64.TKey(argvalue0)
+    argvalue1 := []byte(flag.Arg(2))
+    value1 := listi64.TItemKey(argvalue1)
+    arg272 := flag.Arg(3)
+    mbTrans273 := thrift.NewTMemoryBufferLen(len(arg272))
+    defer mbTrans273.Close()
+    _, err274 := mbTrans273.WriteString(arg272)
+    if err274 != nil { 
+      Usage()
+      return
+    }
+    factory275 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt276 := factory275.GetProtocol(mbTrans273)
+    containerStruct2 := listi64.NewTIBSListI64ServiceAddChildrenItemArgs()
+    err277 := containerStruct2.ReadField3(jsProt276)
+    if err277 != nil {
+      Usage()
+      return
+    }
+    argvalue2 := containerStruct2.AChild
+    value2 := argvalue2
+    tmp3, err := (strconv.Atoi(flag.Arg(4)))
+    if err != nil {
+      Usage()
+     return
+    }
+    argvalue3 := listi64.TChildItemOptions(tmp3)
+    value3 := argvalue3
+    fmt.Print(client.AddChildrenItem(context.Background(), value0, value1, value2, value3))
+    fmt.Print("\n")
+    break
+  case "removeChildItem":
+    if flag.NArg() - 1 != 4 {
+      fmt.Fprintln(os.Stderr, "RemoveChildItem requires 4 args")
+      flag.Usage()
+    }
+    argvalue0, err278 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err278 != nil {
+      Usage()
+      return
+    }
+    value0 := listi64.TKey(argvalue0)
+    argvalue1 := []byte(flag.Arg(2))
+    value1 := listi64.TItemKey(argvalue1)
+    argvalue2, err280 := (strconv.ParseInt(flag.Arg(3), 10, 64))
+    if err280 != nil {
+      Usage()
+      return
+    }
+    value2 := listi64.TItemChild(argvalue2)
+    tmp3, err := (strconv.Atoi(flag.Arg(4)))
+    if err != nil {
+      Usage()
+     return
+    }
+    argvalue3 := listi64.TChildItemOptions(tmp3)
+    value3 := argvalue3
+    fmt.Print(client.RemoveChildItem(context.Background(), value0, value1, value2, value3))
+    fmt.Print("\n")
+    break
   case "removeItem":
     if flag.NArg() - 1 != 2 {
       fmt.Fprintln(os.Stderr, "RemoveItem requires 2 args")
       flag.Usage()
     }
-    argvalue0, err240 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err240 != nil {
+    argvalue0, err281 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err281 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
+    value0 := listi64.TKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
+    value1 := listi64.TItemKey(argvalue1)
     fmt.Print(client.RemoveItem(context.Background(), value0, value1))
     fmt.Print("\n")
     break
@@ -184,14 +286,14 @@ func main() {
       fmt.Fprintln(os.Stderr, "Existed requires 2 args")
       flag.Usage()
     }
-    argvalue0, err242 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err242 != nil {
+    argvalue0, err283 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err283 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
+    value0 := listi64.TKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
+    value1 := listi64.TItemKey(argvalue1)
     fmt.Print(client.Existed(context.Background(), value0, value1))
     fmt.Print("\n")
     break
@@ -200,14 +302,14 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetItem requires 2 args")
       flag.Usage()
     }
-    argvalue0, err244 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err244 != nil {
+    argvalue0, err285 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err285 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
+    value0 := listi64.TKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
+    value1 := listi64.TItemKey(argvalue1)
     fmt.Print(client.GetItem(context.Background(), value0, value1))
     fmt.Print("\n")
     break
@@ -216,21 +318,21 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetSlice requires 3 args")
       flag.Usage()
     }
-    argvalue0, err246 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err246 != nil {
+    argvalue0, err287 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err287 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
-    tmp1, err247 := (strconv.Atoi(flag.Arg(2)))
-    if err247 != nil {
+    value0 := listi64.TKey(argvalue0)
+    tmp1, err288 := (strconv.Atoi(flag.Arg(2)))
+    if err288 != nil {
       Usage()
       return
     }
     argvalue1 := int32(tmp1)
     value1 := argvalue1
-    tmp2, err248 := (strconv.Atoi(flag.Arg(3)))
-    if err248 != nil {
+    tmp2, err289 := (strconv.Atoi(flag.Arg(3)))
+    if err289 != nil {
       Usage()
       return
     }
@@ -244,16 +346,16 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetSliceFromItem requires 3 args")
       flag.Usage()
     }
-    argvalue0, err249 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err249 != nil {
+    argvalue0, err290 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err290 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
+    value0 := listi64.TKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
-    tmp2, err251 := (strconv.Atoi(flag.Arg(3)))
-    if err251 != nil {
+    value1 := listi64.TItemKey(argvalue1)
+    tmp2, err292 := (strconv.Atoi(flag.Arg(3)))
+    if err292 != nil {
       Usage()
       return
     }
@@ -267,21 +369,21 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetSliceR requires 3 args")
       flag.Usage()
     }
-    argvalue0, err252 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err252 != nil {
+    argvalue0, err293 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err293 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
-    tmp1, err253 := (strconv.Atoi(flag.Arg(2)))
-    if err253 != nil {
+    value0 := listi64.TKey(argvalue0)
+    tmp1, err294 := (strconv.Atoi(flag.Arg(2)))
+    if err294 != nil {
       Usage()
       return
     }
     argvalue1 := int32(tmp1)
     value1 := argvalue1
-    tmp2, err254 := (strconv.Atoi(flag.Arg(3)))
-    if err254 != nil {
+    tmp2, err295 := (strconv.Atoi(flag.Arg(3)))
+    if err295 != nil {
       Usage()
       return
     }
@@ -295,16 +397,16 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetSliceFromItemR requires 3 args")
       flag.Usage()
     }
-    argvalue0, err255 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err255 != nil {
+    argvalue0, err296 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err296 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
+    value0 := listi64.TKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
-    tmp2, err257 := (strconv.Atoi(flag.Arg(3)))
-    if err257 != nil {
+    value1 := listi64.TItemKey(argvalue1)
+    tmp2, err298 := (strconv.Atoi(flag.Arg(3)))
+    if err298 != nil {
       Usage()
       return
     }
@@ -318,16 +420,16 @@ func main() {
       fmt.Fprintln(os.Stderr, "RangeQuery requires 3 args")
       flag.Usage()
     }
-    argvalue0, err258 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err258 != nil {
+    argvalue0, err299 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err299 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
+    value0 := listi64.TKey(argvalue0)
     argvalue1 := []byte(flag.Arg(2))
-    value1 := generic.TItemKey(argvalue1)
+    value1 := listi64.TItemKey(argvalue1)
     argvalue2 := []byte(flag.Arg(3))
-    value2 := generic.TItemKey(argvalue2)
+    value2 := listi64.TItemKey(argvalue2)
     fmt.Print(client.RangeQuery(context.Background(), value0, value1, value2))
     fmt.Print("\n")
     break
@@ -336,25 +438,25 @@ func main() {
       fmt.Fprintln(os.Stderr, "BulkLoad requires 2 args")
       flag.Usage()
     }
-    argvalue0, err261 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err261 != nil {
+    argvalue0, err302 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err302 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
-    arg262 := flag.Arg(2)
-    mbTrans263 := thrift.NewTMemoryBufferLen(len(arg262))
-    defer mbTrans263.Close()
-    _, err264 := mbTrans263.WriteString(arg262)
-    if err264 != nil {
+    value0 := listi64.TKey(argvalue0)
+    arg303 := flag.Arg(2)
+    mbTrans304 := thrift.NewTMemoryBufferLen(len(arg303))
+    defer mbTrans304.Close()
+    _, err305 := mbTrans304.WriteString(arg303)
+    if err305 != nil {
       Usage()
       return
     }
-    factory265 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt266 := factory265.GetProtocol(mbTrans263)
-    argvalue1 := generic.NewTItemSet()
-    err267 := argvalue1.Read(jsProt266)
-    if err267 != nil {
+    factory306 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt307 := factory306.GetProtocol(mbTrans304)
+    argvalue1 := listi64.NewTItemSet()
+    err308 := argvalue1.Read(jsProt307)
+    if err308 != nil {
       Usage()
       return
     }
@@ -367,25 +469,25 @@ func main() {
       fmt.Fprintln(os.Stderr, "MultiPut requires 4 args")
       flag.Usage()
     }
-    argvalue0, err268 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err268 != nil {
+    argvalue0, err309 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err309 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
-    arg269 := flag.Arg(2)
-    mbTrans270 := thrift.NewTMemoryBufferLen(len(arg269))
-    defer mbTrans270.Close()
-    _, err271 := mbTrans270.WriteString(arg269)
-    if err271 != nil {
+    value0 := listi64.TKey(argvalue0)
+    arg310 := flag.Arg(2)
+    mbTrans311 := thrift.NewTMemoryBufferLen(len(arg310))
+    defer mbTrans311.Close()
+    _, err312 := mbTrans311.WriteString(arg310)
+    if err312 != nil {
       Usage()
       return
     }
-    factory272 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt273 := factory272.GetProtocol(mbTrans270)
-    argvalue1 := generic.NewTItemSet()
-    err274 := argvalue1.Read(jsProt273)
-    if err274 != nil {
+    factory313 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt314 := factory313.GetProtocol(mbTrans311)
+    argvalue1 := listi64.NewTItemSet()
+    err315 := argvalue1.Read(jsProt314)
+    if err315 != nil {
       Usage()
       return
     }
@@ -402,12 +504,12 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetTotalCount requires 1 args")
       flag.Usage()
     }
-    argvalue0, err277 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err277 != nil {
+    argvalue0, err318 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err318 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
+    value0 := listi64.TKey(argvalue0)
     fmt.Print(client.GetTotalCount(context.Background(), value0))
     fmt.Print("\n")
     break
@@ -416,12 +518,12 @@ func main() {
       fmt.Fprintln(os.Stderr, "RemoveAll requires 1 args")
       flag.Usage()
     }
-    argvalue0, err278 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err278 != nil {
+    argvalue0, err319 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err319 != nil {
       Usage()
       return
     }
-    value0 := generic.TKey(argvalue0)
+    value0 := listi64.TKey(argvalue0)
     fmt.Print(client.RemoveAll(context.Background(), value0))
     fmt.Print("\n")
     break

@@ -14,7 +14,7 @@ import (
         "strconv"
         "strings"
         "git.apache.org/thrift.git/lib/go/thrift"
-        "openstars/core/bigset/generic"
+        "openstars/core/bigset/listi64"
 )
 
 
@@ -115,7 +115,7 @@ func main() {
   }
   iprot := protocolFactory.GetProtocol(trans)
   oprot := protocolFactory.GetProtocol(trans)
-  client := generic.NewBSNotificationPoolClient(thrift.NewTStandardClient(iprot, oprot))
+  client := listi64.NewBSNotificationPoolClient(thrift.NewTStandardClient(iprot, oprot))
   if err := trans.Open(); err != nil {
     fmt.Fprintln(os.Stderr, "Error opening socket to ", host, ":", port, " ", err)
     os.Exit(1)
@@ -127,25 +127,25 @@ func main() {
       fmt.Fprintln(os.Stderr, "NeedSplit requires 2 args")
       flag.Usage()
     }
-    argvalue0, err287 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err287 != nil {
+    argvalue0, err328 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err328 != nil {
       Usage()
       return
     }
-    value0 := generic.TContainerKey(argvalue0)
-    arg288 := flag.Arg(2)
-    mbTrans289 := thrift.NewTMemoryBufferLen(len(arg288))
-    defer mbTrans289.Close()
-    _, err290 := mbTrans289.WriteString(arg288)
-    if err290 != nil {
+    value0 := listi64.TContainerKey(argvalue0)
+    arg329 := flag.Arg(2)
+    mbTrans330 := thrift.NewTMemoryBufferLen(len(arg329))
+    defer mbTrans330.Close()
+    _, err331 := mbTrans330.WriteString(arg329)
+    if err331 != nil {
       Usage()
       return
     }
-    factory291 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt292 := factory291.GetProtocol(mbTrans289)
-    argvalue1 := generic.NewTNeedSplitInfo()
-    err293 := argvalue1.Read(jsProt292)
-    if err293 != nil {
+    factory332 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt333 := factory332.GetProtocol(mbTrans330)
+    argvalue1 := listi64.NewTNeedSplitInfo()
+    err334 := argvalue1.Read(jsProt333)
+    if err334 != nil {
       Usage()
       return
     }
@@ -158,12 +158,12 @@ func main() {
       fmt.Fprintln(os.Stderr, "SplitInfoUpdated requires 1 args")
       flag.Usage()
     }
-    argvalue0, err294 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err294 != nil {
+    argvalue0, err335 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err335 != nil {
       Usage()
       return
     }
-    value0 := generic.TContainerKey(argvalue0)
+    value0 := listi64.TContainerKey(argvalue0)
     fmt.Print(client.SplitInfoUpdated(context.Background(), value0))
     fmt.Print("\n")
     break

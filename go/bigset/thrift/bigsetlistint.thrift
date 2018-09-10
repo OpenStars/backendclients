@@ -1,13 +1,18 @@
-namespace cpp OpenStars.Core.BigSet.Generic
-namespace java org.openstars.core.bigset.Generic
-namespace go openstars.core.bigset.generic
+namespace cpp OpenStars.Core.BigSet.ListI64
+namespace java org.openstars.core.bigset.ListI64
+namespace go openstars.core.bigset.listi64
 
 typedef binary TItemKey //key - index of an item, with simple set, itemkey is equivalent to item
-typedef binary TItemValue 
+
+typedef i64 TItemChild //value is a list of TItemChild
+
+struct TItemValue{
+    1:list<TItemChild> data
+}
 
 struct TItem{
     1: required binary key,
-    2: required binary value
+    2: required TItemValue value
 }
 
 typedef list<TItem> TItemList
@@ -47,7 +52,7 @@ struct TNeedSplitInfo{
     4: bool isSmallSet
 }
 
-struct TBigSetGenericData{
+struct TBigSetLI64Data{
     1: TContainerKey parentID = 0, // <=0 means it is top level meta, parent meta ID
     2: TLevelType level = 0, // level 0 means that its children are small-set-ID or it is small set if it is -1    
     3: optional list<TMetaItem> children, // sort by minItem
@@ -120,6 +125,23 @@ struct TPutItemResult{
     3: optional TItem oldItem,
 }
 
+/*child item operation */
+struct TChildItemResult{
+    1: TErrorCode error, // 0: ok, -1 : error    
+    2: optional TItemValue oldChildren, //befor operation
+    3: optional TItemValue children, //after operation
+}
+
+enum TChildItemOptions{
+    EFree = 1,//
+    EDistinct=2, // as a set
+    EUnSort=4, // insertion will always append to the list
+    EGetOldChildren=8,
+    EGetChildren=16,
+    EGetOldChildrenEDistinct = 10,
+    EGetChildrenEDisttinct = 18
+}
+
 struct TExistedResult{
     1: TErrorCode error, // 0: ok, -1 : error
     2: bool existed
@@ -141,7 +163,7 @@ struct TSplitBigSetResult{
     5: i64 count, // number of item in new set
 }
 
-service TBSGenericDataService{
+service TBSLI64DataService{
 
     TPutItemResult bsgPutItem(1:TContainerKey rootID, 2:TItem item),
 
@@ -152,11 +174,11 @@ service TBSGenericDataService{
 
     TItemResult bsgGetItem(1:TContainerKey rootID, 2: TItemKey itemKey),
 
-    TItemSetResult bsgGetSlice(1:TContainerKey rootID, 2: i32 fromIdx, 3: i32 count)
+    TItemSetResult bsgGetSlice(1:TContainerKey rootID, 2: i32 fromIDX, 3: i32 count)
 
     TItemSetResult bsgGetSliceFromItem(1:TContainerKey rootID, 2: TItemKey fromKey, 3: i32 count)
 
-    TItemSetResult bsgGetSliceR(1:TContainerKey rootID, 2: i32 fromIdx, 3: i32 count)
+    TItemSetResult bsgGetSliceR(1:TContainerKey rootID, 2: i32 fromIDX, 3: i32 count)
 
     TItemSetResult bsgGetSliceFromItemR(1:TContainerKey rootID, 2: TItemKey fromKey, 3: i32 count)
 
@@ -171,13 +193,13 @@ service TBSGenericDataService{
 
 ////////////////////////
 
-    TBigSetGenericData getSetGenData(1:TMetaKey metaID),
+    TBigSetLI64Data getSetGenData(1:TMetaKey metaID),
 
-    void putSetGenData(1:TMetaKey metaID, 2: TBigSetGenericData metadata),
+    void putSetGenData(1:TMetaKey metaID, 2: TBigSetLI64Data metadata),
 
-    i64 getTotalCount(1:TContainerKey rootID),
+    i64 getTotalCount(1:TMetaKey metaID),
 
-    i64 removeAll(1:TContainerKey rootID)
+    i64 removeAll(1:TContainerKey rootID), 
 
 }
 
@@ -193,13 +215,7 @@ struct TBigSetInfoResult{
     2: optional TStringBigSetInfo info,
 }
 
-struct TCaSItem{
-    1: TItemKey itemKey,
-    2: TItemValue oldValue,
-    3: TItemValue newValue,
-}
-
-service TStringBigSetKVService{
+service TStringBSListI64Service{
 
     TBigSetInfoResult createStringBigSet(1:TStringKey bsName),
 
@@ -212,9 +228,14 @@ service TStringBigSetKVService{
 
     TPutItemResult bsPutItem(1:TStringKey bsName, 2:TItem item),
 
-    //New function >> too complicated to implement, so I will do it later. You should try S2I64 or S2S later
-    //TPutItemResult bsCasItem(1:TStringKey bsName, 2:TCasItem casItem), 
-    //New function <<
+    /*additional funtions*/
+
+    TChildItemResult addChildItem(1:TStringKey bsName, 2:TItemKey itemKey, 3: TItemChild aChild, 4: TChildItemOptions opOption),
+
+    TChildItemResult addChildrenItem(1:TStringKey bsName, 2:TItemKey itemKey, 3: list<TItemChild> aChild, 4: TChildItemOptions opOption),
+
+    TChildItemResult removeChildItem(1:TStringKey bsName, 2:TItemKey itemKey, 3: TItemChild aChild, 4: TChildItemOptions opOption),
+
 
     /*return true if item is existed in the list otherwise return false*/
     bool bsRemoveItem(1:TStringKey bsName, 2:TItemKey itemKey),
@@ -240,7 +261,7 @@ service TStringBigSetKVService{
 
     i64 getTotalCount(1:TStringKey bsName),
 
-    i64 removeAll(1:TStringKey bsName)
+    i64 removeAll(1:TStringKey bsName), 
 
     i64 totalStringKeyCount(), 
 
@@ -250,20 +271,24 @@ service TStringBigSetKVService{
 
 }
 
-//String key, big value.
-service TBSBigValueService{
-    
-}
-
 
 /* 
 * BigSet with Int BigSetID key-value items
 * This is a interface of a safer big set (a bit slower)
-* Non-ProProfessional should use it instead of TBSGenericDataService directly
+* Non-ProProfessional should use it instead of TBSLI64DataService directly
 */
-service TIBSDataService{
+service TIBSListI64Service{
 
     TPutItemResult putItem(1:TKey bigsetID, 2:TItem item),
+
+    /* additional functions */
+
+    TChildItemResult addChildItem(1:TKey bsName, 2:TItemKey itemKey, 3: TItemChild aChild, 4: TChildItemOptions opOption),
+
+    TChildItemResult addChildrenItem(1:TKey bsName, 2:TItemKey itemKey, 3: list<TItemChild> aChild, 4: TChildItemOptions opOption),
+
+    TChildItemResult removeChildItem(1:TKey bsName, 2:TItemKey itemKey, 3: TItemChild aChild, 4: TChildItemOptions opOption),
+
 
     /*return true if item is existed in the list otherwise return false*/
     bool removeItem(1:TKey bigsetID, 2:TItemKey itemKey),
@@ -272,11 +297,11 @@ service TIBSDataService{
 
     TItemResult getItem(1:TKey bigsetID, 2: TItemKey itemKey),
 
-    TItemSetResult getSlice(1:TKey bigsetID, 2: i32 fromPos, 3: i32 count)
+    TItemSetResult getSlice(1:TKey bigsetID, 2: i32 fromIDX, 3: i32 count)
 
     TItemSetResult getSliceFromItem(1:TKey bigsetID, 2: TItemKey fromKey, 3: i32 count)
 
-    TItemSetResult getSliceR(1:TKey bigsetID, 2: i32 fromPos, 3: i32 count)
+    TItemSetResult getSliceR(1:TKey bigsetID, 2: i32 fromIDX, 3: i32 count)
 
     TItemSetResult getSliceFromItemR(1:TKey bigsetID, 2: TItemKey fromKey, 3: i32 count)
 
@@ -286,11 +311,14 @@ service TIBSDataService{
     bool bulkLoad(1:TKey bigsetID, 2: TItemSet setData),
 
     TMultiPutItemResult multiPut(1: TKey bigsetID, 2: TItemSet setData, 3: bool getAddedItems, 4: bool getReplacedItems ),
-    
+
     i64 getTotalCount(1:TKey bigsetID),
 
-    i64 removeAll(1:TKey bigsetID)
+    i64 removeAll(1:TKey bigsetID), // remove all items
 
+//    i64 totalKeyCount(), 
+
+//    list<TKey> getListKey(1: i64 fromIndex, 2: i32 count),
 
 }
 

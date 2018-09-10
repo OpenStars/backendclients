@@ -1,2 +1,2 @@
-../../../../contribs/ApacheThrift/bin/thrift -gen cpp bigsetgenericdata.thrift
-../../../../contribs/ApacheThrift/bin/thrift -gen cpp idgen.thrift
+/oserver/OpenStars/contribs/ApacheThrift/bin/thrift -gen go bigsetgenericdata.thrift
+/oserver/OpenStars/contribs/ApacheThrift/bin/thrift -gen go bigsetlistint.thrift
