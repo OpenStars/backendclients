@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="990eb813-2450-4236-b777-58faf60b9a31" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cmd/tests/bigset/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/tests/bigset/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/bigsetgenericdata.thrift" beforeDir="false" afterPath="$PROJECT_DIR$/go/bigset/thrift/bigsetgenericdata.thrift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/GoUnusedProtection__.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/b_s_notification_pool-remote/b_s_notification_pool-remote.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/bigsetgenericdata-consts.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/bigsetgenericdata.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/master_meta_service-remote/master_meta_service-remote.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/t_b_s_big_value_service-remote/t_b_s_big_value_service-remote.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/t_b_s_generic_data_service-remote/t_b_s_generic_data_service-remote.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/t_cluser_ordinator_service-remote/t_cluser_ordinator_service-remote.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/t_i_b_s_data_service-remote/t_i_b_s_data_service-remote.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/bigset/generic/t_string_big_set_k_v_service-remote/t_string_big_set_k_v_service-remote.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/idgen/GoUnusedProtection__.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/idgen/idgen-consts.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/idgen/idgen.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/gen-go-0.11.0/openstars/core/idgen/t_generator-remote/t_generator-remote.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/thrift/thriftgen.sh" beforeDir="false" afterPath="$PROJECT_DIR$/go/bigset/thrift/thriftgen.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go/bigset/transports/thrift_bigsetkv_client.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,11 +14,11 @@
     <session id="902996198">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
-          <entry key="project.open.time.1" value="2" />
+          <entry key="project.closed" value="7" />
+          <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.2" value="3" />
           <entry key="project.open.time.21" value="1" />
-          <entry key="project.opened" value="6" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -91,7 +74,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/go/bigset/thrift/bigsetlistint.thrift">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="931">
+                <state relative-caret-position="483">
                   <caret line="217" column="31" selection-start-line="217" selection-start-column="8" selection-end-line="217" selection-end-column="31" />
                 </state>
               </provider>
@@ -125,16 +108,16 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/go/bigset/thrift/gen-go/openstars/core/bigset/generic/bigsetgenericdata.go">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="338">
-                  <caret line="9117" column="2" selection-start-line="9117" selection-start-column="2" selection-end-line="9179" selection-end-column="98" />
+                <state relative-caret-position="15">
+                  <caret line="9287" column="2" selection-start-line="9287" selection-start-column="2" selection-end-line="9349" selection-end-column="98" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/go/bigset/thrift/bigsetgenericdata.thrift">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="30">
@@ -207,9 +190,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -250,58 +232,6 @@
               <item name="backendclients" type="b2602c69:ProjectViewProjectNode" />
               <item name="backendclients" type="462c0819:PsiDirectoryNode" />
               <item name="go" type="462c0819:PsiDirectoryNode" />
-              <item name="bigset" type="462c0819:PsiDirectoryNode" />
-              <item name="thrift" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="backendclients" type="b2602c69:ProjectViewProjectNode" />
-              <item name="backendclients" type="462c0819:PsiDirectoryNode" />
-              <item name="go" type="462c0819:PsiDirectoryNode" />
-              <item name="bigset" type="462c0819:PsiDirectoryNode" />
-              <item name="thrift" type="462c0819:PsiDirectoryNode" />
-              <item name="gen-go" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="backendclients" type="b2602c69:ProjectViewProjectNode" />
-              <item name="backendclients" type="462c0819:PsiDirectoryNode" />
-              <item name="go" type="462c0819:PsiDirectoryNode" />
-              <item name="bigset" type="462c0819:PsiDirectoryNode" />
-              <item name="thrift" type="462c0819:PsiDirectoryNode" />
-              <item name="gen-go" type="462c0819:PsiDirectoryNode" />
-              <item name="openstars" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="backendclients" type="b2602c69:ProjectViewProjectNode" />
-              <item name="backendclients" type="462c0819:PsiDirectoryNode" />
-              <item name="go" type="462c0819:PsiDirectoryNode" />
-              <item name="bigset" type="462c0819:PsiDirectoryNode" />
-              <item name="thrift" type="462c0819:PsiDirectoryNode" />
-              <item name="gen-go" type="462c0819:PsiDirectoryNode" />
-              <item name="openstars" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="backendclients" type="b2602c69:ProjectViewProjectNode" />
-              <item name="backendclients" type="462c0819:PsiDirectoryNode" />
-              <item name="go" type="462c0819:PsiDirectoryNode" />
-              <item name="bigset" type="462c0819:PsiDirectoryNode" />
-              <item name="thrift" type="462c0819:PsiDirectoryNode" />
-              <item name="gen-go" type="462c0819:PsiDirectoryNode" />
-              <item name="openstars" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="bigset" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="backendclients" type="b2602c69:ProjectViewProjectNode" />
-              <item name="backendclients" type="462c0819:PsiDirectoryNode" />
-              <item name="go" type="462c0819:PsiDirectoryNode" />
-              <item name="bigset" type="462c0819:PsiDirectoryNode" />
-              <item name="transports" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="backendclients" type="b2602c69:ProjectViewProjectNode" />
-              <item name="backendclients" type="462c0819:PsiDirectoryNode" />
-              <item name="go" type="462c0819:PsiDirectoryNode" />
               <item name="s2i64kv" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -315,6 +245,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -322,7 +253,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../../../android/sdk" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536569847635" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536569847891" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -360,18 +291,18 @@
       <workItem from="1536391614603" duration="2310000" />
       <workItem from="1536545819126" duration="602000" />
       <workItem from="1536565869700" duration="137000" />
-      <workItem from="1536567349691" duration="1501000" />
+      <workItem from="1536567349691" duration="1645000" />
+      <workItem from="1536570931547" duration="607000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6717000" />
+    <option name="totallyTimeSpent" value="7468000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="27" width="1866" height="1053" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16995615" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15625" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -386,7 +317,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.17462039" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.4164859" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -447,10 +378,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/tests/bigset/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/go/bigset/transports/bslisti64kv_client.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="10" column="131" selection-start-line="10" selection-start-column="99" selection-end-line="10" selection-end-column="131" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/go/bigset/thrift/bigsetlistint.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="217" column="31" selection-start-line="217" selection-start-column="8" selection-end-line="217" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -474,24 +419,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/go/bigset/thrift/gen-go/openstars/core/bigset/generic/bigsetgenericdata.go">
+    <entry file="file://$PROJECT_DIR$/go/bigset/thrift/bigsetgenericdata.thrift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="9117" column="2" selection-start-line="9117" selection-start-column="2" selection-end-line="9179" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/tests/bigset/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/go/bigset/thrift/bigsetlistint.thrift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="931">
-          <caret line="217" column="31" selection-start-line="217" selection-start-column="8" selection-end-line="217" selection-end-column="31" />
+        <state relative-caret-position="30">
+          <caret line="2" column="42" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -502,10 +433,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/go/bigset/thrift/bigsetgenericdata.thrift">
+    <entry file="file://$PROJECT_DIR$/go/bigset/thrift/gen-go/openstars/core/bigset/generic/bigsetgenericdata.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="42" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="42" />
+        <state relative-caret-position="15">
+          <caret line="9287" column="2" selection-start-line="9287" selection-start-column="2" selection-end-line="9349" selection-end-column="98" />
         </state>
       </provider>
     </entry>
