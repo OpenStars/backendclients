@@ -33,26 +33,34 @@ typedef TPlatformProfile TData
 struct TDataResult{
     1: TErrorCode errorCode,
     2: optional TPlatformProfile data
-
+    
 }
 
 service TDataServiceR{
-    TDataResult getData(1: TKey key),
+    TDataResult getData(1: TKey key), 
 }
 
 service TDataService extends TDataServiceR{
     TErrorCode putData(1: TKey key, 2: TPlatformProfile data)
-
+    
 }
 
 service TPlatformProfileService extends TDataService{
     string setExtData(1: TKey uid, 2: string extKey, 3: string extValue),
-
+        
     string getExtData(1: TKey uid, 2: string extKey),
 
     bool setTrustedEmail(1: TKey uid, 2: string email, 3: bool isTrusted),
 
+    bool removeTrustedEmail(1: TKey uid, 2: string email),
+
+    bool setTrustedMobile(1: TKey uid, 2: string email, 3: bool isTrusted),
+
+    bool removeTrustedMobile(1: TKey uid, 2: string mobile),
+
     bool setSocialInfo(1: TKey uid, 2: string socialType, 3: TSocialProfile socialProfile),
+
+    bool removeSocialInfo(1: TKey uid, 2: string socialType, 3: TSocialProfile socialProfile),
 }
 
 

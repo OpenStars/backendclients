@@ -25,7 +25,11 @@ func Usage() {
   fmt.Fprintln(os.Stderr, "  string setExtData(TKey uid, string extKey, string extValue)")
   fmt.Fprintln(os.Stderr, "  string getExtData(TKey uid, string extKey)")
   fmt.Fprintln(os.Stderr, "  bool setTrustedEmail(TKey uid, string email, bool isTrusted)")
+  fmt.Fprintln(os.Stderr, "  bool removeTrustedEmail(TKey uid, string email)")
+  fmt.Fprintln(os.Stderr, "  bool setTrustedMobile(TKey uid, string email, bool isTrusted)")
+  fmt.Fprintln(os.Stderr, "  bool removeTrustedMobile(TKey uid, string mobile)")
   fmt.Fprintln(os.Stderr, "  bool setSocialInfo(TKey uid, string socialType, TSocialProfile socialProfile)")
+  fmt.Fprintln(os.Stderr, "  bool removeSocialInfo(TKey uid, string socialType, TSocialProfile socialProfile)")
   fmt.Fprintln(os.Stderr, "  TErrorCode putData(TKey key, TPlatformProfile data)")
   fmt.Fprintln(os.Stderr, "  TDataResult getData(TKey key)")
   fmt.Fprintln(os.Stderr)
@@ -130,8 +134,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "SetExtData requires 3 args")
       flag.Usage()
     }
-    argvalue0, err34 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err34 != nil {
+    argvalue0, err42 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err42 != nil {
       Usage()
       return
     }
@@ -148,8 +152,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetExtData requires 2 args")
       flag.Usage()
     }
-    argvalue0, err37 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err37 != nil {
+    argvalue0, err45 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err45 != nil {
       Usage()
       return
     }
@@ -164,8 +168,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "SetTrustedEmail requires 3 args")
       flag.Usage()
     }
-    argvalue0, err39 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err39 != nil {
+    argvalue0, err47 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err47 != nil {
       Usage()
       return
     }
@@ -177,42 +181,9 @@ func main() {
     fmt.Print(client.SetTrustedEmail(context.Background(), value0, value1, value2))
     fmt.Print("\n")
     break
-  case "setSocialInfo":
-    if flag.NArg() - 1 != 3 {
-      fmt.Fprintln(os.Stderr, "SetSocialInfo requires 3 args")
-      flag.Usage()
-    }
-    argvalue0, err42 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err42 != nil {
-      Usage()
-      return
-    }
-    value0 := Profile.TKey(argvalue0)
-    argvalue1 := flag.Arg(2)
-    value1 := argvalue1
-    arg44 := flag.Arg(3)
-    mbTrans45 := thrift.NewTMemoryBufferLen(len(arg44))
-    defer mbTrans45.Close()
-    _, err46 := mbTrans45.WriteString(arg44)
-    if err46 != nil {
-      Usage()
-      return
-    }
-    factory47 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt48 := factory47.GetProtocol(mbTrans45)
-    argvalue2 := Profile.NewTSocialProfile()
-    err49 := argvalue2.Read(jsProt48)
-    if err49 != nil {
-      Usage()
-      return
-    }
-    value2 := argvalue2
-    fmt.Print(client.SetSocialInfo(context.Background(), value0, value1, value2))
-    fmt.Print("\n")
-    break
-  case "putData":
+  case "removeTrustedEmail":
     if flag.NArg() - 1 != 2 {
-      fmt.Fprintln(os.Stderr, "PutData requires 2 args")
+      fmt.Fprintln(os.Stderr, "RemoveTrustedEmail requires 2 args")
       flag.Usage()
     }
     argvalue0, err50 := (strconv.ParseInt(flag.Arg(1), 10, 64))
@@ -221,19 +192,135 @@ func main() {
       return
     }
     value0 := Profile.TKey(argvalue0)
-    arg51 := flag.Arg(2)
-    mbTrans52 := thrift.NewTMemoryBufferLen(len(arg51))
-    defer mbTrans52.Close()
-    _, err53 := mbTrans52.WriteString(arg51)
-    if err53 != nil {
+    argvalue1 := flag.Arg(2)
+    value1 := argvalue1
+    fmt.Print(client.RemoveTrustedEmail(context.Background(), value0, value1))
+    fmt.Print("\n")
+    break
+  case "setTrustedMobile":
+    if flag.NArg() - 1 != 3 {
+      fmt.Fprintln(os.Stderr, "SetTrustedMobile requires 3 args")
+      flag.Usage()
+    }
+    argvalue0, err52 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err52 != nil {
       Usage()
       return
     }
-    factory54 := thrift.NewTSimpleJSONProtocolFactory()
-    jsProt55 := factory54.GetProtocol(mbTrans52)
+    value0 := Profile.TKey(argvalue0)
+    argvalue1 := flag.Arg(2)
+    value1 := argvalue1
+    argvalue2 := flag.Arg(3) == "true"
+    value2 := argvalue2
+    fmt.Print(client.SetTrustedMobile(context.Background(), value0, value1, value2))
+    fmt.Print("\n")
+    break
+  case "removeTrustedMobile":
+    if flag.NArg() - 1 != 2 {
+      fmt.Fprintln(os.Stderr, "RemoveTrustedMobile requires 2 args")
+      flag.Usage()
+    }
+    argvalue0, err55 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err55 != nil {
+      Usage()
+      return
+    }
+    value0 := Profile.TKey(argvalue0)
+    argvalue1 := flag.Arg(2)
+    value1 := argvalue1
+    fmt.Print(client.RemoveTrustedMobile(context.Background(), value0, value1))
+    fmt.Print("\n")
+    break
+  case "setSocialInfo":
+    if flag.NArg() - 1 != 3 {
+      fmt.Fprintln(os.Stderr, "SetSocialInfo requires 3 args")
+      flag.Usage()
+    }
+    argvalue0, err57 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err57 != nil {
+      Usage()
+      return
+    }
+    value0 := Profile.TKey(argvalue0)
+    argvalue1 := flag.Arg(2)
+    value1 := argvalue1
+    arg59 := flag.Arg(3)
+    mbTrans60 := thrift.NewTMemoryBufferLen(len(arg59))
+    defer mbTrans60.Close()
+    _, err61 := mbTrans60.WriteString(arg59)
+    if err61 != nil {
+      Usage()
+      return
+    }
+    factory62 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt63 := factory62.GetProtocol(mbTrans60)
+    argvalue2 := Profile.NewTSocialProfile()
+    err64 := argvalue2.Read(jsProt63)
+    if err64 != nil {
+      Usage()
+      return
+    }
+    value2 := argvalue2
+    fmt.Print(client.SetSocialInfo(context.Background(), value0, value1, value2))
+    fmt.Print("\n")
+    break
+  case "removeSocialInfo":
+    if flag.NArg() - 1 != 3 {
+      fmt.Fprintln(os.Stderr, "RemoveSocialInfo requires 3 args")
+      flag.Usage()
+    }
+    argvalue0, err65 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err65 != nil {
+      Usage()
+      return
+    }
+    value0 := Profile.TKey(argvalue0)
+    argvalue1 := flag.Arg(2)
+    value1 := argvalue1
+    arg67 := flag.Arg(3)
+    mbTrans68 := thrift.NewTMemoryBufferLen(len(arg67))
+    defer mbTrans68.Close()
+    _, err69 := mbTrans68.WriteString(arg67)
+    if err69 != nil {
+      Usage()
+      return
+    }
+    factory70 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt71 := factory70.GetProtocol(mbTrans68)
+    argvalue2 := Profile.NewTSocialProfile()
+    err72 := argvalue2.Read(jsProt71)
+    if err72 != nil {
+      Usage()
+      return
+    }
+    value2 := argvalue2
+    fmt.Print(client.RemoveSocialInfo(context.Background(), value0, value1, value2))
+    fmt.Print("\n")
+    break
+  case "putData":
+    if flag.NArg() - 1 != 2 {
+      fmt.Fprintln(os.Stderr, "PutData requires 2 args")
+      flag.Usage()
+    }
+    argvalue0, err73 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err73 != nil {
+      Usage()
+      return
+    }
+    value0 := Profile.TKey(argvalue0)
+    arg74 := flag.Arg(2)
+    mbTrans75 := thrift.NewTMemoryBufferLen(len(arg74))
+    defer mbTrans75.Close()
+    _, err76 := mbTrans75.WriteString(arg74)
+    if err76 != nil {
+      Usage()
+      return
+    }
+    factory77 := thrift.NewTSimpleJSONProtocolFactory()
+    jsProt78 := factory77.GetProtocol(mbTrans75)
     argvalue1 := Profile.NewTPlatformProfile()
-    err56 := argvalue1.Read(jsProt55)
-    if err56 != nil {
+    err79 := argvalue1.Read(jsProt78)
+    if err79 != nil {
       Usage()
       return
     }
@@ -246,8 +333,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err57 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err57 != nil {
+    argvalue0, err80 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err80 != nil {
       Usage()
       return
     }

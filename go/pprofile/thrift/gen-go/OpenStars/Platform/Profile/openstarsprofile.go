@@ -1519,9 +1519,27 @@ TDataService
   SetTrustedEmail(ctx context.Context, uid TKey, email string, isTrusted bool) (r bool, err error)
   // Parameters:
   //  - UID
+  //  - Email
+  RemoveTrustedEmail(ctx context.Context, uid TKey, email string) (r bool, err error)
+  // Parameters:
+  //  - UID
+  //  - Email
+  //  - IsTrusted
+  SetTrustedMobile(ctx context.Context, uid TKey, email string, isTrusted bool) (r bool, err error)
+  // Parameters:
+  //  - UID
+  //  - Mobile
+  RemoveTrustedMobile(ctx context.Context, uid TKey, mobile string) (r bool, err error)
+  // Parameters:
+  //  - UID
   //  - SocialType
   //  - SocialProfile
   SetSocialInfo(ctx context.Context, uid TKey, socialType string, socialProfile *TSocialProfile) (r bool, err error)
+  // Parameters:
+  //  - UID
+  //  - SocialType
+  //  - SocialProfile
+  RemoveSocialInfo(ctx context.Context, uid TKey, socialType string, socialProfile *TSocialProfile) (r bool, err error)
 }
 
 type TPlatformProfileServiceClient struct {
@@ -1593,18 +1611,78 @@ func (p *TPlatformProfileServiceClient) SetTrustedEmail(ctx context.Context, uid
 
 // Parameters:
 //  - UID
-//  - SocialType
-//  - SocialProfile
-func (p *TPlatformProfileServiceClient) SetSocialInfo(ctx context.Context, uid TKey, socialType string, socialProfile *TSocialProfile) (r bool, err error) {
-  var _args31 TPlatformProfileServiceSetSocialInfoArgs
+//  - Email
+func (p *TPlatformProfileServiceClient) RemoveTrustedEmail(ctx context.Context, uid TKey, email string) (r bool, err error) {
+  var _args31 TPlatformProfileServiceRemoveTrustedEmailArgs
   _args31.UID = uid
-  _args31.SocialType = socialType
-  _args31.SocialProfile = socialProfile
-  var _result32 TPlatformProfileServiceSetSocialInfoResult
-  if err = p.c.Call(ctx, "setSocialInfo", &_args31, &_result32); err != nil {
+  _args31.Email = email
+  var _result32 TPlatformProfileServiceRemoveTrustedEmailResult
+  if err = p.c.Call(ctx, "removeTrustedEmail", &_args31, &_result32); err != nil {
     return
   }
   return _result32.GetSuccess(), nil
+}
+
+// Parameters:
+//  - UID
+//  - Email
+//  - IsTrusted
+func (p *TPlatformProfileServiceClient) SetTrustedMobile(ctx context.Context, uid TKey, email string, isTrusted bool) (r bool, err error) {
+  var _args33 TPlatformProfileServiceSetTrustedMobileArgs
+  _args33.UID = uid
+  _args33.Email = email
+  _args33.IsTrusted = isTrusted
+  var _result34 TPlatformProfileServiceSetTrustedMobileResult
+  if err = p.c.Call(ctx, "setTrustedMobile", &_args33, &_result34); err != nil {
+    return
+  }
+  return _result34.GetSuccess(), nil
+}
+
+// Parameters:
+//  - UID
+//  - Mobile
+func (p *TPlatformProfileServiceClient) RemoveTrustedMobile(ctx context.Context, uid TKey, mobile string) (r bool, err error) {
+  var _args35 TPlatformProfileServiceRemoveTrustedMobileArgs
+  _args35.UID = uid
+  _args35.Mobile = mobile
+  var _result36 TPlatformProfileServiceRemoveTrustedMobileResult
+  if err = p.c.Call(ctx, "removeTrustedMobile", &_args35, &_result36); err != nil {
+    return
+  }
+  return _result36.GetSuccess(), nil
+}
+
+// Parameters:
+//  - UID
+//  - SocialType
+//  - SocialProfile
+func (p *TPlatformProfileServiceClient) SetSocialInfo(ctx context.Context, uid TKey, socialType string, socialProfile *TSocialProfile) (r bool, err error) {
+  var _args37 TPlatformProfileServiceSetSocialInfoArgs
+  _args37.UID = uid
+  _args37.SocialType = socialType
+  _args37.SocialProfile = socialProfile
+  var _result38 TPlatformProfileServiceSetSocialInfoResult
+  if err = p.c.Call(ctx, "setSocialInfo", &_args37, &_result38); err != nil {
+    return
+  }
+  return _result38.GetSuccess(), nil
+}
+
+// Parameters:
+//  - UID
+//  - SocialType
+//  - SocialProfile
+func (p *TPlatformProfileServiceClient) RemoveSocialInfo(ctx context.Context, uid TKey, socialType string, socialProfile *TSocialProfile) (r bool, err error) {
+  var _args39 TPlatformProfileServiceRemoveSocialInfoArgs
+  _args39.UID = uid
+  _args39.SocialType = socialType
+  _args39.SocialProfile = socialProfile
+  var _result40 TPlatformProfileServiceRemoveSocialInfoResult
+  if err = p.c.Call(ctx, "removeSocialInfo", &_args39, &_result40); err != nil {
+    return
+  }
+  return _result40.GetSuccess(), nil
 }
 
 type TPlatformProfileServiceProcessor struct {
@@ -1612,12 +1690,16 @@ type TPlatformProfileServiceProcessor struct {
 }
 
 func NewTPlatformProfileServiceProcessor(handler TPlatformProfileService) *TPlatformProfileServiceProcessor {
-  self33 := &TPlatformProfileServiceProcessor{NewTDataServiceProcessor(handler)}
-  self33.AddToProcessorMap("setExtData", &tPlatformProfileServiceProcessorSetExtData{handler:handler})
-  self33.AddToProcessorMap("getExtData", &tPlatformProfileServiceProcessorGetExtData{handler:handler})
-  self33.AddToProcessorMap("setTrustedEmail", &tPlatformProfileServiceProcessorSetTrustedEmail{handler:handler})
-  self33.AddToProcessorMap("setSocialInfo", &tPlatformProfileServiceProcessorSetSocialInfo{handler:handler})
-  return self33
+  self41 := &TPlatformProfileServiceProcessor{NewTDataServiceProcessor(handler)}
+  self41.AddToProcessorMap("setExtData", &tPlatformProfileServiceProcessorSetExtData{handler:handler})
+  self41.AddToProcessorMap("getExtData", &tPlatformProfileServiceProcessorGetExtData{handler:handler})
+  self41.AddToProcessorMap("setTrustedEmail", &tPlatformProfileServiceProcessorSetTrustedEmail{handler:handler})
+  self41.AddToProcessorMap("removeTrustedEmail", &tPlatformProfileServiceProcessorRemoveTrustedEmail{handler:handler})
+  self41.AddToProcessorMap("setTrustedMobile", &tPlatformProfileServiceProcessorSetTrustedMobile{handler:handler})
+  self41.AddToProcessorMap("removeTrustedMobile", &tPlatformProfileServiceProcessorRemoveTrustedMobile{handler:handler})
+  self41.AddToProcessorMap("setSocialInfo", &tPlatformProfileServiceProcessorSetSocialInfo{handler:handler})
+  self41.AddToProcessorMap("removeSocialInfo", &tPlatformProfileServiceProcessorRemoveSocialInfo{handler:handler})
+  return self41
 }
 
 type tPlatformProfileServiceProcessorSetExtData struct {
@@ -1764,6 +1846,150 @@ var retval bool
   return true, err
 }
 
+type tPlatformProfileServiceProcessorRemoveTrustedEmail struct {
+  handler TPlatformProfileService
+}
+
+func (p *tPlatformProfileServiceProcessorRemoveTrustedEmail) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := TPlatformProfileServiceRemoveTrustedEmailArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("removeTrustedEmail", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := TPlatformProfileServiceRemoveTrustedEmailResult{}
+var retval bool
+  var err2 error
+  if retval, err2 = p.handler.RemoveTrustedEmail(ctx, args.UID, args.Email); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing removeTrustedEmail: " + err2.Error())
+    oprot.WriteMessageBegin("removeTrustedEmail", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return true, err2
+  } else {
+    result.Success = &retval
+}
+  if err2 = oprot.WriteMessageBegin("removeTrustedEmail", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
+type tPlatformProfileServiceProcessorSetTrustedMobile struct {
+  handler TPlatformProfileService
+}
+
+func (p *tPlatformProfileServiceProcessorSetTrustedMobile) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := TPlatformProfileServiceSetTrustedMobileArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("setTrustedMobile", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := TPlatformProfileServiceSetTrustedMobileResult{}
+var retval bool
+  var err2 error
+  if retval, err2 = p.handler.SetTrustedMobile(ctx, args.UID, args.Email, args.IsTrusted); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing setTrustedMobile: " + err2.Error())
+    oprot.WriteMessageBegin("setTrustedMobile", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return true, err2
+  } else {
+    result.Success = &retval
+}
+  if err2 = oprot.WriteMessageBegin("setTrustedMobile", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
+type tPlatformProfileServiceProcessorRemoveTrustedMobile struct {
+  handler TPlatformProfileService
+}
+
+func (p *tPlatformProfileServiceProcessorRemoveTrustedMobile) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := TPlatformProfileServiceRemoveTrustedMobileArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("removeTrustedMobile", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := TPlatformProfileServiceRemoveTrustedMobileResult{}
+var retval bool
+  var err2 error
+  if retval, err2 = p.handler.RemoveTrustedMobile(ctx, args.UID, args.Mobile); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing removeTrustedMobile: " + err2.Error())
+    oprot.WriteMessageBegin("removeTrustedMobile", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return true, err2
+  } else {
+    result.Success = &retval
+}
+  if err2 = oprot.WriteMessageBegin("removeTrustedMobile", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
 type tPlatformProfileServiceProcessorSetSocialInfo struct {
   handler TPlatformProfileService
 }
@@ -1795,6 +2021,54 @@ var retval bool
     result.Success = &retval
 }
   if err2 = oprot.WriteMessageBegin("setSocialInfo", thrift.REPLY, seqId); err2 != nil {
+    err = err2
+  }
+  if err2 = result.Write(oprot); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err2 = oprot.Flush(); err == nil && err2 != nil {
+    err = err2
+  }
+  if err != nil {
+    return
+  }
+  return true, err
+}
+
+type tPlatformProfileServiceProcessorRemoveSocialInfo struct {
+  handler TPlatformProfileService
+}
+
+func (p *tPlatformProfileServiceProcessorRemoveSocialInfo) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+  args := TPlatformProfileServiceRemoveSocialInfoArgs{}
+  if err = args.Read(iprot); err != nil {
+    iprot.ReadMessageEnd()
+    x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+    oprot.WriteMessageBegin("removeSocialInfo", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return false, err
+  }
+
+  iprot.ReadMessageEnd()
+  result := TPlatformProfileServiceRemoveSocialInfoResult{}
+var retval bool
+  var err2 error
+  if retval, err2 = p.handler.RemoveSocialInfo(ctx, args.UID, args.SocialType, args.SocialProfile); err2 != nil {
+    x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing removeSocialInfo: " + err2.Error())
+    oprot.WriteMessageBegin("removeSocialInfo", thrift.EXCEPTION, seqId)
+    x.Write(oprot)
+    oprot.WriteMessageEnd()
+    oprot.Flush()
+    return true, err2
+  } else {
+    result.Success = &retval
+}
+  if err2 = oprot.WriteMessageBegin("removeSocialInfo", thrift.REPLY, seqId); err2 != nil {
     err = err2
   }
   if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -2573,6 +2847,726 @@ func (p *TPlatformProfileServiceSetTrustedEmailResult) String() string {
 
 // Attributes:
 //  - UID
+//  - Email
+type TPlatformProfileServiceRemoveTrustedEmailArgs struct {
+  UID TKey `thrift:"uid,1" db:"uid" json:"uid"`
+  Email string `thrift:"email,2" db:"email" json:"email"`
+}
+
+func NewTPlatformProfileServiceRemoveTrustedEmailArgs() *TPlatformProfileServiceRemoveTrustedEmailArgs {
+  return &TPlatformProfileServiceRemoveTrustedEmailArgs{}
+}
+
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs) GetUID() TKey {
+  return p.UID
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs) GetEmail() string {
+  return p.Email
+}
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := TKey(v)
+  p.UID = temp
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.Email = v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("removeTrustedEmail_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err) }
+  if err := oprot.WriteI64(int64(p.UID)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("email", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:email: ", p), err) }
+  if err := oprot.WriteString(string(p.Email)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.email (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:email: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceRemoveTrustedEmailArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type TPlatformProfileServiceRemoveTrustedEmailResult struct {
+  Success *bool `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewTPlatformProfileServiceRemoveTrustedEmailResult() *TPlatformProfileServiceRemoveTrustedEmailResult {
+  return &TPlatformProfileServiceRemoveTrustedEmailResult{}
+}
+
+var TPlatformProfileServiceRemoveTrustedEmailResult_Success_DEFAULT bool
+func (p *TPlatformProfileServiceRemoveTrustedEmailResult) GetSuccess() bool {
+  if !p.IsSetSuccess() {
+    return TPlatformProfileServiceRemoveTrustedEmailResult_Success_DEFAULT
+  }
+return *p.Success
+}
+func (p *TPlatformProfileServiceRemoveTrustedEmailResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailResult)  ReadField0(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 0: ", err)
+} else {
+  p.Success = &v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("removeTrustedEmail_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.BOOL, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := oprot.WriteBool(bool(*p.Success)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.success (0) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedEmailResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceRemoveTrustedEmailResult(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - Email
+//  - IsTrusted
+type TPlatformProfileServiceSetTrustedMobileArgs struct {
+  UID TKey `thrift:"uid,1" db:"uid" json:"uid"`
+  Email string `thrift:"email,2" db:"email" json:"email"`
+  IsTrusted bool `thrift:"isTrusted,3" db:"isTrusted" json:"isTrusted"`
+}
+
+func NewTPlatformProfileServiceSetTrustedMobileArgs() *TPlatformProfileServiceSetTrustedMobileArgs {
+  return &TPlatformProfileServiceSetTrustedMobileArgs{}
+}
+
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) GetUID() TKey {
+  return p.UID
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) GetEmail() string {
+  return p.Email
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) GetIsTrusted() bool {
+  return p.IsTrusted
+}
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := TKey(v)
+  p.UID = temp
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.Email = v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs)  ReadField3(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 3: ", err)
+} else {
+  p.IsTrusted = v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("setTrustedMobile_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err) }
+  if err := oprot.WriteI64(int64(p.UID)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("email", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:email: ", p), err) }
+  if err := oprot.WriteString(string(p.Email)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.email (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:email: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("isTrusted", thrift.BOOL, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:isTrusted: ", p), err) }
+  if err := oprot.WriteBool(bool(p.IsTrusted)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.isTrusted (3) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:isTrusted: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceSetTrustedMobileArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type TPlatformProfileServiceSetTrustedMobileResult struct {
+  Success *bool `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewTPlatformProfileServiceSetTrustedMobileResult() *TPlatformProfileServiceSetTrustedMobileResult {
+  return &TPlatformProfileServiceSetTrustedMobileResult{}
+}
+
+var TPlatformProfileServiceSetTrustedMobileResult_Success_DEFAULT bool
+func (p *TPlatformProfileServiceSetTrustedMobileResult) GetSuccess() bool {
+  if !p.IsSetSuccess() {
+    return TPlatformProfileServiceSetTrustedMobileResult_Success_DEFAULT
+  }
+return *p.Success
+}
+func (p *TPlatformProfileServiceSetTrustedMobileResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileResult)  ReadField0(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 0: ", err)
+} else {
+  p.Success = &v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("setTrustedMobile_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.BOOL, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := oprot.WriteBool(bool(*p.Success)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.success (0) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *TPlatformProfileServiceSetTrustedMobileResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceSetTrustedMobileResult(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - Mobile
+type TPlatformProfileServiceRemoveTrustedMobileArgs struct {
+  UID TKey `thrift:"uid,1" db:"uid" json:"uid"`
+  Mobile string `thrift:"mobile,2" db:"mobile" json:"mobile"`
+}
+
+func NewTPlatformProfileServiceRemoveTrustedMobileArgs() *TPlatformProfileServiceRemoveTrustedMobileArgs {
+  return &TPlatformProfileServiceRemoveTrustedMobileArgs{}
+}
+
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs) GetUID() TKey {
+  return p.UID
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs) GetMobile() string {
+  return p.Mobile
+}
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := TKey(v)
+  p.UID = temp
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.Mobile = v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("removeTrustedMobile_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err) }
+  if err := oprot.WriteI64(int64(p.UID)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("mobile", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:mobile: ", p), err) }
+  if err := oprot.WriteString(string(p.Mobile)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.mobile (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:mobile: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceRemoveTrustedMobileArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type TPlatformProfileServiceRemoveTrustedMobileResult struct {
+  Success *bool `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewTPlatformProfileServiceRemoveTrustedMobileResult() *TPlatformProfileServiceRemoveTrustedMobileResult {
+  return &TPlatformProfileServiceRemoveTrustedMobileResult{}
+}
+
+var TPlatformProfileServiceRemoveTrustedMobileResult_Success_DEFAULT bool
+func (p *TPlatformProfileServiceRemoveTrustedMobileResult) GetSuccess() bool {
+  if !p.IsSetSuccess() {
+    return TPlatformProfileServiceRemoveTrustedMobileResult_Success_DEFAULT
+  }
+return *p.Success
+}
+func (p *TPlatformProfileServiceRemoveTrustedMobileResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileResult)  ReadField0(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 0: ", err)
+} else {
+  p.Success = &v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("removeTrustedMobile_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.BOOL, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := oprot.WriteBool(bool(*p.Success)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.success (0) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveTrustedMobileResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceRemoveTrustedMobileResult(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
 //  - SocialType
 //  - SocialProfile
 type TPlatformProfileServiceSetSocialInfoArgs struct {
@@ -2840,6 +3834,277 @@ func (p *TPlatformProfileServiceSetSocialInfoResult) String() string {
     return "<nil>"
   }
   return fmt.Sprintf("TPlatformProfileServiceSetSocialInfoResult(%+v)", *p)
+}
+
+// Attributes:
+//  - UID
+//  - SocialType
+//  - SocialProfile
+type TPlatformProfileServiceRemoveSocialInfoArgs struct {
+  UID TKey `thrift:"uid,1" db:"uid" json:"uid"`
+  SocialType string `thrift:"socialType,2" db:"socialType" json:"socialType"`
+  SocialProfile *TSocialProfile `thrift:"socialProfile,3" db:"socialProfile" json:"socialProfile"`
+}
+
+func NewTPlatformProfileServiceRemoveSocialInfoArgs() *TPlatformProfileServiceRemoveSocialInfoArgs {
+  return &TPlatformProfileServiceRemoveSocialInfoArgs{}
+}
+
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) GetUID() TKey {
+  return p.UID
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) GetSocialType() string {
+  return p.SocialType
+}
+var TPlatformProfileServiceRemoveSocialInfoArgs_SocialProfile_DEFAULT *TSocialProfile
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) GetSocialProfile() *TSocialProfile {
+  if !p.IsSetSocialProfile() {
+    return TPlatformProfileServiceRemoveSocialInfoArgs_SocialProfile_DEFAULT
+  }
+return p.SocialProfile
+}
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) IsSetSocialProfile() bool {
+  return p.SocialProfile != nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 1:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField1(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 2:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField2(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 3:
+      if fieldTypeId == thrift.STRUCT {
+        if err := p.ReadField3(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs)  ReadField1(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 1: ", err)
+} else {
+  temp := TKey(v)
+  p.UID = temp
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs)  ReadField2(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 2: ", err)
+} else {
+  p.SocialType = v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs)  ReadField3(iprot thrift.TProtocol) error {
+  p.SocialProfile = &TSocialProfile{}
+  if err := p.SocialProfile.Read(iprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", p.SocialProfile), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("removeSocialInfo_args"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField1(oprot); err != nil { return err }
+    if err := p.writeField2(oprot); err != nil { return err }
+    if err := p.writeField3(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) writeField1(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("uid", thrift.I64, 1); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 1:uid: ", p), err) }
+  if err := oprot.WriteI64(int64(p.UID)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.uid (1) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 1:uid: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) writeField2(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("socialType", thrift.STRING, 2); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 2:socialType: ", p), err) }
+  if err := oprot.WriteString(string(p.SocialType)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.socialType (2) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 2:socialType: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) writeField3(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("socialProfile", thrift.STRUCT, 3); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 3:socialProfile: ", p), err) }
+  if err := p.SocialProfile.Write(oprot); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T error writing struct: ", p.SocialProfile), err)
+  }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 3:socialProfile: ", p), err) }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoArgs) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceRemoveSocialInfoArgs(%+v)", *p)
+}
+
+// Attributes:
+//  - Success
+type TPlatformProfileServiceRemoveSocialInfoResult struct {
+  Success *bool `thrift:"success,0" db:"success" json:"success,omitempty"`
+}
+
+func NewTPlatformProfileServiceRemoveSocialInfoResult() *TPlatformProfileServiceRemoveSocialInfoResult {
+  return &TPlatformProfileServiceRemoveSocialInfoResult{}
+}
+
+var TPlatformProfileServiceRemoveSocialInfoResult_Success_DEFAULT bool
+func (p *TPlatformProfileServiceRemoveSocialInfoResult) GetSuccess() bool {
+  if !p.IsSetSuccess() {
+    return TPlatformProfileServiceRemoveSocialInfoResult_Success_DEFAULT
+  }
+return *p.Success
+}
+func (p *TPlatformProfileServiceRemoveSocialInfoResult) IsSetSuccess() bool {
+  return p.Success != nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoResult) Read(iprot thrift.TProtocol) error {
+  if _, err := iprot.ReadStructBegin(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read error: ", p), err)
+  }
+
+
+  for {
+    _, fieldTypeId, fieldId, err := iprot.ReadFieldBegin()
+    if err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T field %d read error: ", p, fieldId), err)
+    }
+    if fieldTypeId == thrift.STOP { break; }
+    switch fieldId {
+    case 0:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField0(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    default:
+      if err := iprot.Skip(fieldTypeId); err != nil {
+        return err
+      }
+    }
+    if err := iprot.ReadFieldEnd(); err != nil {
+      return err
+    }
+  }
+  if err := iprot.ReadStructEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+  }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoResult)  ReadField0(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(); err != nil {
+  return thrift.PrependError("error reading field 0: ", err)
+} else {
+  p.Success = &v
+}
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoResult) Write(oprot thrift.TProtocol) error {
+  if err := oprot.WriteStructBegin("removeSocialInfo_result"); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
+  if p != nil {
+    if err := p.writeField0(oprot); err != nil { return err }
+  }
+  if err := oprot.WriteFieldStop(); err != nil {
+    return thrift.PrependError("write field stop error: ", err) }
+  if err := oprot.WriteStructEnd(); err != nil {
+    return thrift.PrependError("write struct stop error: ", err) }
+  return nil
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoResult) writeField0(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSuccess() {
+    if err := oprot.WriteFieldBegin("success", thrift.BOOL, 0); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 0:success: ", p), err) }
+    if err := oprot.WriteBool(bool(*p.Success)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.success (0) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 0:success: ", p), err) }
+  }
+  return err
+}
+
+func (p *TPlatformProfileServiceRemoveSocialInfoResult) String() string {
+  if p == nil {
+    return "<nil>"
+  }
+  return fmt.Sprintf("TPlatformProfileServiceRemoveSocialInfoResult(%+v)", *p)
 }
 
 
