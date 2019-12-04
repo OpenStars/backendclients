@@ -14,16 +14,18 @@ import (
 	"strconv"
 	"strings"
 	"github.com/apache/thrift/lib/go/thrift"
-	"OpenStars/Common/TPostStorageService"
+	"OpenStars/Common/TMediaStorageService"
 )
 
-var _ = TPostStorageService.GoUnusedProtection__
+var _ = TMediaStorageService.GoUnusedProtection__
 
 func Usage() {
   fmt.Fprintln(os.Stderr, "Usage of ", os.Args[0], " [-h host:port] [-u url] [-f[ramed]] function [arg1 [arg2...]]:")
   flag.PrintDefaults()
   fmt.Fprintln(os.Stderr, "\nFunctions:")
   fmt.Fprintln(os.Stderr, "  TDataResult getData(TKey key)")
+  fmt.Fprintln(os.Stderr, "  TErrorCode putData(TKey key, TMediaItem data)")
+  fmt.Fprintln(os.Stderr, "  TErrorCode removeData(TKey key)")
   fmt.Fprintln(os.Stderr)
   os.Exit(0)
 }
@@ -138,7 +140,7 @@ func main() {
   }
   iprot := protocolFactory.GetProtocol(trans)
   oprot := protocolFactory.GetProtocol(trans)
-  client := TPostStorageService.NewTDataServiceRClient(thrift.NewTStandardClient(iprot, oprot))
+  client := TMediaStorageService.NewTDataServiceClient(thrift.NewTStandardClient(iprot, oprot))
   if err := trans.Open(); err != nil {
     fmt.Fprintln(os.Stderr, "Error opening socket to ", host, ":", port, " ", err)
     os.Exit(1)
@@ -150,13 +152,58 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err11 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err11 != nil {
+    argvalue0, err13 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err13 != nil {
       Usage()
       return
     }
-    value0 := TPostStorageService.TKey(argvalue0)
+    value0 := TMediaStorageService.TKey(argvalue0)
     fmt.Print(client.GetData(context.Background(), value0))
+    fmt.Print("\n")
+    break
+  case "putData":
+    if flag.NArg() - 1 != 2 {
+      fmt.Fprintln(os.Stderr, "PutData requires 2 args")
+      flag.Usage()
+    }
+    argvalue0, err14 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err14 != nil {
+      Usage()
+      return
+    }
+    value0 := TMediaStorageService.TKey(argvalue0)
+    arg15 := flag.Arg(2)
+    mbTrans16 := thrift.NewTMemoryBufferLen(len(arg15))
+    defer mbTrans16.Close()
+    _, err17 := mbTrans16.WriteString(arg15)
+    if err17 != nil {
+      Usage()
+      return
+    }
+    factory18 := thrift.NewTJSONProtocolFactory()
+    jsProt19 := factory18.GetProtocol(mbTrans16)
+    argvalue1 := TMediaStorageService.NewTMediaItem()
+    err20 := argvalue1.Read(jsProt19)
+    if err20 != nil {
+      Usage()
+      return
+    }
+    value1 := argvalue1
+    fmt.Print(client.PutData(context.Background(), value0, value1))
+    fmt.Print("\n")
+    break
+  case "removeData":
+    if flag.NArg() - 1 != 1 {
+      fmt.Fprintln(os.Stderr, "RemoveData requires 1 args")
+      flag.Usage()
+    }
+    argvalue0, err21 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err21 != nil {
+      Usage()
+      return
+    }
+    value0 := TMediaStorageService.TKey(argvalue0)
+    fmt.Print(client.RemoveData(context.Background(), value0))
     fmt.Print("\n")
     break
   case "":

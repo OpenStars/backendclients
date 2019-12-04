@@ -6,7 +6,7 @@
  */
 #include "TDataService.h"
 
-namespace OpenStars { namespace Common { namespace TPostStorageService {
+namespace OpenStars { namespace Common { namespace TMediaStorageService {
 
 
 TDataService_getData_args::~TDataService_getData_args() noexcept {
@@ -318,9 +318,9 @@ uint32_t TDataService_putData_result::read(::apache::thrift::protocol::TProtocol
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast54;
-          xfer += iprot->readI32(ecast54);
-          this->success = (TErrorCode::type)ecast54;
+          int32_t ecast5;
+          xfer += iprot->readI32(ecast5);
+          this->success = (TErrorCode::type)ecast5;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -382,9 +382,9 @@ uint32_t TDataService_putData_presult::read(::apache::thrift::protocol::TProtoco
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast55;
-          xfer += iprot->readI32(ecast55);
-          (*(this->success)) = (TErrorCode::type)ecast55;
+          int32_t ecast6;
+          xfer += iprot->readI32(ecast6);
+          (*(this->success)) = (TErrorCode::type)ecast6;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -509,9 +509,9 @@ uint32_t TDataService_removeData_result::read(::apache::thrift::protocol::TProto
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast56;
-          xfer += iprot->readI32(ecast56);
-          this->success = (TErrorCode::type)ecast56;
+          int32_t ecast7;
+          xfer += iprot->readI32(ecast7);
+          this->success = (TErrorCode::type)ecast7;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -573,224 +573,9 @@ uint32_t TDataService_removeData_presult::read(::apache::thrift::protocol::TProt
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast57;
-          xfer += iprot->readI32(ecast57);
-          (*(this->success)) = (TErrorCode::type)ecast57;
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-
-TDataService_getListDatas_args::~TDataService_getListDatas_args() noexcept {
-}
-
-
-uint32_t TDataService_getListDatas_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->listkey.clear();
-            uint32_t _size58;
-            ::apache::thrift::protocol::TType _etype61;
-            xfer += iprot->readListBegin(_etype61, _size58);
-            this->listkey.resize(_size58);
-            uint32_t _i62;
-            for (_i62 = 0; _i62 < _size58; ++_i62)
-            {
-              xfer += iprot->readI64(this->listkey[_i62]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.listkey = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t TDataService_getListDatas_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("TDataService_getListDatas_args");
-
-  xfer += oprot->writeFieldBegin("listkey", ::apache::thrift::protocol::T_LIST, 1);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->listkey.size()));
-    std::vector<TKey> ::const_iterator _iter63;
-    for (_iter63 = this->listkey.begin(); _iter63 != this->listkey.end(); ++_iter63)
-    {
-      xfer += oprot->writeI64((*_iter63));
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TDataService_getListDatas_pargs::~TDataService_getListDatas_pargs() noexcept {
-}
-
-
-uint32_t TDataService_getListDatas_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("TDataService_getListDatas_pargs");
-
-  xfer += oprot->writeFieldBegin("listkey", ::apache::thrift::protocol::T_LIST, 1);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>((*(this->listkey)).size()));
-    std::vector<TKey> ::const_iterator _iter64;
-    for (_iter64 = (*(this->listkey)).begin(); _iter64 != (*(this->listkey)).end(); ++_iter64)
-    {
-      xfer += oprot->writeI64((*_iter64));
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TDataService_getListDatas_result::~TDataService_getListDatas_result() noexcept {
-}
-
-
-uint32_t TDataService_getListDatas_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->success.read(iprot);
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t TDataService_getListDatas_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("TDataService_getListDatas_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
-    xfer += this->success.write(oprot);
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TDataService_getListDatas_presult::~TDataService_getListDatas_presult() noexcept {
-}
-
-
-uint32_t TDataService_getListDatas_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += (*(this->success)).read(iprot);
+          int32_t ecast8;
+          xfer += iprot->readI32(ecast8);
+          (*(this->success)) = (TErrorCode::type)ecast8;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -866,13 +651,13 @@ void TDataServiceClient::recv_getData(TDataResult& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getData failed: unknown result");
 }
 
-TErrorCode::type TDataServiceClient::putData(const TKey key, const TPostItem& data)
+TErrorCode::type TDataServiceClient::putData(const TKey key, const TMediaItem& data)
 {
   send_putData(key, data);
   return recv_putData();
 }
 
-void TDataServiceClient::send_putData(const TKey key, const TPostItem& data)
+void TDataServiceClient::send_putData(const TKey key, const TMediaItem& data)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("putData", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -981,64 +766,6 @@ TErrorCode::type TDataServiceClient::recv_removeData()
     return _return;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "removeData failed: unknown result");
-}
-
-void TDataServiceClient::getListDatas(TListDataResult& _return, const std::vector<TKey> & listkey)
-{
-  send_getListDatas(listkey);
-  recv_getListDatas(_return);
-}
-
-void TDataServiceClient::send_getListDatas(const std::vector<TKey> & listkey)
-{
-  int32_t cseqid = 0;
-  oprot_->writeMessageBegin("getListDatas", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  TDataService_getListDatas_pargs args;
-  args.listkey = &listkey;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-}
-
-void TDataServiceClient::recv_getListDatas(TListDataResult& _return)
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-    ::apache::thrift::TApplicationException x;
-    x.read(iprot_);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-    throw x;
-  }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  if (fname.compare("getListDatas") != 0) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  TDataService_getListDatas_presult result;
-  result.success = &_return;
-  result.read(iprot_);
-  iprot_->readMessageEnd();
-  iprot_->getTransport()->readEnd();
-
-  if (result.__isset.success) {
-    // _return pointer has now been filled
-    return;
-  }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getListDatas failed: unknown result");
 }
 
 bool TDataServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
@@ -1222,60 +949,6 @@ void TDataServiceProcessor::process_removeData(int32_t seqid, ::apache::thrift::
   }
 }
 
-void TDataServiceProcessor::process_getListDatas(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
-{
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("TDataService.getListDatas", callContext);
-  }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "TDataService.getListDatas");
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "TDataService.getListDatas");
-  }
-
-  TDataService_getListDatas_args args;
-  args.read(iprot);
-  iprot->readMessageEnd();
-  uint32_t bytes = iprot->getTransport()->readEnd();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "TDataService.getListDatas", bytes);
-  }
-
-  TDataService_getListDatas_result result;
-  try {
-    iface_->getListDatas(result.success, args.listkey);
-    result.__isset.success = true;
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "TDataService.getListDatas");
-    }
-
-    ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("getListDatas", ::apache::thrift::protocol::T_EXCEPTION, seqid);
-    x.write(oprot);
-    oprot->writeMessageEnd();
-    oprot->getTransport()->writeEnd();
-    oprot->getTransport()->flush();
-    return;
-  }
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "TDataService.getListDatas");
-  }
-
-  oprot->writeMessageBegin("getListDatas", ::apache::thrift::protocol::T_REPLY, seqid);
-  result.write(oprot);
-  oprot->writeMessageEnd();
-  bytes = oprot->getTransport()->writeEnd();
-  oprot->getTransport()->flush();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "TDataService.getListDatas", bytes);
-  }
-}
-
 ::std::shared_ptr< ::apache::thrift::TProcessor > TDataServiceProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo) {
   ::apache::thrift::ReleaseHandler< TDataServiceIfFactory > cleanup(handlerFactory_);
   ::std::shared_ptr< TDataServiceIf > handler(handlerFactory_->getHandler(connInfo), cleanup);
@@ -1367,13 +1040,13 @@ void TDataServiceConcurrentClient::recv_getData(TDataResult& _return, const int3
   } // end while(true)
 }
 
-TErrorCode::type TDataServiceConcurrentClient::putData(const TKey key, const TPostItem& data)
+TErrorCode::type TDataServiceConcurrentClient::putData(const TKey key, const TMediaItem& data)
 {
   int32_t seqid = send_putData(key, data);
   return recv_putData(seqid);
 }
 
-int32_t TDataServiceConcurrentClient::send_putData(const TKey key, const TPostItem& data)
+int32_t TDataServiceConcurrentClient::send_putData(const TKey key, const TMediaItem& data)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
@@ -1527,90 +1200,6 @@ TErrorCode::type TDataServiceConcurrentClient::recv_removeData(const int32_t seq
       }
       // in a bad state, don't commit
       throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "removeData failed: unknown result");
-    }
-    // seqid != rseqid
-    this->sync_->updatePending(fname, mtype, rseqid);
-
-    // this will temporarily unlock the readMutex, and let other clients get work done
-    this->sync_->waitForWork(seqid);
-  } // end while(true)
-}
-
-void TDataServiceConcurrentClient::getListDatas(TListDataResult& _return, const std::vector<TKey> & listkey)
-{
-  int32_t seqid = send_getListDatas(listkey);
-  recv_getListDatas(_return, seqid);
-}
-
-int32_t TDataServiceConcurrentClient::send_getListDatas(const std::vector<TKey> & listkey)
-{
-  int32_t cseqid = this->sync_->generateSeqId();
-  ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
-  oprot_->writeMessageBegin("getListDatas", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  TDataService_getListDatas_pargs args;
-  args.listkey = &listkey;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-
-  sentry.commit();
-  return cseqid;
-}
-
-void TDataServiceConcurrentClient::recv_getListDatas(TListDataResult& _return, const int32_t seqid)
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  // the read mutex gets dropped and reacquired as part of waitForWork()
-  // The destructor of this sentry wakes up other clients
-  ::apache::thrift::async::TConcurrentRecvSentry sentry(this->sync_.get(), seqid);
-
-  while(true) {
-    if(!this->sync_->getPending(fname, mtype, rseqid)) {
-      iprot_->readMessageBegin(fname, mtype, rseqid);
-    }
-    if(seqid == rseqid) {
-      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-        ::apache::thrift::TApplicationException x;
-        x.read(iprot_);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-        sentry.commit();
-        throw x;
-      }
-      if (mtype != ::apache::thrift::protocol::T_REPLY) {
-        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-      }
-      if (fname.compare("getListDatas") != 0) {
-        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-
-        // in a bad state, don't commit
-        using ::apache::thrift::protocol::TProtocolException;
-        throw TProtocolException(TProtocolException::INVALID_DATA);
-      }
-      TDataService_getListDatas_presult result;
-      result.success = &_return;
-      result.read(iprot_);
-      iprot_->readMessageEnd();
-      iprot_->getTransport()->readEnd();
-
-      if (result.__isset.success) {
-        // _return pointer has now been filled
-        sentry.commit();
-        return;
-      }
-      // in a bad state, don't commit
-      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getListDatas failed: unknown result");
     }
     // seqid != rseqid
     this->sync_->updatePending(fname, mtype, rseqid);

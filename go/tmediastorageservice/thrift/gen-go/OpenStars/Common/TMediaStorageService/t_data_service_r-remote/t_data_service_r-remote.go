@@ -14,10 +14,10 @@ import (
 	"strconv"
 	"strings"
 	"github.com/apache/thrift/lib/go/thrift"
-	"OpenStars/Common/TPostStorageService"
+	"OpenStars/Common/TMediaStorageService"
 )
 
-var _ = TPostStorageService.GoUnusedProtection__
+var _ = TMediaStorageService.GoUnusedProtection__
 
 func Usage() {
   fmt.Fprintln(os.Stderr, "Usage of ", os.Args[0], " [-h host:port] [-u url] [-f[ramed]] function [arg1 [arg2...]]:")
@@ -138,7 +138,7 @@ func main() {
   }
   iprot := protocolFactory.GetProtocol(trans)
   oprot := protocolFactory.GetProtocol(trans)
-  client := TPostStorageService.NewTDataServiceRClient(thrift.NewTStandardClient(iprot, oprot))
+  client := TMediaStorageService.NewTDataServiceRClient(thrift.NewTStandardClient(iprot, oprot))
   if err := trans.Open(); err != nil {
     fmt.Fprintln(os.Stderr, "Error opening socket to ", host, ":", port, " ", err)
     os.Exit(1)
@@ -150,12 +150,12 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err11 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err11 != nil {
+    argvalue0, err4 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err4 != nil {
       Usage()
       return
     }
-    value0 := TPostStorageService.TKey(argvalue0)
+    value0 := TMediaStorageService.TKey(argvalue0)
     fmt.Print(client.GetData(context.Background(), value0))
     fmt.Print("\n")
     break
