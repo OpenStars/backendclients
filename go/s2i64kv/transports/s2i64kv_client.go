@@ -3,9 +3,10 @@ package transports
 import (
 	"fmt"
 
-	"git.apache.org/thrift.git/lib/go/thrift"
+	"github.com/apache/thrift/lib/go/thrift"
+
 	"github.com/OpenStars/backendclients/go/s2i64kv/thrift/gen-go/OpenStars/Common/S2I64KV"
-	thriftpool "github.com/OpenStars/thriftpool"
+	thriftpool "github.com/OpenStars/thriftpoolv2"
 )
 
 var (

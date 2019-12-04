@@ -2,11 +2,12 @@ package transports
 
 import (
 	"github.com/OpenStars/backendclients/go/mapnoitfycall/thrift/gen-go/OpenStars/Common/MapNotifyCallKV"
+	"github.com/apache/thrift/lib/go/thrift"
+
 	// "github.com/OpenStars/backendclients/go//gen-go/OpenStars/Common/MapPhoneNumberPubkeyKV" //Todo: Fix this
 	"fmt"
 
-	"git.apache.org/thrift.git/lib/go/thrift"
-	"github.com/OpenStars/thriftpool"
+	thriftpool "github.com/OpenStars/thriftpoolv2"
 )
 
 var (
