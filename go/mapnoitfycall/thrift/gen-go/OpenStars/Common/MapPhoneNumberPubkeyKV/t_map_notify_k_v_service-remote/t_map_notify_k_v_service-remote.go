@@ -14,16 +14,18 @@ import (
 	"strconv"
 	"strings"
 	"github.com/apache/thrift/lib/go/thrift"
-	"simplesession"
+	"OpenStars/Common/MapPhoneNumberPubkeyKV"
 )
 
-var _ = simplesession.GoUnusedProtection__
+var _ = MapPhoneNumberPubkeyKV.GoUnusedProtection__
 
 func Usage() {
   fmt.Fprintln(os.Stderr, "Usage of ", os.Args[0], " [-h host:port] [-u url] [-f[ramed]] function [arg1 [arg2...]]:")
   flag.PrintDefaults()
   fmt.Fprintln(os.Stderr, "\nFunctions:")
-  fmt.Fprintln(os.Stderr, "  TUserResult getSession(TSessionKey sessionKey)")
+  fmt.Fprintln(os.Stderr, "  TDataResult getTokenByPubkey(string pubkey)")
+  fmt.Fprintln(os.Stderr, "  TDataResult getPubkeyByToken(string token)")
+  fmt.Fprintln(os.Stderr, "  TErrorCode putData(string pubkey, string token)")
   fmt.Fprintln(os.Stderr)
   os.Exit(0)
 }
@@ -138,21 +140,43 @@ func main() {
   }
   iprot := protocolFactory.GetProtocol(trans)
   oprot := protocolFactory.GetProtocol(trans)
-  client := simplesession.NewTSimpleSessionServiceClient(thrift.NewTStandardClient(iprot, oprot))
+  client := MapPhoneNumberPubkeyKV.NewTMapNotifyKVServiceClient(thrift.NewTStandardClient(iprot, oprot))
   if err := trans.Open(); err != nil {
     fmt.Fprintln(os.Stderr, "Error opening socket to ", host, ":", port, " ", err)
     os.Exit(1)
   }
   
   switch cmd {
-  case "getSession":
+  case "getTokenByPubkey":
     if flag.NArg() - 1 != 1 {
-      fmt.Fprintln(os.Stderr, "GetSession requires 1 args")
+      fmt.Fprintln(os.Stderr, "GetTokenByPubkey requires 1 args")
       flag.Usage()
     }
     argvalue0 := flag.Arg(1)
-    value0 := simplesession.TSessionKey(argvalue0)
-    fmt.Print(client.GetSession(context.Background(), value0))
+    value0 := argvalue0
+    fmt.Print(client.GetTokenByPubkey(context.Background(), value0))
+    fmt.Print("\n")
+    break
+  case "getPubkeyByToken":
+    if flag.NArg() - 1 != 1 {
+      fmt.Fprintln(os.Stderr, "GetPubkeyByToken requires 1 args")
+      flag.Usage()
+    }
+    argvalue0 := flag.Arg(1)
+    value0 := argvalue0
+    fmt.Print(client.GetPubkeyByToken(context.Background(), value0))
+    fmt.Print("\n")
+    break
+  case "putData":
+    if flag.NArg() - 1 != 2 {
+      fmt.Fprintln(os.Stderr, "PutData requires 2 args")
+      flag.Usage()
+    }
+    argvalue0 := flag.Arg(1)
+    value0 := argvalue0
+    argvalue1 := flag.Arg(2)
+    value1 := argvalue1
+    fmt.Print(client.PutData(context.Background(), value0, value1))
     fmt.Print("\n")
     break
   case "":

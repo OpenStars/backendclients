@@ -4,9 +4,9 @@ import (
 	// "github.com/OpenStars/backendclients/go//gen-go/OpenStars/Common/MapPhoneNumberPubkeyKV" //Todo: Fix this
 	"fmt"
 
-	"git.apache.org/thrift.git/lib/go/thrift"
 	"github.com/OpenStars/backendclients/go/mapphone2pubkey/thrift/gen-go/OpenStars/Common/MapPhoneNumberPubkeyKV" //Todo: Fix this
-	"github.com/OpenStars/thriftpool"
+	thriftpool "github.com/OpenStars/thriftpoolv2"
+	"github.com/apache/thrift/lib/go/thrift"
 )
 
 var (

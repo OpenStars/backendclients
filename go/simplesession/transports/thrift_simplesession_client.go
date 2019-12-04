@@ -1,9 +1,10 @@
 package transports
 
 import (
-	"git.apache.org/thrift.git/lib/go/thrift"
+	"github.com/apache/thrift/lib/go/thrift"
+
 	ss "github.com/OpenStars/backendclients/go/simplesession/thrift/gen-go/simplesession"
-	thriftpool "github.com/OpenStars/thriftpool"
+	thriftpool "github.com/OpenStars/thriftpoolv2"
 )
 
 var (
