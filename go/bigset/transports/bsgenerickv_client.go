@@ -21,9 +21,18 @@ func GetBsGenericClient(aHost, aPort string) *thriftpool.ThriftSocketClient {
 	client, _ := bsGenericMapPool.Get(aHost, aPort).Get()
 	return client
 }
+func NewGetBsGenericClient(aHost, aPort string) *thriftpool.ThriftSocketClient {
+	client, _ := bsGenericMapPool.NewGet(aHost, aPort).Get()
+	return client
+}
 
 //GetIBsGenericClient client by host:port
 func GetIBsGenericClient(aHost, aPort string) *thriftpool.ThriftSocketClient {
 	client, _ := ibsGenericMapPool.Get(aHost, aPort).Get()
+	return client
+}
+
+func NewGetIBsGenericClient(aHost, aPort string) *thriftpool.ThriftSocketClient {
+	client, _ := ibsGenericMapPool.NewGet(aHost, aPort).Get()
 	return client
 }
