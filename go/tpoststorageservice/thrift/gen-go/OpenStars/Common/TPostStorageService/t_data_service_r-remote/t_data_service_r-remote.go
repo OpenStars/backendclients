@@ -150,8 +150,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err11 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err11 != nil {
+    argvalue0, err12 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err12 != nil {
       Usage()
       return
     }

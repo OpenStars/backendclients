@@ -50,6 +50,10 @@ struct TPostItem{
     16:optional i64 togroupid,
     17:optional list<ActionLink> actionLinks,
     18:optional list<string> mediaUrls,
+    19:optional i64 poolid,
+    20:optional i64 pageid,
+    21:optional string extend,
+    22:optional list<string> photoUrls,
 }
 
 typedef TPostItem TData
