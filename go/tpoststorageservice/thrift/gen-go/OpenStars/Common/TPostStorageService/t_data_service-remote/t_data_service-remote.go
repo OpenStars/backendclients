@@ -153,8 +153,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err23 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err23 != nil {
+    argvalue0, err24 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err24 != nil {
       Usage()
       return
     }
@@ -167,25 +167,25 @@ func main() {
       fmt.Fprintln(os.Stderr, "PutData requires 2 args")
       flag.Usage()
     }
-    argvalue0, err24 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err24 != nil {
+    argvalue0, err25 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err25 != nil {
       Usage()
       return
     }
     value0 := TPostStorageService.TKey(argvalue0)
-    arg25 := flag.Arg(2)
-    mbTrans26 := thrift.NewTMemoryBufferLen(len(arg25))
-    defer mbTrans26.Close()
-    _, err27 := mbTrans26.WriteString(arg25)
-    if err27 != nil {
+    arg26 := flag.Arg(2)
+    mbTrans27 := thrift.NewTMemoryBufferLen(len(arg26))
+    defer mbTrans27.Close()
+    _, err28 := mbTrans27.WriteString(arg26)
+    if err28 != nil {
       Usage()
       return
     }
-    factory28 := thrift.NewTJSONProtocolFactory()
-    jsProt29 := factory28.GetProtocol(mbTrans26)
+    factory29 := thrift.NewTJSONProtocolFactory()
+    jsProt30 := factory29.GetProtocol(mbTrans27)
     argvalue1 := TPostStorageService.NewTPostItem()
-    err30 := argvalue1.Read(jsProt29)
-    if err30 != nil {
+    err31 := argvalue1.Read(jsProt30)
+    if err31 != nil {
       Usage()
       return
     }
@@ -198,8 +198,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "RemoveData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err31 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err31 != nil {
+    argvalue0, err32 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err32 != nil {
       Usage()
       return
     }
@@ -212,19 +212,19 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetListDatas requires 1 args")
       flag.Usage()
     }
-    arg32 := flag.Arg(1)
-    mbTrans33 := thrift.NewTMemoryBufferLen(len(arg32))
-    defer mbTrans33.Close()
-    _, err34 := mbTrans33.WriteString(arg32)
-    if err34 != nil { 
+    arg33 := flag.Arg(1)
+    mbTrans34 := thrift.NewTMemoryBufferLen(len(arg33))
+    defer mbTrans34.Close()
+    _, err35 := mbTrans34.WriteString(arg33)
+    if err35 != nil { 
       Usage()
       return
     }
-    factory35 := thrift.NewTJSONProtocolFactory()
-    jsProt36 := factory35.GetProtocol(mbTrans33)
+    factory36 := thrift.NewTJSONProtocolFactory()
+    jsProt37 := factory36.GetProtocol(mbTrans34)
     containerStruct0 := TPostStorageService.NewTDataServiceGetListDatasArgs()
-    err37 := containerStruct0.ReadField1(jsProt36)
-    if err37 != nil {
+    err38 := containerStruct0.ReadField1(jsProt37)
+    if err38 != nil {
       Usage()
       return
     }
