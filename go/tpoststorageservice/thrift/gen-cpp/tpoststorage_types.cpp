@@ -195,6 +195,22 @@ void MediaItem::__set_mediaType(const int64_t val) {
 void MediaItem::__set_url(const std::string& val) {
   this->url = val;
 }
+
+void MediaItem::__set_idmedia(const int64_t val) {
+  this->idmedia = val;
+}
+
+void MediaItem::__set_idpost(const int64_t val) {
+  this->idpost = val;
+}
+
+void MediaItem::__set_timestamps(const int64_t val) {
+  this->timestamps = val;
+}
+
+void MediaItem::__set_extend(const std::string& val) {
+  this->extend = val;
+}
 std::ostream& operator<<(std::ostream& out, const MediaItem& obj)
 {
   obj.printTo(out);
@@ -247,6 +263,38 @@ uint32_t MediaItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->idmedia);
+          this->__isset.idmedia = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->idpost);
+          this->__isset.idpost = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->timestamps);
+          this->__isset.timestamps = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->extend);
+          this->__isset.extend = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -276,6 +324,22 @@ uint32_t MediaItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeString(this->url);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("idmedia", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64(this->idmedia);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("idpost", ::apache::thrift::protocol::T_I64, 5);
+  xfer += oprot->writeI64(this->idpost);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timestamps", ::apache::thrift::protocol::T_I64, 6);
+  xfer += oprot->writeI64(this->timestamps);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("extend", ::apache::thrift::protocol::T_STRING, 7);
+  xfer += oprot->writeString(this->extend);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -286,6 +350,10 @@ void swap(MediaItem &a, MediaItem &b) {
   swap(a.name, b.name);
   swap(a.mediaType, b.mediaType);
   swap(a.url, b.url);
+  swap(a.idmedia, b.idmedia);
+  swap(a.idpost, b.idpost);
+  swap(a.timestamps, b.timestamps);
+  swap(a.extend, b.extend);
   swap(a.__isset, b.__isset);
 }
 
@@ -293,12 +361,20 @@ MediaItem::MediaItem(const MediaItem& other2) {
   name = other2.name;
   mediaType = other2.mediaType;
   url = other2.url;
+  idmedia = other2.idmedia;
+  idpost = other2.idpost;
+  timestamps = other2.timestamps;
+  extend = other2.extend;
   __isset = other2.__isset;
 }
 MediaItem& MediaItem::operator=(const MediaItem& other3) {
   name = other3.name;
   mediaType = other3.mediaType;
   url = other3.url;
+  idmedia = other3.idmedia;
+  idpost = other3.idpost;
+  timestamps = other3.timestamps;
+  extend = other3.extend;
   __isset = other3.__isset;
   return *this;
 }
@@ -308,6 +384,10 @@ void MediaItem::printTo(std::ostream& out) const {
   out << "name=" << to_string(name);
   out << ", " << "mediaType=" << to_string(mediaType);
   out << ", " << "url=" << to_string(url);
+  out << ", " << "idmedia=" << to_string(idmedia);
+  out << ", " << "idpost=" << to_string(idpost);
+  out << ", " << "timestamps=" << to_string(timestamps);
+  out << ", " << "extend=" << to_string(extend);
   out << ")";
 }
 
@@ -375,11 +455,6 @@ void TPostItem::__set_pubkey(const std::string& val) {
   this->pubkey = val;
 }
 
-void TPostItem::__set_topubkey(const std::string& val) {
-  this->topubkey = val;
-__isset.topubkey = true;
-}
-
 void TPostItem::__set_touid(const int64_t val) {
   this->touid = val;
 __isset.touid = true;
@@ -395,11 +470,6 @@ void TPostItem::__set_actionLinks(const std::vector<ActionLink> & val) {
 __isset.actionLinks = true;
 }
 
-void TPostItem::__set_mediaUrls(const std::vector<std::string> & val) {
-  this->mediaUrls = val;
-__isset.mediaUrls = true;
-}
-
 void TPostItem::__set_poolid(const int64_t val) {
   this->poolid = val;
 __isset.poolid = true;
@@ -413,11 +483,6 @@ __isset.pageid = true;
 void TPostItem::__set_extend(const std::string& val) {
   this->extend = val;
 __isset.extend = true;
-}
-
-void TPostItem::__set_photoUrls(const std::vector<std::string> & val) {
-  this->photoUrls = val;
-__isset.photoUrls = true;
 }
 std::ostream& operator<<(std::ostream& out, const TPostItem& obj)
 {
@@ -599,14 +664,6 @@ uint32_t TPostItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 14:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->topubkey);
-          this->__isset.topubkey = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
       case 15:
         if (ftype == ::apache::thrift::protocol::T_I64) {
           xfer += iprot->readI64(this->touid);
@@ -643,26 +700,6 @@ uint32_t TPostItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 18:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->mediaUrls.clear();
-            uint32_t _size29;
-            ::apache::thrift::protocol::TType _etype32;
-            xfer += iprot->readListBegin(_etype32, _size29);
-            this->mediaUrls.resize(_size29);
-            uint32_t _i33;
-            for (_i33 = 0; _i33 < _size29; ++_i33)
-            {
-              xfer += iprot->readString(this->mediaUrls[_i33]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.mediaUrls = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
       case 19:
         if (ftype == ::apache::thrift::protocol::T_I64) {
           xfer += iprot->readI64(this->poolid);
@@ -683,26 +720,6 @@ uint32_t TPostItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->extend);
           this->__isset.extend = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 22:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->photoUrls.clear();
-            uint32_t _size34;
-            ::apache::thrift::protocol::TType _etype37;
-            xfer += iprot->readListBegin(_etype37, _size34);
-            this->photoUrls.resize(_size34);
-            uint32_t _i38;
-            for (_i38 = 0; _i38 < _size34; ++_i38)
-            {
-              xfer += iprot->readString(this->photoUrls[_i38]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.photoUrls = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -740,10 +757,10 @@ uint32_t TPostItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
     xfer += oprot->writeFieldBegin("listMediaItems", ::apache::thrift::protocol::T_LIST, 4);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->listMediaItems.size()));
-      std::vector<MediaItem> ::const_iterator _iter39;
-      for (_iter39 = this->listMediaItems.begin(); _iter39 != this->listMediaItems.end(); ++_iter39)
+      std::vector<MediaItem> ::const_iterator _iter29;
+      for (_iter29 = this->listMediaItems.begin(); _iter29 != this->listMediaItems.end(); ++_iter29)
       {
-        xfer += (*_iter39).write(oprot);
+        xfer += (*_iter29).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -767,10 +784,10 @@ uint32_t TPostItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
     xfer += oprot->writeFieldBegin("friendsexcept", ::apache::thrift::protocol::T_LIST, 8);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->friendsexcept.size()));
-      std::vector<int64_t> ::const_iterator _iter40;
-      for (_iter40 = this->friendsexcept.begin(); _iter40 != this->friendsexcept.end(); ++_iter40)
+      std::vector<int64_t> ::const_iterator _iter30;
+      for (_iter30 = this->friendsexcept.begin(); _iter30 != this->friendsexcept.end(); ++_iter30)
       {
-        xfer += oprot->writeI64((*_iter40));
+        xfer += oprot->writeI64((*_iter30));
       }
       xfer += oprot->writeListEnd();
     }
@@ -780,10 +797,10 @@ uint32_t TPostItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
     xfer += oprot->writeFieldBegin("specificfriends", ::apache::thrift::protocol::T_LIST, 9);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->specificfriends.size()));
-      std::vector<int64_t> ::const_iterator _iter41;
-      for (_iter41 = this->specificfriends.begin(); _iter41 != this->specificfriends.end(); ++_iter41)
+      std::vector<int64_t> ::const_iterator _iter31;
+      for (_iter31 = this->specificfriends.begin(); _iter31 != this->specificfriends.end(); ++_iter31)
       {
-        xfer += oprot->writeI64((*_iter41));
+        xfer += oprot->writeI64((*_iter31));
       }
       xfer += oprot->writeListEnd();
     }
@@ -793,10 +810,10 @@ uint32_t TPostItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
     xfer += oprot->writeFieldBegin("tagusers", ::apache::thrift::protocol::T_LIST, 10);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->tagusers.size()));
-      std::vector<int64_t> ::const_iterator _iter42;
-      for (_iter42 = this->tagusers.begin(); _iter42 != this->tagusers.end(); ++_iter42)
+      std::vector<int64_t> ::const_iterator _iter32;
+      for (_iter32 = this->tagusers.begin(); _iter32 != this->tagusers.end(); ++_iter32)
       {
-        xfer += oprot->writeI64((*_iter42));
+        xfer += oprot->writeI64((*_iter32));
       }
       xfer += oprot->writeListEnd();
     }
@@ -815,11 +832,6 @@ uint32_t TPostItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeString(this->pubkey);
   xfer += oprot->writeFieldEnd();
 
-  if (this->__isset.topubkey) {
-    xfer += oprot->writeFieldBegin("topubkey", ::apache::thrift::protocol::T_STRING, 14);
-    xfer += oprot->writeString(this->topubkey);
-    xfer += oprot->writeFieldEnd();
-  }
   if (this->__isset.touid) {
     xfer += oprot->writeFieldBegin("touid", ::apache::thrift::protocol::T_I64, 15);
     xfer += oprot->writeI64(this->touid);
@@ -834,23 +846,10 @@ uint32_t TPostItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
     xfer += oprot->writeFieldBegin("actionLinks", ::apache::thrift::protocol::T_LIST, 17);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->actionLinks.size()));
-      std::vector<ActionLink> ::const_iterator _iter43;
-      for (_iter43 = this->actionLinks.begin(); _iter43 != this->actionLinks.end(); ++_iter43)
+      std::vector<ActionLink> ::const_iterator _iter33;
+      for (_iter33 = this->actionLinks.begin(); _iter33 != this->actionLinks.end(); ++_iter33)
       {
-        xfer += (*_iter43).write(oprot);
-      }
-      xfer += oprot->writeListEnd();
-    }
-    xfer += oprot->writeFieldEnd();
-  }
-  if (this->__isset.mediaUrls) {
-    xfer += oprot->writeFieldBegin("mediaUrls", ::apache::thrift::protocol::T_LIST, 18);
-    {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->mediaUrls.size()));
-      std::vector<std::string> ::const_iterator _iter44;
-      for (_iter44 = this->mediaUrls.begin(); _iter44 != this->mediaUrls.end(); ++_iter44)
-      {
-        xfer += oprot->writeString((*_iter44));
+        xfer += (*_iter33).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -869,19 +868,6 @@ uint32_t TPostItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
   if (this->__isset.extend) {
     xfer += oprot->writeFieldBegin("extend", ::apache::thrift::protocol::T_STRING, 21);
     xfer += oprot->writeString(this->extend);
-    xfer += oprot->writeFieldEnd();
-  }
-  if (this->__isset.photoUrls) {
-    xfer += oprot->writeFieldBegin("photoUrls", ::apache::thrift::protocol::T_LIST, 22);
-    {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->photoUrls.size()));
-      std::vector<std::string> ::const_iterator _iter45;
-      for (_iter45 = this->photoUrls.begin(); _iter45 != this->photoUrls.end(); ++_iter45)
-      {
-        xfer += oprot->writeString((*_iter45));
-      }
-      xfer += oprot->writeListEnd();
-    }
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -904,67 +890,58 @@ void swap(TPostItem &a, TPostItem &b) {
   swap(a.locationId, b.locationId);
   swap(a.timestamps, b.timestamps);
   swap(a.pubkey, b.pubkey);
-  swap(a.topubkey, b.topubkey);
   swap(a.touid, b.touid);
   swap(a.togroupid, b.togroupid);
   swap(a.actionLinks, b.actionLinks);
-  swap(a.mediaUrls, b.mediaUrls);
   swap(a.poolid, b.poolid);
   swap(a.pageid, b.pageid);
   swap(a.extend, b.extend);
-  swap(a.photoUrls, b.photoUrls);
   swap(a.__isset, b.__isset);
 }
 
-TPostItem::TPostItem(const TPostItem& other46) {
-  idpost = other46.idpost;
-  uid = other46.uid;
-  content = other46.content;
-  listMediaItems = other46.listMediaItems;
-  idbackground = other46.idbackground;
-  idfeeling = other46.idfeeling;
-  privacy = other46.privacy;
-  friendsexcept = other46.friendsexcept;
-  specificfriends = other46.specificfriends;
-  tagusers = other46.tagusers;
-  locationId = other46.locationId;
-  timestamps = other46.timestamps;
-  pubkey = other46.pubkey;
-  topubkey = other46.topubkey;
-  touid = other46.touid;
-  togroupid = other46.togroupid;
-  actionLinks = other46.actionLinks;
-  mediaUrls = other46.mediaUrls;
-  poolid = other46.poolid;
-  pageid = other46.pageid;
-  extend = other46.extend;
-  photoUrls = other46.photoUrls;
-  __isset = other46.__isset;
+TPostItem::TPostItem(const TPostItem& other34) {
+  idpost = other34.idpost;
+  uid = other34.uid;
+  content = other34.content;
+  listMediaItems = other34.listMediaItems;
+  idbackground = other34.idbackground;
+  idfeeling = other34.idfeeling;
+  privacy = other34.privacy;
+  friendsexcept = other34.friendsexcept;
+  specificfriends = other34.specificfriends;
+  tagusers = other34.tagusers;
+  locationId = other34.locationId;
+  timestamps = other34.timestamps;
+  pubkey = other34.pubkey;
+  touid = other34.touid;
+  togroupid = other34.togroupid;
+  actionLinks = other34.actionLinks;
+  poolid = other34.poolid;
+  pageid = other34.pageid;
+  extend = other34.extend;
+  __isset = other34.__isset;
 }
-TPostItem& TPostItem::operator=(const TPostItem& other47) {
-  idpost = other47.idpost;
-  uid = other47.uid;
-  content = other47.content;
-  listMediaItems = other47.listMediaItems;
-  idbackground = other47.idbackground;
-  idfeeling = other47.idfeeling;
-  privacy = other47.privacy;
-  friendsexcept = other47.friendsexcept;
-  specificfriends = other47.specificfriends;
-  tagusers = other47.tagusers;
-  locationId = other47.locationId;
-  timestamps = other47.timestamps;
-  pubkey = other47.pubkey;
-  topubkey = other47.topubkey;
-  touid = other47.touid;
-  togroupid = other47.togroupid;
-  actionLinks = other47.actionLinks;
-  mediaUrls = other47.mediaUrls;
-  poolid = other47.poolid;
-  pageid = other47.pageid;
-  extend = other47.extend;
-  photoUrls = other47.photoUrls;
-  __isset = other47.__isset;
+TPostItem& TPostItem::operator=(const TPostItem& other35) {
+  idpost = other35.idpost;
+  uid = other35.uid;
+  content = other35.content;
+  listMediaItems = other35.listMediaItems;
+  idbackground = other35.idbackground;
+  idfeeling = other35.idfeeling;
+  privacy = other35.privacy;
+  friendsexcept = other35.friendsexcept;
+  specificfriends = other35.specificfriends;
+  tagusers = other35.tagusers;
+  locationId = other35.locationId;
+  timestamps = other35.timestamps;
+  pubkey = other35.pubkey;
+  touid = other35.touid;
+  togroupid = other35.togroupid;
+  actionLinks = other35.actionLinks;
+  poolid = other35.poolid;
+  pageid = other35.pageid;
+  extend = other35.extend;
+  __isset = other35.__isset;
   return *this;
 }
 void TPostItem::printTo(std::ostream& out) const {
@@ -983,15 +960,12 @@ void TPostItem::printTo(std::ostream& out) const {
   out << ", " << "locationId="; (__isset.locationId ? (out << to_string(locationId)) : (out << "<null>"));
   out << ", " << "timestamps=" << to_string(timestamps);
   out << ", " << "pubkey=" << to_string(pubkey);
-  out << ", " << "topubkey="; (__isset.topubkey ? (out << to_string(topubkey)) : (out << "<null>"));
   out << ", " << "touid="; (__isset.touid ? (out << to_string(touid)) : (out << "<null>"));
   out << ", " << "togroupid="; (__isset.togroupid ? (out << to_string(togroupid)) : (out << "<null>"));
   out << ", " << "actionLinks="; (__isset.actionLinks ? (out << to_string(actionLinks)) : (out << "<null>"));
-  out << ", " << "mediaUrls="; (__isset.mediaUrls ? (out << to_string(mediaUrls)) : (out << "<null>"));
   out << ", " << "poolid="; (__isset.poolid ? (out << to_string(poolid)) : (out << "<null>"));
   out << ", " << "pageid="; (__isset.pageid ? (out << to_string(pageid)) : (out << "<null>"));
   out << ", " << "extend="; (__isset.extend ? (out << to_string(extend)) : (out << "<null>"));
-  out << ", " << "photoUrls="; (__isset.photoUrls ? (out << to_string(photoUrls)) : (out << "<null>"));
   out << ")";
 }
 
@@ -1038,9 +1012,9 @@ uint32_t TDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast48;
-          xfer += iprot->readI32(ecast48);
-          this->errorCode = (TErrorCode::type)ecast48;
+          int32_t ecast36;
+          xfer += iprot->readI32(ecast36);
+          this->errorCode = (TErrorCode::type)ecast36;
           this->__isset.errorCode = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -1092,15 +1066,15 @@ void swap(TDataResult &a, TDataResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-TDataResult::TDataResult(const TDataResult& other49) {
-  errorCode = other49.errorCode;
-  data = other49.data;
-  __isset = other49.__isset;
+TDataResult::TDataResult(const TDataResult& other37) {
+  errorCode = other37.errorCode;
+  data = other37.data;
+  __isset = other37.__isset;
 }
-TDataResult& TDataResult::operator=(const TDataResult& other50) {
-  errorCode = other50.errorCode;
-  data = other50.data;
-  __isset = other50.__isset;
+TDataResult& TDataResult::operator=(const TDataResult& other38) {
+  errorCode = other38.errorCode;
+  data = other38.data;
+  __isset = other38.__isset;
   return *this;
 }
 void TDataResult::printTo(std::ostream& out) const {
@@ -1153,9 +1127,9 @@ uint32_t TListDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast51;
-          xfer += iprot->readI32(ecast51);
-          this->errorCode = (TErrorCode::type)ecast51;
+          int32_t ecast39;
+          xfer += iprot->readI32(ecast39);
+          this->errorCode = (TErrorCode::type)ecast39;
           this->__isset.errorCode = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -1165,14 +1139,14 @@ uint32_t TListDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->listDatas.clear();
-            uint32_t _size52;
-            ::apache::thrift::protocol::TType _etype55;
-            xfer += iprot->readListBegin(_etype55, _size52);
-            this->listDatas.resize(_size52);
-            uint32_t _i56;
-            for (_i56 = 0; _i56 < _size52; ++_i56)
+            uint32_t _size40;
+            ::apache::thrift::protocol::TType _etype43;
+            xfer += iprot->readListBegin(_etype43, _size40);
+            this->listDatas.resize(_size40);
+            uint32_t _i44;
+            for (_i44 = 0; _i44 < _size40; ++_i44)
             {
-              xfer += this->listDatas[_i56].read(iprot);
+              xfer += this->listDatas[_i44].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1205,10 +1179,10 @@ uint32_t TListDataResult::write(::apache::thrift::protocol::TProtocol* oprot) co
   xfer += oprot->writeFieldBegin("listDatas", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->listDatas.size()));
-    std::vector<TPostItem> ::const_iterator _iter57;
-    for (_iter57 = this->listDatas.begin(); _iter57 != this->listDatas.end(); ++_iter57)
+    std::vector<TPostItem> ::const_iterator _iter45;
+    for (_iter45 = this->listDatas.begin(); _iter45 != this->listDatas.end(); ++_iter45)
     {
-      xfer += (*_iter57).write(oprot);
+      xfer += (*_iter45).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -1226,15 +1200,15 @@ void swap(TListDataResult &a, TListDataResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-TListDataResult::TListDataResult(const TListDataResult& other58) {
-  errorCode = other58.errorCode;
-  listDatas = other58.listDatas;
-  __isset = other58.__isset;
+TListDataResult::TListDataResult(const TListDataResult& other46) {
+  errorCode = other46.errorCode;
+  listDatas = other46.listDatas;
+  __isset = other46.__isset;
 }
-TListDataResult& TListDataResult::operator=(const TListDataResult& other59) {
-  errorCode = other59.errorCode;
-  listDatas = other59.listDatas;
-  __isset = other59.__isset;
+TListDataResult& TListDataResult::operator=(const TListDataResult& other47) {
+  errorCode = other47.errorCode;
+  listDatas = other47.listDatas;
+  __isset = other47.__isset;
   return *this;
 }
 void TListDataResult::printTo(std::ostream& out) const {
