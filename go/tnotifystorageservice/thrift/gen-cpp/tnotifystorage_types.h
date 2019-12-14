@@ -44,13 +44,13 @@ class TDataResult;
 class TListDataResult;
 
 typedef struct _TNotifyItem__isset {
-  _TNotifyItem__isset() : key(false), objectId(false), actionId(false), targetId(false), extendId(false), extendmapdata(false), extend(false), seen(false), timestamps(false) {}
+  _TNotifyItem__isset() : key(false), subjectId(false), actionId(false), objectId(false), extendSubjectId(false), extendObjectId(false), extend(false), seen(false), timestamps(false) {}
   bool key :1;
-  bool objectId :1;
+  bool subjectId :1;
   bool actionId :1;
-  bool targetId :1;
-  bool extendId :1;
-  bool extendmapdata :1;
+  bool objectId :1;
+  bool extendSubjectId :1;
+  bool extendObjectId :1;
   bool extend :1;
   bool seen :1;
   bool timestamps :1;
@@ -61,16 +61,16 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
 
   TNotifyItem(const TNotifyItem&);
   TNotifyItem& operator=(const TNotifyItem&);
-  TNotifyItem() : key(0), objectId(0), actionId(0), targetId(0), extend(), seen(0), timestamps(0) {
+  TNotifyItem() : key(0), subjectId(0), actionId(0), objectId(0), extend(), seen(0), timestamps(0) {
   }
 
   virtual ~TNotifyItem() throw();
   int64_t key;
-  int64_t objectId;
+  int64_t subjectId;
   int64_t actionId;
-  int64_t targetId;
-  std::vector<int64_t>  extendId;
-  std::map<std::string, std::string>  extendmapdata;
+  int64_t objectId;
+  std::vector<int64_t>  extendSubjectId;
+  std::vector<int64_t>  extendObjectId;
   std::string extend;
   bool seen;
   int64_t timestamps;
@@ -79,15 +79,15 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
 
   void __set_key(const int64_t val);
 
-  void __set_objectId(const int64_t val);
+  void __set_subjectId(const int64_t val);
 
   void __set_actionId(const int64_t val);
 
-  void __set_targetId(const int64_t val);
+  void __set_objectId(const int64_t val);
 
-  void __set_extendId(const std::vector<int64_t> & val);
+  void __set_extendSubjectId(const std::vector<int64_t> & val);
 
-  void __set_extendmapdata(const std::map<std::string, std::string> & val);
+  void __set_extendObjectId(const std::vector<int64_t> & val);
 
   void __set_extend(const std::string& val);
 
@@ -99,21 +99,19 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
   {
     if (!(key == rhs.key))
       return false;
-    if (!(objectId == rhs.objectId))
+    if (!(subjectId == rhs.subjectId))
       return false;
     if (!(actionId == rhs.actionId))
       return false;
-    if (__isset.targetId != rhs.__isset.targetId)
+    if (!(objectId == rhs.objectId))
       return false;
-    else if (__isset.targetId && !(targetId == rhs.targetId))
+    if (__isset.extendSubjectId != rhs.__isset.extendSubjectId)
       return false;
-    if (__isset.extendId != rhs.__isset.extendId)
+    else if (__isset.extendSubjectId && !(extendSubjectId == rhs.extendSubjectId))
       return false;
-    else if (__isset.extendId && !(extendId == rhs.extendId))
+    if (__isset.extendObjectId != rhs.__isset.extendObjectId)
       return false;
-    if (__isset.extendmapdata != rhs.__isset.extendmapdata)
-      return false;
-    else if (__isset.extendmapdata && !(extendmapdata == rhs.extendmapdata))
+    else if (__isset.extendObjectId && !(extendObjectId == rhs.extendObjectId))
       return false;
     if (__isset.extend != rhs.__isset.extend)
       return false;

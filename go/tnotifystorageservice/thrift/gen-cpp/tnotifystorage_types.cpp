@@ -46,27 +46,26 @@ void TNotifyItem::__set_key(const int64_t val) {
   this->key = val;
 }
 
-void TNotifyItem::__set_objectId(const int64_t val) {
-  this->objectId = val;
+void TNotifyItem::__set_subjectId(const int64_t val) {
+  this->subjectId = val;
 }
 
 void TNotifyItem::__set_actionId(const int64_t val) {
   this->actionId = val;
 }
 
-void TNotifyItem::__set_targetId(const int64_t val) {
-  this->targetId = val;
-__isset.targetId = true;
+void TNotifyItem::__set_objectId(const int64_t val) {
+  this->objectId = val;
 }
 
-void TNotifyItem::__set_extendId(const std::vector<int64_t> & val) {
-  this->extendId = val;
-__isset.extendId = true;
+void TNotifyItem::__set_extendSubjectId(const std::vector<int64_t> & val) {
+  this->extendSubjectId = val;
+__isset.extendSubjectId = true;
 }
 
-void TNotifyItem::__set_extendmapdata(const std::map<std::string, std::string> & val) {
-  this->extendmapdata = val;
-__isset.extendmapdata = true;
+void TNotifyItem::__set_extendObjectId(const std::vector<int64_t> & val) {
+  this->extendObjectId = val;
+__isset.extendObjectId = true;
 }
 
 void TNotifyItem::__set_extend(const std::string& val) {
@@ -120,8 +119,8 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->objectId);
-          this->__isset.objectId = true;
+          xfer += iprot->readI64(this->subjectId);
+          this->__isset.subjectId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -136,8 +135,8 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 4:
         if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->targetId);
-          this->__isset.targetId = true;
+          xfer += iprot->readI64(this->objectId);
+          this->__isset.objectId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -145,42 +144,39 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
       case 5:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
-            this->extendId.clear();
+            this->extendSubjectId.clear();
             uint32_t _size0;
             ::apache::thrift::protocol::TType _etype3;
             xfer += iprot->readListBegin(_etype3, _size0);
-            this->extendId.resize(_size0);
+            this->extendSubjectId.resize(_size0);
             uint32_t _i4;
             for (_i4 = 0; _i4 < _size0; ++_i4)
             {
-              xfer += iprot->readI64(this->extendId[_i4]);
+              xfer += iprot->readI64(this->extendSubjectId[_i4]);
             }
             xfer += iprot->readListEnd();
           }
-          this->__isset.extendId = true;
+          this->__isset.extendSubjectId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 6:
-        if (ftype == ::apache::thrift::protocol::T_MAP) {
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
-            this->extendmapdata.clear();
+            this->extendObjectId.clear();
             uint32_t _size5;
-            ::apache::thrift::protocol::TType _ktype6;
-            ::apache::thrift::protocol::TType _vtype7;
-            xfer += iprot->readMapBegin(_ktype6, _vtype7, _size5);
+            ::apache::thrift::protocol::TType _etype8;
+            xfer += iprot->readListBegin(_etype8, _size5);
+            this->extendObjectId.resize(_size5);
             uint32_t _i9;
             for (_i9 = 0; _i9 < _size5; ++_i9)
             {
-              std::string _key10;
-              xfer += iprot->readString(_key10);
-              std::string& _val11 = this->extendmapdata[_key10];
-              xfer += iprot->readString(_val11);
+              xfer += iprot->readI64(this->extendObjectId[_i9]);
             }
-            xfer += iprot->readMapEnd();
+            xfer += iprot->readListEnd();
           }
-          this->__isset.extendmapdata = true;
+          this->__isset.extendObjectId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -230,43 +226,41 @@ uint32_t TNotifyItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeI64(this->key);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("objectId", ::apache::thrift::protocol::T_I64, 2);
-  xfer += oprot->writeI64(this->objectId);
+  xfer += oprot->writeFieldBegin("subjectId", ::apache::thrift::protocol::T_I64, 2);
+  xfer += oprot->writeI64(this->subjectId);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("actionId", ::apache::thrift::protocol::T_I64, 3);
   xfer += oprot->writeI64(this->actionId);
   xfer += oprot->writeFieldEnd();
 
-  if (this->__isset.targetId) {
-    xfer += oprot->writeFieldBegin("targetId", ::apache::thrift::protocol::T_I64, 4);
-    xfer += oprot->writeI64(this->targetId);
-    xfer += oprot->writeFieldEnd();
-  }
-  if (this->__isset.extendId) {
-    xfer += oprot->writeFieldBegin("extendId", ::apache::thrift::protocol::T_LIST, 5);
+  xfer += oprot->writeFieldBegin("objectId", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64(this->objectId);
+  xfer += oprot->writeFieldEnd();
+
+  if (this->__isset.extendSubjectId) {
+    xfer += oprot->writeFieldBegin("extendSubjectId", ::apache::thrift::protocol::T_LIST, 5);
     {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->extendId.size()));
-      std::vector<int64_t> ::const_iterator _iter12;
-      for (_iter12 = this->extendId.begin(); _iter12 != this->extendId.end(); ++_iter12)
+      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->extendSubjectId.size()));
+      std::vector<int64_t> ::const_iterator _iter10;
+      for (_iter10 = this->extendSubjectId.begin(); _iter10 != this->extendSubjectId.end(); ++_iter10)
       {
-        xfer += oprot->writeI64((*_iter12));
+        xfer += oprot->writeI64((*_iter10));
       }
       xfer += oprot->writeListEnd();
     }
     xfer += oprot->writeFieldEnd();
   }
-  if (this->__isset.extendmapdata) {
-    xfer += oprot->writeFieldBegin("extendmapdata", ::apache::thrift::protocol::T_MAP, 6);
+  if (this->__isset.extendObjectId) {
+    xfer += oprot->writeFieldBegin("extendObjectId", ::apache::thrift::protocol::T_LIST, 6);
     {
-      xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->extendmapdata.size()));
-      std::map<std::string, std::string> ::const_iterator _iter13;
-      for (_iter13 = this->extendmapdata.begin(); _iter13 != this->extendmapdata.end(); ++_iter13)
+      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->extendObjectId.size()));
+      std::vector<int64_t> ::const_iterator _iter11;
+      for (_iter11 = this->extendObjectId.begin(); _iter11 != this->extendObjectId.end(); ++_iter11)
       {
-        xfer += oprot->writeString(_iter13->first);
-        xfer += oprot->writeString(_iter13->second);
+        xfer += oprot->writeI64((*_iter11));
       }
-      xfer += oprot->writeMapEnd();
+      xfer += oprot->writeListEnd();
     }
     xfer += oprot->writeFieldEnd();
   }
@@ -292,51 +286,51 @@ uint32_t TNotifyItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
 void swap(TNotifyItem &a, TNotifyItem &b) {
   using ::std::swap;
   swap(a.key, b.key);
-  swap(a.objectId, b.objectId);
+  swap(a.subjectId, b.subjectId);
   swap(a.actionId, b.actionId);
-  swap(a.targetId, b.targetId);
-  swap(a.extendId, b.extendId);
-  swap(a.extendmapdata, b.extendmapdata);
+  swap(a.objectId, b.objectId);
+  swap(a.extendSubjectId, b.extendSubjectId);
+  swap(a.extendObjectId, b.extendObjectId);
   swap(a.extend, b.extend);
   swap(a.seen, b.seen);
   swap(a.timestamps, b.timestamps);
   swap(a.__isset, b.__isset);
 }
 
-TNotifyItem::TNotifyItem(const TNotifyItem& other14) {
-  key = other14.key;
-  objectId = other14.objectId;
-  actionId = other14.actionId;
-  targetId = other14.targetId;
-  extendId = other14.extendId;
-  extendmapdata = other14.extendmapdata;
-  extend = other14.extend;
-  seen = other14.seen;
-  timestamps = other14.timestamps;
-  __isset = other14.__isset;
+TNotifyItem::TNotifyItem(const TNotifyItem& other12) {
+  key = other12.key;
+  subjectId = other12.subjectId;
+  actionId = other12.actionId;
+  objectId = other12.objectId;
+  extendSubjectId = other12.extendSubjectId;
+  extendObjectId = other12.extendObjectId;
+  extend = other12.extend;
+  seen = other12.seen;
+  timestamps = other12.timestamps;
+  __isset = other12.__isset;
 }
-TNotifyItem& TNotifyItem::operator=(const TNotifyItem& other15) {
-  key = other15.key;
-  objectId = other15.objectId;
-  actionId = other15.actionId;
-  targetId = other15.targetId;
-  extendId = other15.extendId;
-  extendmapdata = other15.extendmapdata;
-  extend = other15.extend;
-  seen = other15.seen;
-  timestamps = other15.timestamps;
-  __isset = other15.__isset;
+TNotifyItem& TNotifyItem::operator=(const TNotifyItem& other13) {
+  key = other13.key;
+  subjectId = other13.subjectId;
+  actionId = other13.actionId;
+  objectId = other13.objectId;
+  extendSubjectId = other13.extendSubjectId;
+  extendObjectId = other13.extendObjectId;
+  extend = other13.extend;
+  seen = other13.seen;
+  timestamps = other13.timestamps;
+  __isset = other13.__isset;
   return *this;
 }
 void TNotifyItem::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "TNotifyItem(";
   out << "key=" << to_string(key);
-  out << ", " << "objectId=" << to_string(objectId);
+  out << ", " << "subjectId=" << to_string(subjectId);
   out << ", " << "actionId=" << to_string(actionId);
-  out << ", " << "targetId="; (__isset.targetId ? (out << to_string(targetId)) : (out << "<null>"));
-  out << ", " << "extendId="; (__isset.extendId ? (out << to_string(extendId)) : (out << "<null>"));
-  out << ", " << "extendmapdata="; (__isset.extendmapdata ? (out << to_string(extendmapdata)) : (out << "<null>"));
+  out << ", " << "objectId=" << to_string(objectId);
+  out << ", " << "extendSubjectId="; (__isset.extendSubjectId ? (out << to_string(extendSubjectId)) : (out << "<null>"));
+  out << ", " << "extendObjectId="; (__isset.extendObjectId ? (out << to_string(extendObjectId)) : (out << "<null>"));
   out << ", " << "extend="; (__isset.extend ? (out << to_string(extend)) : (out << "<null>"));
   out << ", " << "seen="; (__isset.seen ? (out << to_string(seen)) : (out << "<null>"));
   out << ", " << "timestamps=" << to_string(timestamps);
@@ -386,9 +380,9 @@ uint32_t TDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast16;
-          xfer += iprot->readI32(ecast16);
-          this->errorCode = (TErrorCode::type)ecast16;
+          int32_t ecast14;
+          xfer += iprot->readI32(ecast14);
+          this->errorCode = (TErrorCode::type)ecast14;
           this->__isset.errorCode = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -440,15 +434,15 @@ void swap(TDataResult &a, TDataResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-TDataResult::TDataResult(const TDataResult& other17) {
-  errorCode = other17.errorCode;
-  data = other17.data;
-  __isset = other17.__isset;
+TDataResult::TDataResult(const TDataResult& other15) {
+  errorCode = other15.errorCode;
+  data = other15.data;
+  __isset = other15.__isset;
 }
-TDataResult& TDataResult::operator=(const TDataResult& other18) {
-  errorCode = other18.errorCode;
-  data = other18.data;
-  __isset = other18.__isset;
+TDataResult& TDataResult::operator=(const TDataResult& other16) {
+  errorCode = other16.errorCode;
+  data = other16.data;
+  __isset = other16.__isset;
   return *this;
 }
 void TDataResult::printTo(std::ostream& out) const {
@@ -502,9 +496,9 @@ uint32_t TListDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast19;
-          xfer += iprot->readI32(ecast19);
-          this->errorCode = (TErrorCode::type)ecast19;
+          int32_t ecast17;
+          xfer += iprot->readI32(ecast17);
+          this->errorCode = (TErrorCode::type)ecast17;
           this->__isset.errorCode = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -514,14 +508,14 @@ uint32_t TListDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->datass.clear();
-            uint32_t _size20;
-            ::apache::thrift::protocol::TType _etype23;
-            xfer += iprot->readListBegin(_etype23, _size20);
-            this->datass.resize(_size20);
-            uint32_t _i24;
-            for (_i24 = 0; _i24 < _size20; ++_i24)
+            uint32_t _size18;
+            ::apache::thrift::protocol::TType _etype21;
+            xfer += iprot->readListBegin(_etype21, _size18);
+            this->datass.resize(_size18);
+            uint32_t _i22;
+            for (_i22 = 0; _i22 < _size18; ++_i22)
             {
-              xfer += this->datass[_i24].read(iprot);
+              xfer += this->datass[_i22].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -555,10 +549,10 @@ uint32_t TListDataResult::write(::apache::thrift::protocol::TProtocol* oprot) co
     xfer += oprot->writeFieldBegin("datass", ::apache::thrift::protocol::T_LIST, 2);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->datass.size()));
-      std::vector<TNotifyItem> ::const_iterator _iter25;
-      for (_iter25 = this->datass.begin(); _iter25 != this->datass.end(); ++_iter25)
+      std::vector<TNotifyItem> ::const_iterator _iter23;
+      for (_iter23 = this->datass.begin(); _iter23 != this->datass.end(); ++_iter23)
       {
-        xfer += (*_iter25).write(oprot);
+        xfer += (*_iter23).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -576,15 +570,15 @@ void swap(TListDataResult &a, TListDataResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-TListDataResult::TListDataResult(const TListDataResult& other26) {
-  errorCode = other26.errorCode;
-  datass = other26.datass;
-  __isset = other26.__isset;
+TListDataResult::TListDataResult(const TListDataResult& other24) {
+  errorCode = other24.errorCode;
+  datass = other24.datass;
+  __isset = other24.__isset;
 }
-TListDataResult& TListDataResult::operator=(const TListDataResult& other27) {
-  errorCode = other27.errorCode;
-  datass = other27.datass;
-  __isset = other27.__isset;
+TListDataResult& TListDataResult::operator=(const TListDataResult& other25) {
+  errorCode = other25.errorCode;
+  datass = other25.datass;
+  __isset = other25.__isset;
   return *this;
 }
 void TListDataResult::printTo(std::ostream& out) const {

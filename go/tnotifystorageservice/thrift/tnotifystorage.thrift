@@ -13,11 +13,11 @@ enum TErrorCode{
 
 struct TNotifyItem{
     1: i64 key, // notifyitem id
-    2: i64 objectId // chu the phat ra hanh dong
+    2: i64 subjectId // chu the phat ra hanh dong
     3: i64 actionId, // hanh dong
-    4: optional i64 targetId, // doi tuong chiu tac dong cua chu the
-    5: optional list<i64> extendId,
-    6: optional map<string,string> extendmapdata,
+    4: i64  objectId, // doi tuong chiu tac dong cua chu the
+    5: optional list<i64> extendSubjectId,
+    6: optional list<i64> extendObjectId,
     7: optional string extend,
     8: optional bool seen,
     9: i64 timestamps,
