@@ -58,6 +58,14 @@ void TNotifyItem::__set_objectId(const int64_t val) {
   this->objectId = val;
 }
 
+void TNotifyItem::__set_subjectType(const int64_t val) {
+  this->subjectType = val;
+}
+
+void TNotifyItem::__set_objectType(const int64_t val) {
+  this->objectType = val;
+}
+
 void TNotifyItem::__set_extendSubjectId(const std::vector<int64_t> & val) {
   this->extendSubjectId = val;
 __isset.extendSubjectId = true;
@@ -66,6 +74,11 @@ __isset.extendSubjectId = true;
 void TNotifyItem::__set_extendObjectId(const std::vector<int64_t> & val) {
   this->extendObjectId = val;
 __isset.extendObjectId = true;
+}
+
+void TNotifyItem::__set_message(const std::string& val) {
+  this->message = val;
+__isset.message = true;
 }
 
 void TNotifyItem::__set_extend(const std::string& val) {
@@ -142,6 +155,22 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         }
         break;
       case 5:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->subjectType);
+          this->__isset.subjectType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->objectType);
+          this->__isset.objectType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->extendSubjectId.clear();
@@ -161,7 +190,7 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 6:
+      case 8:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->extendObjectId.clear();
@@ -181,7 +210,15 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 7:
+      case 9:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->message);
+          this->__isset.message = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 10:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->extend);
           this->__isset.extend = true;
@@ -189,7 +226,7 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 8:
+      case 11:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->seen);
           this->__isset.seen = true;
@@ -197,7 +234,7 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 9:
+      case 12:
         if (ftype == ::apache::thrift::protocol::T_I64) {
           xfer += iprot->readI64(this->timestamps);
           this->__isset.timestamps = true;
@@ -238,8 +275,16 @@ uint32_t TNotifyItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeI64(this->objectId);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("subjectType", ::apache::thrift::protocol::T_I64, 5);
+  xfer += oprot->writeI64(this->subjectType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("objectType", ::apache::thrift::protocol::T_I64, 6);
+  xfer += oprot->writeI64(this->objectType);
+  xfer += oprot->writeFieldEnd();
+
   if (this->__isset.extendSubjectId) {
-    xfer += oprot->writeFieldBegin("extendSubjectId", ::apache::thrift::protocol::T_LIST, 5);
+    xfer += oprot->writeFieldBegin("extendSubjectId", ::apache::thrift::protocol::T_LIST, 7);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->extendSubjectId.size()));
       std::vector<int64_t> ::const_iterator _iter10;
@@ -252,7 +297,7 @@ uint32_t TNotifyItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.extendObjectId) {
-    xfer += oprot->writeFieldBegin("extendObjectId", ::apache::thrift::protocol::T_LIST, 6);
+    xfer += oprot->writeFieldBegin("extendObjectId", ::apache::thrift::protocol::T_LIST, 8);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->extendObjectId.size()));
       std::vector<int64_t> ::const_iterator _iter11;
@@ -264,17 +309,22 @@ uint32_t TNotifyItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
     }
     xfer += oprot->writeFieldEnd();
   }
+  if (this->__isset.message) {
+    xfer += oprot->writeFieldBegin("message", ::apache::thrift::protocol::T_STRING, 9);
+    xfer += oprot->writeString(this->message);
+    xfer += oprot->writeFieldEnd();
+  }
   if (this->__isset.extend) {
-    xfer += oprot->writeFieldBegin("extend", ::apache::thrift::protocol::T_STRING, 7);
+    xfer += oprot->writeFieldBegin("extend", ::apache::thrift::protocol::T_STRING, 10);
     xfer += oprot->writeString(this->extend);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.seen) {
-    xfer += oprot->writeFieldBegin("seen", ::apache::thrift::protocol::T_BOOL, 8);
+    xfer += oprot->writeFieldBegin("seen", ::apache::thrift::protocol::T_BOOL, 11);
     xfer += oprot->writeBool(this->seen);
     xfer += oprot->writeFieldEnd();
   }
-  xfer += oprot->writeFieldBegin("timestamps", ::apache::thrift::protocol::T_I64, 9);
+  xfer += oprot->writeFieldBegin("timestamps", ::apache::thrift::protocol::T_I64, 12);
   xfer += oprot->writeI64(this->timestamps);
   xfer += oprot->writeFieldEnd();
 
@@ -289,8 +339,11 @@ void swap(TNotifyItem &a, TNotifyItem &b) {
   swap(a.subjectId, b.subjectId);
   swap(a.actionId, b.actionId);
   swap(a.objectId, b.objectId);
+  swap(a.subjectType, b.subjectType);
+  swap(a.objectType, b.objectType);
   swap(a.extendSubjectId, b.extendSubjectId);
   swap(a.extendObjectId, b.extendObjectId);
+  swap(a.message, b.message);
   swap(a.extend, b.extend);
   swap(a.seen, b.seen);
   swap(a.timestamps, b.timestamps);
@@ -302,8 +355,11 @@ TNotifyItem::TNotifyItem(const TNotifyItem& other12) {
   subjectId = other12.subjectId;
   actionId = other12.actionId;
   objectId = other12.objectId;
+  subjectType = other12.subjectType;
+  objectType = other12.objectType;
   extendSubjectId = other12.extendSubjectId;
   extendObjectId = other12.extendObjectId;
+  message = other12.message;
   extend = other12.extend;
   seen = other12.seen;
   timestamps = other12.timestamps;
@@ -314,8 +370,11 @@ TNotifyItem& TNotifyItem::operator=(const TNotifyItem& other13) {
   subjectId = other13.subjectId;
   actionId = other13.actionId;
   objectId = other13.objectId;
+  subjectType = other13.subjectType;
+  objectType = other13.objectType;
   extendSubjectId = other13.extendSubjectId;
   extendObjectId = other13.extendObjectId;
+  message = other13.message;
   extend = other13.extend;
   seen = other13.seen;
   timestamps = other13.timestamps;
@@ -329,8 +388,11 @@ void TNotifyItem::printTo(std::ostream& out) const {
   out << ", " << "subjectId=" << to_string(subjectId);
   out << ", " << "actionId=" << to_string(actionId);
   out << ", " << "objectId=" << to_string(objectId);
+  out << ", " << "subjectType=" << to_string(subjectType);
+  out << ", " << "objectType=" << to_string(objectType);
   out << ", " << "extendSubjectId="; (__isset.extendSubjectId ? (out << to_string(extendSubjectId)) : (out << "<null>"));
   out << ", " << "extendObjectId="; (__isset.extendObjectId ? (out << to_string(extendObjectId)) : (out << "<null>"));
+  out << ", " << "message="; (__isset.message ? (out << to_string(message)) : (out << "<null>"));
   out << ", " << "extend="; (__isset.extend ? (out << to_string(extend)) : (out << "<null>"));
   out << ", " << "seen="; (__isset.seen ? (out << to_string(seen)) : (out << "<null>"));
   out << ", " << "timestamps=" << to_string(timestamps);

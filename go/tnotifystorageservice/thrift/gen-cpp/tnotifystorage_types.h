@@ -44,13 +44,16 @@ class TDataResult;
 class TListDataResult;
 
 typedef struct _TNotifyItem__isset {
-  _TNotifyItem__isset() : key(false), subjectId(false), actionId(false), objectId(false), extendSubjectId(false), extendObjectId(false), extend(false), seen(false), timestamps(false) {}
+  _TNotifyItem__isset() : key(false), subjectId(false), actionId(false), objectId(false), subjectType(false), objectType(false), extendSubjectId(false), extendObjectId(false), message(false), extend(false), seen(false), timestamps(false) {}
   bool key :1;
   bool subjectId :1;
   bool actionId :1;
   bool objectId :1;
+  bool subjectType :1;
+  bool objectType :1;
   bool extendSubjectId :1;
   bool extendObjectId :1;
+  bool message :1;
   bool extend :1;
   bool seen :1;
   bool timestamps :1;
@@ -61,7 +64,7 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
 
   TNotifyItem(const TNotifyItem&);
   TNotifyItem& operator=(const TNotifyItem&);
-  TNotifyItem() : key(0), subjectId(0), actionId(0), objectId(0), extend(), seen(0), timestamps(0) {
+  TNotifyItem() : key(0), subjectId(0), actionId(0), objectId(0), subjectType(0), objectType(0), message(), extend(), seen(0), timestamps(0) {
   }
 
   virtual ~TNotifyItem() throw();
@@ -69,8 +72,11 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
   int64_t subjectId;
   int64_t actionId;
   int64_t objectId;
+  int64_t subjectType;
+  int64_t objectType;
   std::vector<int64_t>  extendSubjectId;
   std::vector<int64_t>  extendObjectId;
+  std::string message;
   std::string extend;
   bool seen;
   int64_t timestamps;
@@ -85,9 +91,15 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
 
   void __set_objectId(const int64_t val);
 
+  void __set_subjectType(const int64_t val);
+
+  void __set_objectType(const int64_t val);
+
   void __set_extendSubjectId(const std::vector<int64_t> & val);
 
   void __set_extendObjectId(const std::vector<int64_t> & val);
+
+  void __set_message(const std::string& val);
 
   void __set_extend(const std::string& val);
 
@@ -105,6 +117,10 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
       return false;
     if (!(objectId == rhs.objectId))
       return false;
+    if (!(subjectType == rhs.subjectType))
+      return false;
+    if (!(objectType == rhs.objectType))
+      return false;
     if (__isset.extendSubjectId != rhs.__isset.extendSubjectId)
       return false;
     else if (__isset.extendSubjectId && !(extendSubjectId == rhs.extendSubjectId))
@@ -112,6 +128,10 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
     if (__isset.extendObjectId != rhs.__isset.extendObjectId)
       return false;
     else if (__isset.extendObjectId && !(extendObjectId == rhs.extendObjectId))
+      return false;
+    if (__isset.message != rhs.__isset.message)
+      return false;
+    else if (__isset.message && !(message == rhs.message))
       return false;
     if (__isset.extend != rhs.__isset.extend)
       return false;

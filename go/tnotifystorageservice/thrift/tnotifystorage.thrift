@@ -16,11 +16,14 @@ struct TNotifyItem{
     2: i64 subjectId // chu the phat ra hanh dong
     3: i64 actionId, // hanh dong
     4: i64  objectId, // doi tuong chiu tac dong cua chu the
-    5: optional list<i64> extendSubjectId,
-    6: optional list<i64> extendObjectId,
-    7: optional string extend,
-    8: optional bool seen,
-    9: i64 timestamps,
+    5: i64 subjectType, // uid, pageid or groupid
+    6: i64 objectType, // comment or post
+    7: optional list<i64> extendSubjectId,
+    8: optional list<i64> extendObjectId,
+    9: optional string message, // render message
+    10: optional string extend,
+    11: optional bool seen,
+    12: i64 timestamps,
 }
 
 typedef TNotifyItem TData

@@ -92,8 +92,11 @@ func TDataPtr(v TData) *TData { return &v }
 //  - SubjectId
 //  - ActionId
 //  - ObjectId
+//  - SubjectType
+//  - ObjectType
 //  - ExtendSubjectId
 //  - ExtendObjectId
+//  - Message
 //  - Extend
 //  - Seen
 //  - Timestamps
@@ -102,11 +105,14 @@ type TNotifyItem struct {
   SubjectId int64 `thrift:"subjectId,2" db:"subjectId" json:"subjectId"`
   ActionId int64 `thrift:"actionId,3" db:"actionId" json:"actionId"`
   ObjectId int64 `thrift:"objectId,4" db:"objectId" json:"objectId"`
-  ExtendSubjectId []int64 `thrift:"extendSubjectId,5" db:"extendSubjectId" json:"extendSubjectId,omitempty"`
-  ExtendObjectId []int64 `thrift:"extendObjectId,6" db:"extendObjectId" json:"extendObjectId,omitempty"`
-  Extend *string `thrift:"extend,7" db:"extend" json:"extend,omitempty"`
-  Seen *bool `thrift:"seen,8" db:"seen" json:"seen,omitempty"`
-  Timestamps int64 `thrift:"timestamps,9" db:"timestamps" json:"timestamps"`
+  SubjectType int64 `thrift:"subjectType,5" db:"subjectType" json:"subjectType"`
+  ObjectType int64 `thrift:"objectType,6" db:"objectType" json:"objectType"`
+  ExtendSubjectId []int64 `thrift:"extendSubjectId,7" db:"extendSubjectId" json:"extendSubjectId,omitempty"`
+  ExtendObjectId []int64 `thrift:"extendObjectId,8" db:"extendObjectId" json:"extendObjectId,omitempty"`
+  Message *string `thrift:"message,9" db:"message" json:"message,omitempty"`
+  Extend *string `thrift:"extend,10" db:"extend" json:"extend,omitempty"`
+  Seen *bool `thrift:"seen,11" db:"seen" json:"seen,omitempty"`
+  Timestamps int64 `thrift:"timestamps,12" db:"timestamps" json:"timestamps"`
 }
 
 func NewTNotifyItem() *TNotifyItem {
@@ -129,6 +135,14 @@ func (p *TNotifyItem) GetActionId() int64 {
 func (p *TNotifyItem) GetObjectId() int64 {
   return p.ObjectId
 }
+
+func (p *TNotifyItem) GetSubjectType() int64 {
+  return p.SubjectType
+}
+
+func (p *TNotifyItem) GetObjectType() int64 {
+  return p.ObjectType
+}
 var TNotifyItem_ExtendSubjectId_DEFAULT []int64
 
 func (p *TNotifyItem) GetExtendSubjectId() []int64 {
@@ -138,6 +152,13 @@ var TNotifyItem_ExtendObjectId_DEFAULT []int64
 
 func (p *TNotifyItem) GetExtendObjectId() []int64 {
   return p.ExtendObjectId
+}
+var TNotifyItem_Message_DEFAULT string
+func (p *TNotifyItem) GetMessage() string {
+  if !p.IsSetMessage() {
+    return TNotifyItem_Message_DEFAULT
+  }
+return *p.Message
 }
 var TNotifyItem_Extend_DEFAULT string
 func (p *TNotifyItem) GetExtend() string {
@@ -163,6 +184,10 @@ func (p *TNotifyItem) IsSetExtendSubjectId() bool {
 
 func (p *TNotifyItem) IsSetExtendObjectId() bool {
   return p.ExtendObjectId != nil
+}
+
+func (p *TNotifyItem) IsSetMessage() bool {
+  return p.Message != nil
 }
 
 func (p *TNotifyItem) IsSetExtend() bool {
@@ -227,7 +252,7 @@ func (p *TNotifyItem) Read(iprot thrift.TProtocol) error {
         }
       }
     case 5:
-      if fieldTypeId == thrift.LIST {
+      if fieldTypeId == thrift.I64 {
         if err := p.ReadField5(iprot); err != nil {
           return err
         }
@@ -237,7 +262,7 @@ func (p *TNotifyItem) Read(iprot thrift.TProtocol) error {
         }
       }
     case 6:
-      if fieldTypeId == thrift.LIST {
+      if fieldTypeId == thrift.I64 {
         if err := p.ReadField6(iprot); err != nil {
           return err
         }
@@ -247,7 +272,7 @@ func (p *TNotifyItem) Read(iprot thrift.TProtocol) error {
         }
       }
     case 7:
-      if fieldTypeId == thrift.STRING {
+      if fieldTypeId == thrift.LIST {
         if err := p.ReadField7(iprot); err != nil {
           return err
         }
@@ -257,7 +282,7 @@ func (p *TNotifyItem) Read(iprot thrift.TProtocol) error {
         }
       }
     case 8:
-      if fieldTypeId == thrift.BOOL {
+      if fieldTypeId == thrift.LIST {
         if err := p.ReadField8(iprot); err != nil {
           return err
         }
@@ -267,8 +292,38 @@ func (p *TNotifyItem) Read(iprot thrift.TProtocol) error {
         }
       }
     case 9:
-      if fieldTypeId == thrift.I64 {
+      if fieldTypeId == thrift.STRING {
         if err := p.ReadField9(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 10:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField10(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 11:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField11(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 12:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField12(iprot); err != nil {
           return err
         }
       } else {
@@ -328,6 +383,24 @@ func (p *TNotifyItem)  ReadField4(iprot thrift.TProtocol) error {
 }
 
 func (p *TNotifyItem)  ReadField5(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 5: ", err)
+} else {
+  p.SubjectType = v
+}
+  return nil
+}
+
+func (p *TNotifyItem)  ReadField6(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 6: ", err)
+} else {
+  p.ObjectType = v
+}
+  return nil
+}
+
+func (p *TNotifyItem)  ReadField7(iprot thrift.TProtocol) error {
   _, size, err := iprot.ReadListBegin()
   if err != nil {
     return thrift.PrependError("error reading list begin: ", err)
@@ -349,7 +422,7 @@ var _elem0 int64
   return nil
 }
 
-func (p *TNotifyItem)  ReadField6(iprot thrift.TProtocol) error {
+func (p *TNotifyItem)  ReadField8(iprot thrift.TProtocol) error {
   _, size, err := iprot.ReadListBegin()
   if err != nil {
     return thrift.PrependError("error reading list begin: ", err)
@@ -371,27 +444,36 @@ var _elem1 int64
   return nil
 }
 
-func (p *TNotifyItem)  ReadField7(iprot thrift.TProtocol) error {
+func (p *TNotifyItem)  ReadField9(iprot thrift.TProtocol) error {
   if v, err := iprot.ReadString(); err != nil {
-  return thrift.PrependError("error reading field 7: ", err)
+  return thrift.PrependError("error reading field 9: ", err)
+} else {
+  p.Message = &v
+}
+  return nil
+}
+
+func (p *TNotifyItem)  ReadField10(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 10: ", err)
 } else {
   p.Extend = &v
 }
   return nil
 }
 
-func (p *TNotifyItem)  ReadField8(iprot thrift.TProtocol) error {
+func (p *TNotifyItem)  ReadField11(iprot thrift.TProtocol) error {
   if v, err := iprot.ReadBool(); err != nil {
-  return thrift.PrependError("error reading field 8: ", err)
+  return thrift.PrependError("error reading field 11: ", err)
 } else {
   p.Seen = &v
 }
   return nil
 }
 
-func (p *TNotifyItem)  ReadField9(iprot thrift.TProtocol) error {
+func (p *TNotifyItem)  ReadField12(iprot thrift.TProtocol) error {
   if v, err := iprot.ReadI64(); err != nil {
-  return thrift.PrependError("error reading field 9: ", err)
+  return thrift.PrependError("error reading field 12: ", err)
 } else {
   p.Timestamps = v
 }
@@ -411,6 +493,9 @@ func (p *TNotifyItem) Write(oprot thrift.TProtocol) error {
     if err := p.writeField7(oprot); err != nil { return err }
     if err := p.writeField8(oprot); err != nil { return err }
     if err := p.writeField9(oprot); err != nil { return err }
+    if err := p.writeField10(oprot); err != nil { return err }
+    if err := p.writeField11(oprot); err != nil { return err }
+    if err := p.writeField12(oprot); err != nil { return err }
   }
   if err := oprot.WriteFieldStop(); err != nil {
     return thrift.PrependError("write field stop error: ", err) }
@@ -460,9 +545,29 @@ func (p *TNotifyItem) writeField4(oprot thrift.TProtocol) (err error) {
 }
 
 func (p *TNotifyItem) writeField5(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("subjectType", thrift.I64, 5); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:subjectType: ", p), err) }
+  if err := oprot.WriteI64(int64(p.SubjectType)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.subjectType (5) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 5:subjectType: ", p), err) }
+  return err
+}
+
+func (p *TNotifyItem) writeField6(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("objectType", thrift.I64, 6); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:objectType: ", p), err) }
+  if err := oprot.WriteI64(int64(p.ObjectType)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.objectType (6) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 6:objectType: ", p), err) }
+  return err
+}
+
+func (p *TNotifyItem) writeField7(oprot thrift.TProtocol) (err error) {
   if p.IsSetExtendSubjectId() {
-    if err := oprot.WriteFieldBegin("extendSubjectId", thrift.LIST, 5); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:extendSubjectId: ", p), err) }
+    if err := oprot.WriteFieldBegin("extendSubjectId", thrift.LIST, 7); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:extendSubjectId: ", p), err) }
     if err := oprot.WriteListBegin(thrift.I64, len(p.ExtendSubjectId)); err != nil {
       return thrift.PrependError("error writing list begin: ", err)
     }
@@ -474,15 +579,15 @@ func (p *TNotifyItem) writeField5(oprot thrift.TProtocol) (err error) {
       return thrift.PrependError("error writing list end: ", err)
     }
     if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 5:extendSubjectId: ", p), err) }
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 7:extendSubjectId: ", p), err) }
   }
   return err
 }
 
-func (p *TNotifyItem) writeField6(oprot thrift.TProtocol) (err error) {
+func (p *TNotifyItem) writeField8(oprot thrift.TProtocol) (err error) {
   if p.IsSetExtendObjectId() {
-    if err := oprot.WriteFieldBegin("extendObjectId", thrift.LIST, 6); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:extendObjectId: ", p), err) }
+    if err := oprot.WriteFieldBegin("extendObjectId", thrift.LIST, 8); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:extendObjectId: ", p), err) }
     if err := oprot.WriteListBegin(thrift.I64, len(p.ExtendObjectId)); err != nil {
       return thrift.PrependError("error writing list begin: ", err)
     }
@@ -494,42 +599,54 @@ func (p *TNotifyItem) writeField6(oprot thrift.TProtocol) (err error) {
       return thrift.PrependError("error writing list end: ", err)
     }
     if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 6:extendObjectId: ", p), err) }
-  }
-  return err
-}
-
-func (p *TNotifyItem) writeField7(oprot thrift.TProtocol) (err error) {
-  if p.IsSetExtend() {
-    if err := oprot.WriteFieldBegin("extend", thrift.STRING, 7); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:extend: ", p), err) }
-    if err := oprot.WriteString(string(*p.Extend)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.extend (7) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 7:extend: ", p), err) }
-  }
-  return err
-}
-
-func (p *TNotifyItem) writeField8(oprot thrift.TProtocol) (err error) {
-  if p.IsSetSeen() {
-    if err := oprot.WriteFieldBegin("seen", thrift.BOOL, 8); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:seen: ", p), err) }
-    if err := oprot.WriteBool(bool(*p.Seen)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.seen (8) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 8:seen: ", p), err) }
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 8:extendObjectId: ", p), err) }
   }
   return err
 }
 
 func (p *TNotifyItem) writeField9(oprot thrift.TProtocol) (err error) {
-  if err := oprot.WriteFieldBegin("timestamps", thrift.I64, 9); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:timestamps: ", p), err) }
+  if p.IsSetMessage() {
+    if err := oprot.WriteFieldBegin("message", thrift.STRING, 9); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:message: ", p), err) }
+    if err := oprot.WriteString(string(*p.Message)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.message (9) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 9:message: ", p), err) }
+  }
+  return err
+}
+
+func (p *TNotifyItem) writeField10(oprot thrift.TProtocol) (err error) {
+  if p.IsSetExtend() {
+    if err := oprot.WriteFieldBegin("extend", thrift.STRING, 10); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:extend: ", p), err) }
+    if err := oprot.WriteString(string(*p.Extend)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.extend (10) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 10:extend: ", p), err) }
+  }
+  return err
+}
+
+func (p *TNotifyItem) writeField11(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSeen() {
+    if err := oprot.WriteFieldBegin("seen", thrift.BOOL, 11); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:seen: ", p), err) }
+    if err := oprot.WriteBool(bool(*p.Seen)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.seen (11) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 11:seen: ", p), err) }
+  }
+  return err
+}
+
+func (p *TNotifyItem) writeField12(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("timestamps", thrift.I64, 12); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 12:timestamps: ", p), err) }
   if err := oprot.WriteI64(int64(p.Timestamps)); err != nil {
-  return thrift.PrependError(fmt.Sprintf("%T.timestamps (9) field write error: ", p), err) }
+  return thrift.PrependError(fmt.Sprintf("%T.timestamps (12) field write error: ", p), err) }
   if err := oprot.WriteFieldEnd(); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T write field end error 9:timestamps: ", p), err) }
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 12:timestamps: ", p), err) }
   return err
 }
 

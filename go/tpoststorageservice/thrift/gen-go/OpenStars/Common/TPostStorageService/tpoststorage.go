@@ -301,6 +301,7 @@ func (p *ActionLink) String() string {
 //  - Idmedia
 //  - Idpost
 //  - Timestamps
+//  - Extend
 type MediaItem struct {
   Name string `thrift:"name,1" db:"name" json:"name"`
   MediaType int64 `thrift:"mediaType,2" db:"mediaType" json:"mediaType"`
@@ -308,6 +309,7 @@ type MediaItem struct {
   Idmedia int64 `thrift:"idmedia,4" db:"idmedia" json:"idmedia"`
   Idpost int64 `thrift:"idpost,5" db:"idpost" json:"idpost"`
   Timestamps int64 `thrift:"timestamps,6" db:"timestamps" json:"timestamps"`
+  Extend string `thrift:"extend,7" db:"extend" json:"extend"`
 }
 
 func NewMediaItem() *MediaItem {
@@ -337,6 +339,10 @@ func (p *MediaItem) GetIdpost() int64 {
 
 func (p *MediaItem) GetTimestamps() int64 {
   return p.Timestamps
+}
+
+func (p *MediaItem) GetExtend() string {
+  return p.Extend
 }
 func (p *MediaItem) Read(iprot thrift.TProtocol) error {
   if _, err := iprot.ReadStructBegin(); err != nil {
@@ -404,6 +410,16 @@ func (p *MediaItem) Read(iprot thrift.TProtocol) error {
     case 6:
       if fieldTypeId == thrift.I64 {
         if err := p.ReadField6(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 7:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField7(iprot); err != nil {
           return err
         }
       } else {
@@ -480,6 +496,15 @@ func (p *MediaItem)  ReadField6(iprot thrift.TProtocol) error {
   return nil
 }
 
+func (p *MediaItem)  ReadField7(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 7: ", err)
+} else {
+  p.Extend = v
+}
+  return nil
+}
+
 func (p *MediaItem) Write(oprot thrift.TProtocol) error {
   if err := oprot.WriteStructBegin("MediaItem"); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
@@ -490,6 +515,7 @@ func (p *MediaItem) Write(oprot thrift.TProtocol) error {
     if err := p.writeField4(oprot); err != nil { return err }
     if err := p.writeField5(oprot); err != nil { return err }
     if err := p.writeField6(oprot); err != nil { return err }
+    if err := p.writeField7(oprot); err != nil { return err }
   }
   if err := oprot.WriteFieldStop(); err != nil {
     return thrift.PrependError("write field stop error: ", err) }
@@ -555,6 +581,16 @@ func (p *MediaItem) writeField6(oprot thrift.TProtocol) (err error) {
   return thrift.PrependError(fmt.Sprintf("%T.timestamps (6) field write error: ", p), err) }
   if err := oprot.WriteFieldEnd(); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write field end error 6:timestamps: ", p), err) }
+  return err
+}
+
+func (p *MediaItem) writeField7(oprot thrift.TProtocol) (err error) {
+  if err := oprot.WriteFieldBegin("extend", thrift.STRING, 7); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:extend: ", p), err) }
+  if err := oprot.WriteString(string(p.Extend)); err != nil {
+  return thrift.PrependError(fmt.Sprintf("%T.extend (7) field write error: ", p), err) }
+  if err := oprot.WriteFieldEnd(); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T write field end error 7:extend: ", p), err) }
   return err
 }
 
