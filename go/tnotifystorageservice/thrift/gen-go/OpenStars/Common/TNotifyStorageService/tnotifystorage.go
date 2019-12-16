@@ -100,6 +100,8 @@ func TDataPtr(v TData) *TData { return &v }
 //  - Extend
 //  - Seen
 //  - Timestamps
+//  - SourceId
+//  - ParentId
 type TNotifyItem struct {
   Key int64 `thrift:"key,1" db:"key" json:"key"`
   SubjectId int64 `thrift:"subjectId,2" db:"subjectId" json:"subjectId"`
@@ -113,6 +115,8 @@ type TNotifyItem struct {
   Extend *string `thrift:"extend,10" db:"extend" json:"extend,omitempty"`
   Seen *bool `thrift:"seen,11" db:"seen" json:"seen,omitempty"`
   Timestamps int64 `thrift:"timestamps,12" db:"timestamps" json:"timestamps"`
+  SourceId *int64 `thrift:"sourceId,13" db:"sourceId" json:"sourceId,omitempty"`
+  ParentId *int64 `thrift:"parentId,14" db:"parentId" json:"parentId,omitempty"`
 }
 
 func NewTNotifyItem() *TNotifyItem {
@@ -178,6 +182,20 @@ return *p.Seen
 func (p *TNotifyItem) GetTimestamps() int64 {
   return p.Timestamps
 }
+var TNotifyItem_SourceId_DEFAULT int64
+func (p *TNotifyItem) GetSourceId() int64 {
+  if !p.IsSetSourceId() {
+    return TNotifyItem_SourceId_DEFAULT
+  }
+return *p.SourceId
+}
+var TNotifyItem_ParentId_DEFAULT int64
+func (p *TNotifyItem) GetParentId() int64 {
+  if !p.IsSetParentId() {
+    return TNotifyItem_ParentId_DEFAULT
+  }
+return *p.ParentId
+}
 func (p *TNotifyItem) IsSetExtendSubjectId() bool {
   return p.ExtendSubjectId != nil
 }
@@ -196,6 +214,14 @@ func (p *TNotifyItem) IsSetExtend() bool {
 
 func (p *TNotifyItem) IsSetSeen() bool {
   return p.Seen != nil
+}
+
+func (p *TNotifyItem) IsSetSourceId() bool {
+  return p.SourceId != nil
+}
+
+func (p *TNotifyItem) IsSetParentId() bool {
+  return p.ParentId != nil
 }
 
 func (p *TNotifyItem) Read(iprot thrift.TProtocol) error {
@@ -324,6 +350,26 @@ func (p *TNotifyItem) Read(iprot thrift.TProtocol) error {
     case 12:
       if fieldTypeId == thrift.I64 {
         if err := p.ReadField12(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 13:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField13(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 14:
+      if fieldTypeId == thrift.I64 {
+        if err := p.ReadField14(iprot); err != nil {
           return err
         }
       } else {
@@ -480,6 +526,24 @@ func (p *TNotifyItem)  ReadField12(iprot thrift.TProtocol) error {
   return nil
 }
 
+func (p *TNotifyItem)  ReadField13(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 13: ", err)
+} else {
+  p.SourceId = &v
+}
+  return nil
+}
+
+func (p *TNotifyItem)  ReadField14(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadI64(); err != nil {
+  return thrift.PrependError("error reading field 14: ", err)
+} else {
+  p.ParentId = &v
+}
+  return nil
+}
+
 func (p *TNotifyItem) Write(oprot thrift.TProtocol) error {
   if err := oprot.WriteStructBegin("TNotifyItem"); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err) }
@@ -496,6 +560,8 @@ func (p *TNotifyItem) Write(oprot thrift.TProtocol) error {
     if err := p.writeField10(oprot); err != nil { return err }
     if err := p.writeField11(oprot); err != nil { return err }
     if err := p.writeField12(oprot); err != nil { return err }
+    if err := p.writeField13(oprot); err != nil { return err }
+    if err := p.writeField14(oprot); err != nil { return err }
   }
   if err := oprot.WriteFieldStop(); err != nil {
     return thrift.PrependError("write field stop error: ", err) }
@@ -647,6 +713,30 @@ func (p *TNotifyItem) writeField12(oprot thrift.TProtocol) (err error) {
   return thrift.PrependError(fmt.Sprintf("%T.timestamps (12) field write error: ", p), err) }
   if err := oprot.WriteFieldEnd(); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write field end error 12:timestamps: ", p), err) }
+  return err
+}
+
+func (p *TNotifyItem) writeField13(oprot thrift.TProtocol) (err error) {
+  if p.IsSetSourceId() {
+    if err := oprot.WriteFieldBegin("sourceId", thrift.I64, 13); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 13:sourceId: ", p), err) }
+    if err := oprot.WriteI64(int64(*p.SourceId)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.sourceId (13) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 13:sourceId: ", p), err) }
+  }
+  return err
+}
+
+func (p *TNotifyItem) writeField14(oprot thrift.TProtocol) (err error) {
+  if p.IsSetParentId() {
+    if err := oprot.WriteFieldBegin("parentId", thrift.I64, 14); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 14:parentId: ", p), err) }
+    if err := oprot.WriteI64(int64(*p.ParentId)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.parentId (14) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 14:parentId: ", p), err) }
+  }
   return err
 }
 

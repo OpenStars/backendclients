@@ -44,7 +44,7 @@ class TDataResult;
 class TListDataResult;
 
 typedef struct _TNotifyItem__isset {
-  _TNotifyItem__isset() : key(false), subjectId(false), actionId(false), objectId(false), subjectType(false), objectType(false), extendSubjectId(false), extendObjectId(false), message(false), extend(false), seen(false), timestamps(false) {}
+  _TNotifyItem__isset() : key(false), subjectId(false), actionId(false), objectId(false), subjectType(false), objectType(false), extendSubjectId(false), extendObjectId(false), message(false), extend(false), seen(false), timestamps(false), sourceId(false), parentId(false) {}
   bool key :1;
   bool subjectId :1;
   bool actionId :1;
@@ -57,6 +57,8 @@ typedef struct _TNotifyItem__isset {
   bool extend :1;
   bool seen :1;
   bool timestamps :1;
+  bool sourceId :1;
+  bool parentId :1;
 } _TNotifyItem__isset;
 
 class TNotifyItem : public virtual ::apache::thrift::TBase {
@@ -64,7 +66,7 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
 
   TNotifyItem(const TNotifyItem&);
   TNotifyItem& operator=(const TNotifyItem&);
-  TNotifyItem() : key(0), subjectId(0), actionId(0), objectId(0), subjectType(0), objectType(0), message(), extend(), seen(0), timestamps(0) {
+  TNotifyItem() : key(0), subjectId(0), actionId(0), objectId(0), subjectType(0), objectType(0), message(), extend(), seen(0), timestamps(0), sourceId(0), parentId(0) {
   }
 
   virtual ~TNotifyItem() throw();
@@ -80,6 +82,8 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
   std::string extend;
   bool seen;
   int64_t timestamps;
+  int64_t sourceId;
+  int64_t parentId;
 
   _TNotifyItem__isset __isset;
 
@@ -106,6 +110,10 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
   void __set_seen(const bool val);
 
   void __set_timestamps(const int64_t val);
+
+  void __set_sourceId(const int64_t val);
+
+  void __set_parentId(const int64_t val);
 
   bool operator == (const TNotifyItem & rhs) const
   {
@@ -142,6 +150,14 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
     else if (__isset.seen && !(seen == rhs.seen))
       return false;
     if (!(timestamps == rhs.timestamps))
+      return false;
+    if (__isset.sourceId != rhs.__isset.sourceId)
+      return false;
+    else if (__isset.sourceId && !(sourceId == rhs.sourceId))
+      return false;
+    if (__isset.parentId != rhs.__isset.parentId)
+      return false;
+    else if (__isset.parentId && !(parentId == rhs.parentId))
       return false;
     return true;
   }

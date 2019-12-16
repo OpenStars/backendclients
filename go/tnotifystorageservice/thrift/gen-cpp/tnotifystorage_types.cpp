@@ -94,6 +94,16 @@ __isset.seen = true;
 void TNotifyItem::__set_timestamps(const int64_t val) {
   this->timestamps = val;
 }
+
+void TNotifyItem::__set_sourceId(const int64_t val) {
+  this->sourceId = val;
+__isset.sourceId = true;
+}
+
+void TNotifyItem::__set_parentId(const int64_t val) {
+  this->parentId = val;
+__isset.parentId = true;
+}
 std::ostream& operator<<(std::ostream& out, const TNotifyItem& obj)
 {
   obj.printTo(out);
@@ -242,6 +252,22 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
+      case 13:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->sourceId);
+          this->__isset.sourceId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 14:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->parentId);
+          this->__isset.parentId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -328,6 +354,16 @@ uint32_t TNotifyItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeI64(this->timestamps);
   xfer += oprot->writeFieldEnd();
 
+  if (this->__isset.sourceId) {
+    xfer += oprot->writeFieldBegin("sourceId", ::apache::thrift::protocol::T_I64, 13);
+    xfer += oprot->writeI64(this->sourceId);
+    xfer += oprot->writeFieldEnd();
+  }
+  if (this->__isset.parentId) {
+    xfer += oprot->writeFieldBegin("parentId", ::apache::thrift::protocol::T_I64, 14);
+    xfer += oprot->writeI64(this->parentId);
+    xfer += oprot->writeFieldEnd();
+  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -347,6 +383,8 @@ void swap(TNotifyItem &a, TNotifyItem &b) {
   swap(a.extend, b.extend);
   swap(a.seen, b.seen);
   swap(a.timestamps, b.timestamps);
+  swap(a.sourceId, b.sourceId);
+  swap(a.parentId, b.parentId);
   swap(a.__isset, b.__isset);
 }
 
@@ -363,6 +401,8 @@ TNotifyItem::TNotifyItem(const TNotifyItem& other12) {
   extend = other12.extend;
   seen = other12.seen;
   timestamps = other12.timestamps;
+  sourceId = other12.sourceId;
+  parentId = other12.parentId;
   __isset = other12.__isset;
 }
 TNotifyItem& TNotifyItem::operator=(const TNotifyItem& other13) {
@@ -378,6 +418,8 @@ TNotifyItem& TNotifyItem::operator=(const TNotifyItem& other13) {
   extend = other13.extend;
   seen = other13.seen;
   timestamps = other13.timestamps;
+  sourceId = other13.sourceId;
+  parentId = other13.parentId;
   __isset = other13.__isset;
   return *this;
 }
@@ -396,6 +438,8 @@ void TNotifyItem::printTo(std::ostream& out) const {
   out << ", " << "extend="; (__isset.extend ? (out << to_string(extend)) : (out << "<null>"));
   out << ", " << "seen="; (__isset.seen ? (out << to_string(seen)) : (out << "<null>"));
   out << ", " << "timestamps=" << to_string(timestamps);
+  out << ", " << "sourceId="; (__isset.sourceId ? (out << to_string(sourceId)) : (out << "<null>"));
+  out << ", " << "parentId="; (__isset.parentId ? (out << to_string(parentId)) : (out << "<null>"));
   out << ")";
 }
 
