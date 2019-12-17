@@ -62,23 +62,12 @@ void TNotifyItem::__set_subjectType(const int64_t val) {
   this->subjectType = val;
 }
 
-void TNotifyItem::__set_objectType(const int64_t val) {
-  this->objectType = val;
-}
-
 void TNotifyItem::__set_extendSubjectId(const std::vector<int64_t> & val) {
   this->extendSubjectId = val;
-__isset.extendSubjectId = true;
-}
-
-void TNotifyItem::__set_extendObjectId(const std::vector<int64_t> & val) {
-  this->extendObjectId = val;
-__isset.extendObjectId = true;
 }
 
 void TNotifyItem::__set_message(const std::string& val) {
   this->message = val;
-__isset.message = true;
 }
 
 void TNotifyItem::__set_extend(const std::string& val) {
@@ -169,14 +158,6 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 6:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->objectType);
-          this->__isset.objectType = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
       case 7:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
@@ -193,26 +174,6 @@ uint32_t TNotifyItem::read(::apache::thrift::protocol::TProtocol* iprot) {
             xfer += iprot->readListEnd();
           }
           this->__isset.extendSubjectId = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 8:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->extendObjectId.clear();
-            uint32_t _size5;
-            ::apache::thrift::protocol::TType _etype8;
-            xfer += iprot->readListBegin(_etype8, _size5);
-            this->extendObjectId.resize(_size5);
-            uint32_t _i9;
-            for (_i9 = 0; _i9 < _size5; ++_i9)
-            {
-              xfer += iprot->readI64(this->extendObjectId[_i9]);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.extendObjectId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -302,41 +263,22 @@ uint32_t TNotifyItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeI64(this->subjectType);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("objectType", ::apache::thrift::protocol::T_I64, 6);
-  xfer += oprot->writeI64(this->objectType);
+  xfer += oprot->writeFieldBegin("extendSubjectId", ::apache::thrift::protocol::T_LIST, 7);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->extendSubjectId.size()));
+    std::vector<int64_t> ::const_iterator _iter5;
+    for (_iter5 = this->extendSubjectId.begin(); _iter5 != this->extendSubjectId.end(); ++_iter5)
+    {
+      xfer += oprot->writeI64((*_iter5));
+    }
+    xfer += oprot->writeListEnd();
+  }
   xfer += oprot->writeFieldEnd();
 
-  if (this->__isset.extendSubjectId) {
-    xfer += oprot->writeFieldBegin("extendSubjectId", ::apache::thrift::protocol::T_LIST, 7);
-    {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->extendSubjectId.size()));
-      std::vector<int64_t> ::const_iterator _iter10;
-      for (_iter10 = this->extendSubjectId.begin(); _iter10 != this->extendSubjectId.end(); ++_iter10)
-      {
-        xfer += oprot->writeI64((*_iter10));
-      }
-      xfer += oprot->writeListEnd();
-    }
-    xfer += oprot->writeFieldEnd();
-  }
-  if (this->__isset.extendObjectId) {
-    xfer += oprot->writeFieldBegin("extendObjectId", ::apache::thrift::protocol::T_LIST, 8);
-    {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->extendObjectId.size()));
-      std::vector<int64_t> ::const_iterator _iter11;
-      for (_iter11 = this->extendObjectId.begin(); _iter11 != this->extendObjectId.end(); ++_iter11)
-      {
-        xfer += oprot->writeI64((*_iter11));
-      }
-      xfer += oprot->writeListEnd();
-    }
-    xfer += oprot->writeFieldEnd();
-  }
-  if (this->__isset.message) {
-    xfer += oprot->writeFieldBegin("message", ::apache::thrift::protocol::T_STRING, 9);
-    xfer += oprot->writeString(this->message);
-    xfer += oprot->writeFieldEnd();
-  }
+  xfer += oprot->writeFieldBegin("message", ::apache::thrift::protocol::T_STRING, 9);
+  xfer += oprot->writeString(this->message);
+  xfer += oprot->writeFieldEnd();
+
   if (this->__isset.extend) {
     xfer += oprot->writeFieldBegin("extend", ::apache::thrift::protocol::T_STRING, 10);
     xfer += oprot->writeString(this->extend);
@@ -370,9 +312,7 @@ void swap(TNotifyItem &a, TNotifyItem &b) {
   swap(a.actionId, b.actionId);
   swap(a.objectId, b.objectId);
   swap(a.subjectType, b.subjectType);
-  swap(a.objectType, b.objectType);
   swap(a.extendSubjectId, b.extendSubjectId);
-  swap(a.extendObjectId, b.extendObjectId);
   swap(a.message, b.message);
   swap(a.extend, b.extend);
   swap(a.seen, b.seen);
@@ -382,39 +322,35 @@ void swap(TNotifyItem &a, TNotifyItem &b) {
   swap(a.__isset, b.__isset);
 }
 
-TNotifyItem::TNotifyItem(const TNotifyItem& other12) {
-  key = other12.key;
-  subjectId = other12.subjectId;
-  actionId = other12.actionId;
-  objectId = other12.objectId;
-  subjectType = other12.subjectType;
-  objectType = other12.objectType;
-  extendSubjectId = other12.extendSubjectId;
-  extendObjectId = other12.extendObjectId;
-  message = other12.message;
-  extend = other12.extend;
-  seen = other12.seen;
-  timestamps = other12.timestamps;
-  sourceId = other12.sourceId;
-  parentId = other12.parentId;
-  __isset = other12.__isset;
+TNotifyItem::TNotifyItem(const TNotifyItem& other6) {
+  key = other6.key;
+  subjectId = other6.subjectId;
+  actionId = other6.actionId;
+  objectId = other6.objectId;
+  subjectType = other6.subjectType;
+  extendSubjectId = other6.extendSubjectId;
+  message = other6.message;
+  extend = other6.extend;
+  seen = other6.seen;
+  timestamps = other6.timestamps;
+  sourceId = other6.sourceId;
+  parentId = other6.parentId;
+  __isset = other6.__isset;
 }
-TNotifyItem& TNotifyItem::operator=(const TNotifyItem& other13) {
-  key = other13.key;
-  subjectId = other13.subjectId;
-  actionId = other13.actionId;
-  objectId = other13.objectId;
-  subjectType = other13.subjectType;
-  objectType = other13.objectType;
-  extendSubjectId = other13.extendSubjectId;
-  extendObjectId = other13.extendObjectId;
-  message = other13.message;
-  extend = other13.extend;
-  seen = other13.seen;
-  timestamps = other13.timestamps;
-  sourceId = other13.sourceId;
-  parentId = other13.parentId;
-  __isset = other13.__isset;
+TNotifyItem& TNotifyItem::operator=(const TNotifyItem& other7) {
+  key = other7.key;
+  subjectId = other7.subjectId;
+  actionId = other7.actionId;
+  objectId = other7.objectId;
+  subjectType = other7.subjectType;
+  extendSubjectId = other7.extendSubjectId;
+  message = other7.message;
+  extend = other7.extend;
+  seen = other7.seen;
+  timestamps = other7.timestamps;
+  sourceId = other7.sourceId;
+  parentId = other7.parentId;
+  __isset = other7.__isset;
   return *this;
 }
 void TNotifyItem::printTo(std::ostream& out) const {
@@ -425,10 +361,8 @@ void TNotifyItem::printTo(std::ostream& out) const {
   out << ", " << "actionId=" << to_string(actionId);
   out << ", " << "objectId=" << to_string(objectId);
   out << ", " << "subjectType=" << to_string(subjectType);
-  out << ", " << "objectType=" << to_string(objectType);
-  out << ", " << "extendSubjectId="; (__isset.extendSubjectId ? (out << to_string(extendSubjectId)) : (out << "<null>"));
-  out << ", " << "extendObjectId="; (__isset.extendObjectId ? (out << to_string(extendObjectId)) : (out << "<null>"));
-  out << ", " << "message="; (__isset.message ? (out << to_string(message)) : (out << "<null>"));
+  out << ", " << "extendSubjectId=" << to_string(extendSubjectId);
+  out << ", " << "message=" << to_string(message);
   out << ", " << "extend="; (__isset.extend ? (out << to_string(extend)) : (out << "<null>"));
   out << ", " << "seen=" << to_string(seen);
   out << ", " << "timestamps=" << to_string(timestamps);
@@ -480,9 +414,9 @@ uint32_t TDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast14;
-          xfer += iprot->readI32(ecast14);
-          this->errorCode = (TErrorCode::type)ecast14;
+          int32_t ecast8;
+          xfer += iprot->readI32(ecast8);
+          this->errorCode = (TErrorCode::type)ecast8;
           this->__isset.errorCode = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -534,15 +468,15 @@ void swap(TDataResult &a, TDataResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-TDataResult::TDataResult(const TDataResult& other15) {
-  errorCode = other15.errorCode;
-  data = other15.data;
-  __isset = other15.__isset;
+TDataResult::TDataResult(const TDataResult& other9) {
+  errorCode = other9.errorCode;
+  data = other9.data;
+  __isset = other9.__isset;
 }
-TDataResult& TDataResult::operator=(const TDataResult& other16) {
-  errorCode = other16.errorCode;
-  data = other16.data;
-  __isset = other16.__isset;
+TDataResult& TDataResult::operator=(const TDataResult& other10) {
+  errorCode = other10.errorCode;
+  data = other10.data;
+  __isset = other10.__isset;
   return *this;
 }
 void TDataResult::printTo(std::ostream& out) const {
@@ -596,9 +530,9 @@ uint32_t TListDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast17;
-          xfer += iprot->readI32(ecast17);
-          this->errorCode = (TErrorCode::type)ecast17;
+          int32_t ecast11;
+          xfer += iprot->readI32(ecast11);
+          this->errorCode = (TErrorCode::type)ecast11;
           this->__isset.errorCode = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -608,14 +542,14 @@ uint32_t TListDataResult::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->datass.clear();
-            uint32_t _size18;
-            ::apache::thrift::protocol::TType _etype21;
-            xfer += iprot->readListBegin(_etype21, _size18);
-            this->datass.resize(_size18);
-            uint32_t _i22;
-            for (_i22 = 0; _i22 < _size18; ++_i22)
+            uint32_t _size12;
+            ::apache::thrift::protocol::TType _etype15;
+            xfer += iprot->readListBegin(_etype15, _size12);
+            this->datass.resize(_size12);
+            uint32_t _i16;
+            for (_i16 = 0; _i16 < _size12; ++_i16)
             {
-              xfer += this->datass[_i22].read(iprot);
+              xfer += this->datass[_i16].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -649,10 +583,10 @@ uint32_t TListDataResult::write(::apache::thrift::protocol::TProtocol* oprot) co
     xfer += oprot->writeFieldBegin("datass", ::apache::thrift::protocol::T_LIST, 2);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->datass.size()));
-      std::vector<TNotifyItem> ::const_iterator _iter23;
-      for (_iter23 = this->datass.begin(); _iter23 != this->datass.end(); ++_iter23)
+      std::vector<TNotifyItem> ::const_iterator _iter17;
+      for (_iter17 = this->datass.begin(); _iter17 != this->datass.end(); ++_iter17)
       {
-        xfer += (*_iter23).write(oprot);
+        xfer += (*_iter17).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -670,15 +604,15 @@ void swap(TListDataResult &a, TListDataResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-TListDataResult::TListDataResult(const TListDataResult& other24) {
-  errorCode = other24.errorCode;
-  datass = other24.datass;
-  __isset = other24.__isset;
+TListDataResult::TListDataResult(const TListDataResult& other18) {
+  errorCode = other18.errorCode;
+  datass = other18.datass;
+  __isset = other18.__isset;
 }
-TListDataResult& TListDataResult::operator=(const TListDataResult& other25) {
-  errorCode = other25.errorCode;
-  datass = other25.datass;
-  __isset = other25.__isset;
+TListDataResult& TListDataResult::operator=(const TListDataResult& other19) {
+  errorCode = other19.errorCode;
+  datass = other19.datass;
+  __isset = other19.__isset;
   return *this;
 }
 void TListDataResult::printTo(std::ostream& out) const {

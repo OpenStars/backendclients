@@ -318,9 +318,9 @@ uint32_t TDataService_putData_result::read(::apache::thrift::protocol::TProtocol
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast26;
-          xfer += iprot->readI32(ecast26);
-          this->success = (TErrorCode::type)ecast26;
+          int32_t ecast20;
+          xfer += iprot->readI32(ecast20);
+          this->success = (TErrorCode::type)ecast20;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -382,9 +382,9 @@ uint32_t TDataService_putData_presult::read(::apache::thrift::protocol::TProtoco
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast27;
-          xfer += iprot->readI32(ecast27);
-          (*(this->success)) = (TErrorCode::type)ecast27;
+          int32_t ecast21;
+          xfer += iprot->readI32(ecast21);
+          (*(this->success)) = (TErrorCode::type)ecast21;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -432,14 +432,14 @@ uint32_t TDataService_getListData_args::read(::apache::thrift::protocol::TProtoc
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->lskeys.clear();
-            uint32_t _size28;
-            ::apache::thrift::protocol::TType _etype31;
-            xfer += iprot->readListBegin(_etype31, _size28);
-            this->lskeys.resize(_size28);
-            uint32_t _i32;
-            for (_i32 = 0; _i32 < _size28; ++_i32)
+            uint32_t _size22;
+            ::apache::thrift::protocol::TType _etype25;
+            xfer += iprot->readListBegin(_etype25, _size22);
+            this->lskeys.resize(_size22);
+            uint32_t _i26;
+            for (_i26 = 0; _i26 < _size22; ++_i26)
             {
-              xfer += iprot->readI64(this->lskeys[_i32]);
+              xfer += iprot->readI64(this->lskeys[_i26]);
             }
             xfer += iprot->readListEnd();
           }
@@ -468,10 +468,10 @@ uint32_t TDataService_getListData_args::write(::apache::thrift::protocol::TProto
   xfer += oprot->writeFieldBegin("lskeys", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->lskeys.size()));
-    std::vector<int64_t> ::const_iterator _iter33;
-    for (_iter33 = this->lskeys.begin(); _iter33 != this->lskeys.end(); ++_iter33)
+    std::vector<int64_t> ::const_iterator _iter27;
+    for (_iter27 = this->lskeys.begin(); _iter27 != this->lskeys.end(); ++_iter27)
     {
-      xfer += oprot->writeI64((*_iter33));
+      xfer += oprot->writeI64((*_iter27));
     }
     xfer += oprot->writeListEnd();
   }
@@ -495,10 +495,10 @@ uint32_t TDataService_getListData_pargs::write(::apache::thrift::protocol::TProt
   xfer += oprot->writeFieldBegin("lskeys", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>((*(this->lskeys)).size()));
-    std::vector<int64_t> ::const_iterator _iter34;
-    for (_iter34 = (*(this->lskeys)).begin(); _iter34 != (*(this->lskeys)).end(); ++_iter34)
+    std::vector<int64_t> ::const_iterator _iter28;
+    for (_iter28 = (*(this->lskeys)).begin(); _iter28 != (*(this->lskeys)).end(); ++_iter28)
     {
-      xfer += oprot->writeI64((*_iter34));
+      xfer += oprot->writeI64((*_iter28));
     }
     xfer += oprot->writeListEnd();
   }

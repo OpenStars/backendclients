@@ -153,8 +153,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err19 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err19 != nil {
+    argvalue0, err18 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err18 != nil {
       Usage()
       return
     }
@@ -167,25 +167,25 @@ func main() {
       fmt.Fprintln(os.Stderr, "PutData requires 2 args")
       flag.Usage()
     }
-    argvalue0, err20 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err20 != nil {
+    argvalue0, err19 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err19 != nil {
       Usage()
       return
     }
     value0 := argvalue0
-    arg21 := flag.Arg(2)
-    mbTrans22 := thrift.NewTMemoryBufferLen(len(arg21))
-    defer mbTrans22.Close()
-    _, err23 := mbTrans22.WriteString(arg21)
-    if err23 != nil {
+    arg20 := flag.Arg(2)
+    mbTrans21 := thrift.NewTMemoryBufferLen(len(arg20))
+    defer mbTrans21.Close()
+    _, err22 := mbTrans21.WriteString(arg20)
+    if err22 != nil {
       Usage()
       return
     }
-    factory24 := thrift.NewTJSONProtocolFactory()
-    jsProt25 := factory24.GetProtocol(mbTrans22)
+    factory23 := thrift.NewTJSONProtocolFactory()
+    jsProt24 := factory23.GetProtocol(mbTrans21)
     argvalue1 := TNotifyStorageService.NewTNotifyItem()
-    err26 := argvalue1.Read(jsProt25)
-    if err26 != nil {
+    err25 := argvalue1.Read(jsProt24)
+    if err25 != nil {
       Usage()
       return
     }
@@ -198,19 +198,19 @@ func main() {
       fmt.Fprintln(os.Stderr, "GetListData requires 1 args")
       flag.Usage()
     }
-    arg27 := flag.Arg(1)
-    mbTrans28 := thrift.NewTMemoryBufferLen(len(arg27))
-    defer mbTrans28.Close()
-    _, err29 := mbTrans28.WriteString(arg27)
-    if err29 != nil { 
+    arg26 := flag.Arg(1)
+    mbTrans27 := thrift.NewTMemoryBufferLen(len(arg26))
+    defer mbTrans27.Close()
+    _, err28 := mbTrans27.WriteString(arg26)
+    if err28 != nil { 
       Usage()
       return
     }
-    factory30 := thrift.NewTJSONProtocolFactory()
-    jsProt31 := factory30.GetProtocol(mbTrans28)
+    factory29 := thrift.NewTJSONProtocolFactory()
+    jsProt30 := factory29.GetProtocol(mbTrans27)
     containerStruct0 := TNotifyStorageService.NewTDataServiceGetListDataArgs()
-    err32 := containerStruct0.ReadField1(jsProt31)
-    if err32 != nil {
+    err31 := containerStruct0.ReadField1(jsProt30)
+    if err31 != nil {
       Usage()
       return
     }
@@ -224,8 +224,8 @@ func main() {
       fmt.Fprintln(os.Stderr, "RemoveData requires 1 args")
       flag.Usage()
     }
-    argvalue0, err33 := (strconv.ParseInt(flag.Arg(1), 10, 64))
-    if err33 != nil {
+    argvalue0, err32 := (strconv.ParseInt(flag.Arg(1), 10, 64))
+    if err32 != nil {
       Usage()
       return
     }

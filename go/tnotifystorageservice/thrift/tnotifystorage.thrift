@@ -17,10 +17,8 @@ struct TNotifyItem{
     3: i64 actionId, // hanh dong
     4: i64  objectId, // doi tuong chiu tac dong cua chu the
     5: i64 subjectType, // uid, pageid or groupid
-    6: i64 objectType, // comment or post
-    7: optional list<i64> extendSubjectId,
-    8: optional list<i64> extendObjectId,
-    9: optional string message, // render message
+    7: list<i64> extendSubjectId,
+    9: string message, // render message
     10: optional string extend,
     11: bool seen,
     12: i64 timestamps,
