@@ -88,7 +88,6 @@ __isset.extend = true;
 
 void TNotifyItem::__set_seen(const bool val) {
   this->seen = val;
-__isset.seen = true;
 }
 
 void TNotifyItem::__set_timestamps(const int64_t val) {
@@ -97,12 +96,10 @@ void TNotifyItem::__set_timestamps(const int64_t val) {
 
 void TNotifyItem::__set_sourceId(const int64_t val) {
   this->sourceId = val;
-__isset.sourceId = true;
 }
 
 void TNotifyItem::__set_parentId(const int64_t val) {
   this->parentId = val;
-__isset.parentId = true;
 }
 std::ostream& operator<<(std::ostream& out, const TNotifyItem& obj)
 {
@@ -345,25 +342,22 @@ uint32_t TNotifyItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
     xfer += oprot->writeString(this->extend);
     xfer += oprot->writeFieldEnd();
   }
-  if (this->__isset.seen) {
-    xfer += oprot->writeFieldBegin("seen", ::apache::thrift::protocol::T_BOOL, 11);
-    xfer += oprot->writeBool(this->seen);
-    xfer += oprot->writeFieldEnd();
-  }
+  xfer += oprot->writeFieldBegin("seen", ::apache::thrift::protocol::T_BOOL, 11);
+  xfer += oprot->writeBool(this->seen);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldBegin("timestamps", ::apache::thrift::protocol::T_I64, 12);
   xfer += oprot->writeI64(this->timestamps);
   xfer += oprot->writeFieldEnd();
 
-  if (this->__isset.sourceId) {
-    xfer += oprot->writeFieldBegin("sourceId", ::apache::thrift::protocol::T_I64, 13);
-    xfer += oprot->writeI64(this->sourceId);
-    xfer += oprot->writeFieldEnd();
-  }
-  if (this->__isset.parentId) {
-    xfer += oprot->writeFieldBegin("parentId", ::apache::thrift::protocol::T_I64, 14);
-    xfer += oprot->writeI64(this->parentId);
-    xfer += oprot->writeFieldEnd();
-  }
+  xfer += oprot->writeFieldBegin("sourceId", ::apache::thrift::protocol::T_I64, 13);
+  xfer += oprot->writeI64(this->sourceId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("parentId", ::apache::thrift::protocol::T_I64, 14);
+  xfer += oprot->writeI64(this->parentId);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -436,10 +430,10 @@ void TNotifyItem::printTo(std::ostream& out) const {
   out << ", " << "extendObjectId="; (__isset.extendObjectId ? (out << to_string(extendObjectId)) : (out << "<null>"));
   out << ", " << "message="; (__isset.message ? (out << to_string(message)) : (out << "<null>"));
   out << ", " << "extend="; (__isset.extend ? (out << to_string(extend)) : (out << "<null>"));
-  out << ", " << "seen="; (__isset.seen ? (out << to_string(seen)) : (out << "<null>"));
+  out << ", " << "seen=" << to_string(seen);
   out << ", " << "timestamps=" << to_string(timestamps);
-  out << ", " << "sourceId="; (__isset.sourceId ? (out << to_string(sourceId)) : (out << "<null>"));
-  out << ", " << "parentId="; (__isset.parentId ? (out << to_string(parentId)) : (out << "<null>"));
+  out << ", " << "sourceId=" << to_string(sourceId);
+  out << ", " << "parentId=" << to_string(parentId);
   out << ")";
 }
 

@@ -22,10 +22,10 @@ struct TNotifyItem{
     8: optional list<i64> extendObjectId,
     9: optional string message, // render message
     10: optional string extend,
-    11: optional bool seen,
+    11: bool seen,
     12: i64 timestamps,
-    13: optional i64 sourceId,
-    14: optional i64 parentId,
+    13: i64 sourceId,
+    14: i64 parentId,
 }
 
 typedef TNotifyItem TData

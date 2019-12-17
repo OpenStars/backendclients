@@ -145,19 +145,13 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
       return false;
     else if (__isset.extend && !(extend == rhs.extend))
       return false;
-    if (__isset.seen != rhs.__isset.seen)
-      return false;
-    else if (__isset.seen && !(seen == rhs.seen))
+    if (!(seen == rhs.seen))
       return false;
     if (!(timestamps == rhs.timestamps))
       return false;
-    if (__isset.sourceId != rhs.__isset.sourceId)
+    if (!(sourceId == rhs.sourceId))
       return false;
-    else if (__isset.sourceId && !(sourceId == rhs.sourceId))
-      return false;
-    if (__isset.parentId != rhs.__isset.parentId)
-      return false;
-    else if (__isset.parentId && !(parentId == rhs.parentId))
+    if (!(parentId == rhs.parentId))
       return false;
     return true;
   }
