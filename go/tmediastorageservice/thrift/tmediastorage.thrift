@@ -11,35 +11,41 @@ enum TErrorCode{
     EDataExisted = -3
 }
 
-struct TMediaItem{
-    1: TKey uid
-    2: i64 mediaType, // 1= image,2= video,3= audio,4 =gif,
-    3: string name,
-    4: binary rawsdata,
-    5: string mediaurls,
+struct TMediaItem {
+    1:string name,
+    2:i64 mediaType, // 1 = image ; 2 = video; 3 = gif; 
+    3:string url,
+    4:i64 idmedia // == idpost
+    5:i64 idpost,
+    6:i64 timestamps,
+    7:string extend,
 }
 
 typedef TMediaItem TData
 
 
-struct TDataResult{
+struct TDataResult{ 
     1: TErrorCode errorCode,
     2: optional TMediaItem data
     
 }
 
+struct TListDataResult {
+    1: TErrorCode errorCode,
+    2: list<TMediaItem> listDatas;
+}
+
 service TDataServiceR{
-    TDataResult getData(1: TKey key), 
+    TDataResult getData(1: TKey key),
 }
 
 service TDataService{
     TDataResult getData(1: TKey key), 
     TErrorCode putData(1: TKey key, 2: TMediaItem data)
-    TErrorCode removeData(1:TKey key)
+    TErrorCode removeData(1:TKey key),
+    TListDataResult getListData(1:list<TKey> listkey),
 }
 
 service TMediaStorageService extends TDataService{
     
 }
-
-

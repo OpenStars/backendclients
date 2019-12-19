@@ -35,15 +35,20 @@ class TDataServiceHandler : virtual public TDataServiceIf {
     printf("removeData\n");
   }
 
+  void getListData(TListDataResult& _return, const std::vector<TKey> & listkey) {
+    // Your implementation goes here
+    printf("getListData\n");
+  }
+
 };
 
 int main(int argc, char **argv) {
   int port = 9090;
-  ::std::shared_ptr<TDataServiceHandler> handler(new TDataServiceHandler());
-  ::std::shared_ptr<TProcessor> processor(new TDataServiceProcessor(handler));
-  ::std::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  ::std::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  ::std::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  ::apache::thrift::stdcxx::shared_ptr<TDataServiceHandler> handler(new TDataServiceHandler());
+  ::apache::thrift::stdcxx::shared_ptr<TProcessor> processor(new TDataServiceProcessor(handler));
+  ::apache::thrift::stdcxx::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+  ::apache::thrift::stdcxx::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+  ::apache::thrift::stdcxx::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   server.serve();
