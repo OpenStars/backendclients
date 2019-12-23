@@ -24,6 +24,7 @@ struct TNotifyItem{
     12: i64 timestamps,
     13: i64 sourceId,
     14: i64 parentId,
+    15: map<string,string> mapData,
 }
 
 typedef TNotifyItem TData

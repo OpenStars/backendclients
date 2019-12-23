@@ -44,7 +44,7 @@ class TDataResult;
 class TListDataResult;
 
 typedef struct _TNotifyItem__isset {
-  _TNotifyItem__isset() : key(false), subjectId(false), actionId(false), objectId(false), subjectType(false), extendSubjectId(false), message(false), extend(false), seen(false), timestamps(false), sourceId(false), parentId(false) {}
+  _TNotifyItem__isset() : key(false), subjectId(false), actionId(false), objectId(false), subjectType(false), extendSubjectId(false), message(false), extend(false), seen(false), timestamps(false), sourceId(false), parentId(false), mapData(false) {}
   bool key :1;
   bool subjectId :1;
   bool actionId :1;
@@ -57,6 +57,7 @@ typedef struct _TNotifyItem__isset {
   bool timestamps :1;
   bool sourceId :1;
   bool parentId :1;
+  bool mapData :1;
 } _TNotifyItem__isset;
 
 class TNotifyItem : public virtual ::apache::thrift::TBase {
@@ -80,6 +81,7 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
   int64_t timestamps;
   int64_t sourceId;
   int64_t parentId;
+  std::map<std::string, std::string>  mapData;
 
   _TNotifyItem__isset __isset;
 
@@ -106,6 +108,8 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
   void __set_sourceId(const int64_t val);
 
   void __set_parentId(const int64_t val);
+
+  void __set_mapData(const std::map<std::string, std::string> & val);
 
   bool operator == (const TNotifyItem & rhs) const
   {
@@ -134,6 +138,8 @@ class TNotifyItem : public virtual ::apache::thrift::TBase {
     if (!(sourceId == rhs.sourceId))
       return false;
     if (!(parentId == rhs.parentId))
+      return false;
+    if (!(mapData == rhs.mapData))
       return false;
     return true;
   }
