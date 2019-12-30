@@ -114,10 +114,14 @@ void swap(ActionLink &a, ActionLink &b);
 std::ostream& operator<<(std::ostream& out, const ActionLink& obj);
 
 typedef struct _MediaItem__isset {
-  _MediaItem__isset() : name(false), mediaType(false), url(false) {}
+  _MediaItem__isset() : name(false), mediaType(false), url(false), idmedia(false), idpost(false), timestamps(false), extend(false) {}
   bool name :1;
   bool mediaType :1;
   bool url :1;
+  bool idmedia :1;
+  bool idpost :1;
+  bool timestamps :1;
+  bool extend :1;
 } _MediaItem__isset;
 
 class MediaItem : public virtual ::apache::thrift::TBase {
@@ -125,13 +129,17 @@ class MediaItem : public virtual ::apache::thrift::TBase {
 
   MediaItem(const MediaItem&);
   MediaItem& operator=(const MediaItem&);
-  MediaItem() : name(), mediaType(0), url() {
+  MediaItem() : name(), mediaType(0), url(), idmedia(0), idpost(0), timestamps(0), extend() {
   }
 
   virtual ~MediaItem() throw();
   std::string name;
   int64_t mediaType;
   std::string url;
+  int64_t idmedia;
+  int64_t idpost;
+  int64_t timestamps;
+  std::string extend;
 
   _MediaItem__isset __isset;
 
@@ -141,6 +149,14 @@ class MediaItem : public virtual ::apache::thrift::TBase {
 
   void __set_url(const std::string& val);
 
+  void __set_idmedia(const int64_t val);
+
+  void __set_idpost(const int64_t val);
+
+  void __set_timestamps(const int64_t val);
+
+  void __set_extend(const std::string& val);
+
   bool operator == (const MediaItem & rhs) const
   {
     if (!(name == rhs.name))
@@ -148,6 +164,14 @@ class MediaItem : public virtual ::apache::thrift::TBase {
     if (!(mediaType == rhs.mediaType))
       return false;
     if (!(url == rhs.url))
+      return false;
+    if (!(idmedia == rhs.idmedia))
+      return false;
+    if (!(idpost == rhs.idpost))
+      return false;
+    if (!(timestamps == rhs.timestamps))
+      return false;
+    if (!(extend == rhs.extend))
       return false;
     return true;
   }
@@ -168,7 +192,7 @@ void swap(MediaItem &a, MediaItem &b);
 std::ostream& operator<<(std::ostream& out, const MediaItem& obj);
 
 typedef struct _TPostItem__isset {
-  _TPostItem__isset() : idpost(false), uid(false), content(false), listMediaItems(false), idbackground(false), idfeeling(false), privacy(false), friendsexcept(false), specificfriends(false), tagusers(false), locationId(false), timestamps(false), pubkey(false), topubkey(false), touid(false), togroupid(false), actionLinks(false), mediaUrls(false), poolid(false), pageid(false), extend(false), photoUrls(false) {}
+  _TPostItem__isset() : idpost(false), uid(false), content(false), listMediaItems(false), idbackground(false), idfeeling(false), privacy(false), friendsexcept(false), specificfriends(false), tagusers(false), locationId(false), timestamps(false), pubkey(false), touid(false), togroupid(false), actionLinks(false), poolid(false), pageid(false), extend(false), totalReaction(false), totalComment(false), totalShare(false), originPostID(false) {}
   bool idpost :1;
   bool uid :1;
   bool content :1;
@@ -182,15 +206,16 @@ typedef struct _TPostItem__isset {
   bool locationId :1;
   bool timestamps :1;
   bool pubkey :1;
-  bool topubkey :1;
   bool touid :1;
   bool togroupid :1;
   bool actionLinks :1;
-  bool mediaUrls :1;
   bool poolid :1;
   bool pageid :1;
   bool extend :1;
-  bool photoUrls :1;
+  bool totalReaction :1;
+  bool totalComment :1;
+  bool totalShare :1;
+  bool originPostID :1;
 } _TPostItem__isset;
 
 class TPostItem : public virtual ::apache::thrift::TBase {
@@ -198,7 +223,7 @@ class TPostItem : public virtual ::apache::thrift::TBase {
 
   TPostItem(const TPostItem&);
   TPostItem& operator=(const TPostItem&);
-  TPostItem() : idpost(0), uid(0), content(), idbackground(), idfeeling(), privacy(0), locationId(), timestamps(0), pubkey(), topubkey(), touid(0), togroupid(0), poolid(0), pageid(0), extend() {
+  TPostItem() : idpost(0), uid(0), content(), idbackground(), idfeeling(), privacy(0), locationId(), timestamps(0), pubkey(), touid(0), togroupid(0), poolid(0), pageid(0), extend(), totalReaction(0), totalComment(0), totalShare(0), originPostID(0) {
   }
 
   virtual ~TPostItem() throw();
@@ -215,15 +240,16 @@ class TPostItem : public virtual ::apache::thrift::TBase {
   std::string locationId;
   int64_t timestamps;
   std::string pubkey;
-  std::string topubkey;
   int64_t touid;
   int64_t togroupid;
   std::vector<ActionLink>  actionLinks;
-  std::vector<std::string>  mediaUrls;
   int64_t poolid;
   int64_t pageid;
   std::string extend;
-  std::vector<std::string>  photoUrls;
+  int64_t totalReaction;
+  int64_t totalComment;
+  int64_t totalShare;
+  int64_t originPostID;
 
   _TPostItem__isset __isset;
 
@@ -253,15 +279,11 @@ class TPostItem : public virtual ::apache::thrift::TBase {
 
   void __set_pubkey(const std::string& val);
 
-  void __set_topubkey(const std::string& val);
-
   void __set_touid(const int64_t val);
 
   void __set_togroupid(const int64_t val);
 
   void __set_actionLinks(const std::vector<ActionLink> & val);
-
-  void __set_mediaUrls(const std::vector<std::string> & val);
 
   void __set_poolid(const int64_t val);
 
@@ -269,7 +291,13 @@ class TPostItem : public virtual ::apache::thrift::TBase {
 
   void __set_extend(const std::string& val);
 
-  void __set_photoUrls(const std::vector<std::string> & val);
+  void __set_totalReaction(const int64_t val);
+
+  void __set_totalComment(const int64_t val);
+
+  void __set_totalShare(const int64_t val);
+
+  void __set_originPostID(const int64_t val);
 
   bool operator == (const TPostItem & rhs) const
   {
@@ -313,10 +341,6 @@ class TPostItem : public virtual ::apache::thrift::TBase {
       return false;
     if (!(pubkey == rhs.pubkey))
       return false;
-    if (__isset.topubkey != rhs.__isset.topubkey)
-      return false;
-    else if (__isset.topubkey && !(topubkey == rhs.topubkey))
-      return false;
     if (__isset.touid != rhs.__isset.touid)
       return false;
     else if (__isset.touid && !(touid == rhs.touid))
@@ -328,10 +352,6 @@ class TPostItem : public virtual ::apache::thrift::TBase {
     if (__isset.actionLinks != rhs.__isset.actionLinks)
       return false;
     else if (__isset.actionLinks && !(actionLinks == rhs.actionLinks))
-      return false;
-    if (__isset.mediaUrls != rhs.__isset.mediaUrls)
-      return false;
-    else if (__isset.mediaUrls && !(mediaUrls == rhs.mediaUrls))
       return false;
     if (__isset.poolid != rhs.__isset.poolid)
       return false;
@@ -345,9 +365,13 @@ class TPostItem : public virtual ::apache::thrift::TBase {
       return false;
     else if (__isset.extend && !(extend == rhs.extend))
       return false;
-    if (__isset.photoUrls != rhs.__isset.photoUrls)
+    if (!(totalReaction == rhs.totalReaction))
       return false;
-    else if (__isset.photoUrls && !(photoUrls == rhs.photoUrls))
+    if (!(totalComment == rhs.totalComment))
+      return false;
+    if (!(totalShare == rhs.totalShare))
+      return false;
+    if (!(originPostID == rhs.originPostID))
       return false;
     return true;
   }
