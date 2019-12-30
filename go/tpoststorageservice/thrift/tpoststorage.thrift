@@ -45,19 +45,18 @@ struct TPostItem{
     11:optional string locationId, // check in location
     12:i64 timestamps;
     13:string pubkey, //pubkey of user author of this post
-
+    14:optional string topubkey,
     15:optional i64 touid,
     16:optional i64 togroupid,
     17:optional list<ActionLink> actionLinks,
-
+    18:optional list<string> mediaUrls,
     19:optional i64 poolid,
     20:optional i64 pageid,
     21:optional string extend,
-    22:i64 totalReaction,
-    23:i64 totalComment,
-    24:i64 totalShare,
-    25:i64 originPostID,
-    
+    22:optional list<string> photoUrls,
+    23: i64 totalReaction,
+    24: it64 totalCommareent,
+    25: i64 totalShare
 }
 
 typedef TPostItem TData
