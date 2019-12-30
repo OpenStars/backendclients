@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"git.apache.org/thrift.git/lib/go/thrift"
+	"github.com/apache/thrift/lib/go/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -425,7 +425,7 @@ func (p *TDataServiceRProcessor) Process(ctx context.Context, iprot, oprot thrif
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
 	x3.Write(oprot)
 	oprot.WriteMessageEnd()
-	oprot.Flush()
+	oprot.Flush(ctx)
 	return false, x3
 
 }
@@ -442,7 +442,7 @@ func (p *tDataServiceRProcessorGetData) Process(ctx context.Context, seqId int32
 		oprot.WriteMessageBegin("getData", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
-		oprot.Flush()
+		oprot.Flush(ctx)
 		return false, err
 	}
 
@@ -455,7 +455,7 @@ func (p *tDataServiceRProcessorGetData) Process(ctx context.Context, seqId int32
 		oprot.WriteMessageBegin("getData", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
-		oprot.Flush()
+		oprot.Flush(ctx)
 		return true, err2
 	} else {
 		result.Success = retval
@@ -469,7 +469,7 @@ func (p *tDataServiceRProcessorGetData) Process(ctx context.Context, seqId int32
 	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
 		err = err2
 	}
-	if err2 = oprot.Flush(); err == nil && err2 != nil {
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
 		err = err2
 	}
 	if err != nil {
@@ -805,7 +805,7 @@ func (p *TDataServiceProcessor) Process(ctx context.Context, iprot, oprot thrift
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
 	x12.Write(oprot)
 	oprot.WriteMessageEnd()
-	oprot.Flush()
+	oprot.Flush(ctx)
 	return false, x12
 
 }
@@ -822,7 +822,7 @@ func (p *tDataServiceProcessorGetTokenByPubkey) Process(ctx context.Context, seq
 		oprot.WriteMessageBegin("getTokenByPubkey", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
-		oprot.Flush()
+		oprot.Flush(ctx)
 		return false, err
 	}
 
@@ -835,7 +835,7 @@ func (p *tDataServiceProcessorGetTokenByPubkey) Process(ctx context.Context, seq
 		oprot.WriteMessageBegin("getTokenByPubkey", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
-		oprot.Flush()
+		oprot.Flush(ctx)
 		return true, err2
 	} else {
 		result.Success = retval
@@ -849,7 +849,7 @@ func (p *tDataServiceProcessorGetTokenByPubkey) Process(ctx context.Context, seq
 	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
 		err = err2
 	}
-	if err2 = oprot.Flush(); err == nil && err2 != nil {
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
 		err = err2
 	}
 	if err != nil {
@@ -870,7 +870,7 @@ func (p *tDataServiceProcessorGetPubkeyByToken) Process(ctx context.Context, seq
 		oprot.WriteMessageBegin("getPubkeyByToken", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
-		oprot.Flush()
+		oprot.Flush(ctx)
 		return false, err
 	}
 
@@ -883,7 +883,7 @@ func (p *tDataServiceProcessorGetPubkeyByToken) Process(ctx context.Context, seq
 		oprot.WriteMessageBegin("getPubkeyByToken", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
-		oprot.Flush()
+		oprot.Flush(ctx)
 		return true, err2
 	} else {
 		result.Success = retval
@@ -897,7 +897,7 @@ func (p *tDataServiceProcessorGetPubkeyByToken) Process(ctx context.Context, seq
 	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
 		err = err2
 	}
-	if err2 = oprot.Flush(); err == nil && err2 != nil {
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
 		err = err2
 	}
 	if err != nil {
@@ -918,7 +918,7 @@ func (p *tDataServiceProcessorPutData) Process(ctx context.Context, seqId int32,
 		oprot.WriteMessageBegin("putData", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
-		oprot.Flush()
+		oprot.Flush(ctx)
 		return false, err
 	}
 
@@ -931,7 +931,7 @@ func (p *tDataServiceProcessorPutData) Process(ctx context.Context, seqId int32,
 		oprot.WriteMessageBegin("putData", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
-		oprot.Flush()
+		oprot.Flush(ctx)
 		return true, err2
 	} else {
 		result.Success = &retval
@@ -945,7 +945,7 @@ func (p *tDataServiceProcessorPutData) Process(ctx context.Context, seqId int32,
 	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
 		err = err2
 	}
-	if err2 = oprot.Flush(); err == nil && err2 != nil {
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
 		err = err2
 	}
 	if err != nil {

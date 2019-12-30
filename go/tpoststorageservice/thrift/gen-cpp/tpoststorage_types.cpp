@@ -195,22 +195,6 @@ void MediaItem::__set_mediaType(const int64_t val) {
 void MediaItem::__set_url(const std::string& val) {
   this->url = val;
 }
-
-void MediaItem::__set_idmedia(const int64_t val) {
-  this->idmedia = val;
-}
-
-void MediaItem::__set_idpost(const int64_t val) {
-  this->idpost = val;
-}
-
-void MediaItem::__set_timestamps(const int64_t val) {
-  this->timestamps = val;
-}
-
-void MediaItem::__set_extend(const std::string& val) {
-  this->extend = val;
-}
 std::ostream& operator<<(std::ostream& out, const MediaItem& obj)
 {
   obj.printTo(out);
@@ -263,38 +247,6 @@ uint32_t MediaItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->idmedia);
-          this->__isset.idmedia = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 5:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->idpost);
-          this->__isset.idpost = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 6:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->timestamps);
-          this->__isset.timestamps = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 7:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->extend);
-          this->__isset.extend = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -324,22 +276,6 @@ uint32_t MediaItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeString(this->url);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("idmedia", ::apache::thrift::protocol::T_I64, 4);
-  xfer += oprot->writeI64(this->idmedia);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("idpost", ::apache::thrift::protocol::T_I64, 5);
-  xfer += oprot->writeI64(this->idpost);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("timestamps", ::apache::thrift::protocol::T_I64, 6);
-  xfer += oprot->writeI64(this->timestamps);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("extend", ::apache::thrift::protocol::T_STRING, 7);
-  xfer += oprot->writeString(this->extend);
-  xfer += oprot->writeFieldEnd();
-
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -350,10 +286,6 @@ void swap(MediaItem &a, MediaItem &b) {
   swap(a.name, b.name);
   swap(a.mediaType, b.mediaType);
   swap(a.url, b.url);
-  swap(a.idmedia, b.idmedia);
-  swap(a.idpost, b.idpost);
-  swap(a.timestamps, b.timestamps);
-  swap(a.extend, b.extend);
   swap(a.__isset, b.__isset);
 }
 
@@ -361,20 +293,12 @@ MediaItem::MediaItem(const MediaItem& other2) {
   name = other2.name;
   mediaType = other2.mediaType;
   url = other2.url;
-  idmedia = other2.idmedia;
-  idpost = other2.idpost;
-  timestamps = other2.timestamps;
-  extend = other2.extend;
   __isset = other2.__isset;
 }
 MediaItem& MediaItem::operator=(const MediaItem& other3) {
   name = other3.name;
   mediaType = other3.mediaType;
   url = other3.url;
-  idmedia = other3.idmedia;
-  idpost = other3.idpost;
-  timestamps = other3.timestamps;
-  extend = other3.extend;
   __isset = other3.__isset;
   return *this;
 }
@@ -384,10 +308,6 @@ void MediaItem::printTo(std::ostream& out) const {
   out << "name=" << to_string(name);
   out << ", " << "mediaType=" << to_string(mediaType);
   out << ", " << "url=" << to_string(url);
-  out << ", " << "idmedia=" << to_string(idmedia);
-  out << ", " << "idpost=" << to_string(idpost);
-  out << ", " << "timestamps=" << to_string(timestamps);
-  out << ", " << "extend=" << to_string(extend);
   out << ")";
 }
 
@@ -483,6 +403,22 @@ __isset.pageid = true;
 void TPostItem::__set_extend(const std::string& val) {
   this->extend = val;
 __isset.extend = true;
+}
+
+void TPostItem::__set_totalReaction(const int64_t val) {
+  this->totalReaction = val;
+}
+
+void TPostItem::__set_totalComment(const int64_t val) {
+  this->totalComment = val;
+}
+
+void TPostItem::__set_totalShare(const int64_t val) {
+  this->totalShare = val;
+}
+
+void TPostItem::__set_originPostID(const int64_t val) {
+  this->originPostID = val;
 }
 std::ostream& operator<<(std::ostream& out, const TPostItem& obj)
 {
@@ -724,6 +660,38 @@ uint32_t TPostItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
+      case 22:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->totalReaction);
+          this->__isset.totalReaction = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 23:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->totalComment);
+          this->__isset.totalComment = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 24:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->totalShare);
+          this->__isset.totalShare = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 25:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->originPostID);
+          this->__isset.originPostID = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -870,6 +838,22 @@ uint32_t TPostItem::write(::apache::thrift::protocol::TProtocol* oprot) const {
     xfer += oprot->writeString(this->extend);
     xfer += oprot->writeFieldEnd();
   }
+  xfer += oprot->writeFieldBegin("totalReaction", ::apache::thrift::protocol::T_I64, 22);
+  xfer += oprot->writeI64(this->totalReaction);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalComment", ::apache::thrift::protocol::T_I64, 23);
+  xfer += oprot->writeI64(this->totalComment);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalShare", ::apache::thrift::protocol::T_I64, 24);
+  xfer += oprot->writeI64(this->totalShare);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("originPostID", ::apache::thrift::protocol::T_I64, 25);
+  xfer += oprot->writeI64(this->originPostID);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -896,6 +880,10 @@ void swap(TPostItem &a, TPostItem &b) {
   swap(a.poolid, b.poolid);
   swap(a.pageid, b.pageid);
   swap(a.extend, b.extend);
+  swap(a.totalReaction, b.totalReaction);
+  swap(a.totalComment, b.totalComment);
+  swap(a.totalShare, b.totalShare);
+  swap(a.originPostID, b.originPostID);
   swap(a.__isset, b.__isset);
 }
 
@@ -919,6 +907,10 @@ TPostItem::TPostItem(const TPostItem& other34) {
   poolid = other34.poolid;
   pageid = other34.pageid;
   extend = other34.extend;
+  totalReaction = other34.totalReaction;
+  totalComment = other34.totalComment;
+  totalShare = other34.totalShare;
+  originPostID = other34.originPostID;
   __isset = other34.__isset;
 }
 TPostItem& TPostItem::operator=(const TPostItem& other35) {
@@ -941,6 +933,10 @@ TPostItem& TPostItem::operator=(const TPostItem& other35) {
   poolid = other35.poolid;
   pageid = other35.pageid;
   extend = other35.extend;
+  totalReaction = other35.totalReaction;
+  totalComment = other35.totalComment;
+  totalShare = other35.totalShare;
+  originPostID = other35.originPostID;
   __isset = other35.__isset;
   return *this;
 }
@@ -966,6 +962,10 @@ void TPostItem::printTo(std::ostream& out) const {
   out << ", " << "poolid="; (__isset.poolid ? (out << to_string(poolid)) : (out << "<null>"));
   out << ", " << "pageid="; (__isset.pageid ? (out << to_string(pageid)) : (out << "<null>"));
   out << ", " << "extend="; (__isset.extend ? (out << to_string(extend)) : (out << "<null>"));
+  out << ", " << "totalReaction=" << to_string(totalReaction);
+  out << ", " << "totalComment=" << to_string(totalComment);
+  out << ", " << "totalShare=" << to_string(totalShare);
+  out << ", " << "originPostID=" << to_string(originPostID);
   out << ")";
 }
 
