@@ -44,7 +44,7 @@ class TDataResult;
 class TListDataResult;
 
 typedef struct _TMediaItem__isset {
-  _TMediaItem__isset() : name(false), mediaType(false), url(false), idmedia(false), idpost(false), timestamps(false), extend(false) {}
+  _TMediaItem__isset() : name(false), mediaType(false), url(false), idmedia(false), idpost(false), timestamps(false), extend(false), mapExtend(false) {}
   bool name :1;
   bool mediaType :1;
   bool url :1;
@@ -52,6 +52,7 @@ typedef struct _TMediaItem__isset {
   bool idpost :1;
   bool timestamps :1;
   bool extend :1;
+  bool mapExtend :1;
 } _TMediaItem__isset;
 
 class TMediaItem : public virtual ::apache::thrift::TBase {
@@ -70,6 +71,7 @@ class TMediaItem : public virtual ::apache::thrift::TBase {
   int64_t idpost;
   int64_t timestamps;
   std::string extend;
+  std::map<std::string, std::string>  mapExtend;
 
   _TMediaItem__isset __isset;
 
@@ -87,6 +89,8 @@ class TMediaItem : public virtual ::apache::thrift::TBase {
 
   void __set_extend(const std::string& val);
 
+  void __set_mapExtend(const std::map<std::string, std::string> & val);
+
   bool operator == (const TMediaItem & rhs) const
   {
     if (!(name == rhs.name))
@@ -102,6 +106,8 @@ class TMediaItem : public virtual ::apache::thrift::TBase {
     if (!(timestamps == rhs.timestamps))
       return false;
     if (!(extend == rhs.extend))
+      return false;
+    if (!(mapExtend == rhs.mapExtend))
       return false;
     return true;
   }

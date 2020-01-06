@@ -19,6 +19,7 @@ struct TMediaItem {
     5:i64 idpost,
     6:i64 timestamps,
     7:string extend,
+    8:map<string,string> mapExtend,
 }
 
 typedef TMediaItem TData

@@ -318,9 +318,9 @@ uint32_t TDataService_putData_result::read(::apache::thrift::protocol::TProtocol
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast14;
-          xfer += iprot->readI32(ecast14);
-          this->success = (TErrorCode::type)ecast14;
+          int32_t ecast22;
+          xfer += iprot->readI32(ecast22);
+          this->success = (TErrorCode::type)ecast22;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -382,9 +382,9 @@ uint32_t TDataService_putData_presult::read(::apache::thrift::protocol::TProtoco
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast15;
-          xfer += iprot->readI32(ecast15);
-          (*(this->success)) = (TErrorCode::type)ecast15;
+          int32_t ecast23;
+          xfer += iprot->readI32(ecast23);
+          (*(this->success)) = (TErrorCode::type)ecast23;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -509,9 +509,9 @@ uint32_t TDataService_removeData_result::read(::apache::thrift::protocol::TProto
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast16;
-          xfer += iprot->readI32(ecast16);
-          this->success = (TErrorCode::type)ecast16;
+          int32_t ecast24;
+          xfer += iprot->readI32(ecast24);
+          this->success = (TErrorCode::type)ecast24;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -573,9 +573,9 @@ uint32_t TDataService_removeData_presult::read(::apache::thrift::protocol::TProt
     {
       case 0:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast17;
-          xfer += iprot->readI32(ecast17);
-          (*(this->success)) = (TErrorCode::type)ecast17;
+          int32_t ecast25;
+          xfer += iprot->readI32(ecast25);
+          (*(this->success)) = (TErrorCode::type)ecast25;
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -623,14 +623,14 @@ uint32_t TDataService_getListData_args::read(::apache::thrift::protocol::TProtoc
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->listkey.clear();
-            uint32_t _size18;
-            ::apache::thrift::protocol::TType _etype21;
-            xfer += iprot->readListBegin(_etype21, _size18);
-            this->listkey.resize(_size18);
-            uint32_t _i22;
-            for (_i22 = 0; _i22 < _size18; ++_i22)
+            uint32_t _size26;
+            ::apache::thrift::protocol::TType _etype29;
+            xfer += iprot->readListBegin(_etype29, _size26);
+            this->listkey.resize(_size26);
+            uint32_t _i30;
+            for (_i30 = 0; _i30 < _size26; ++_i30)
             {
-              xfer += iprot->readI64(this->listkey[_i22]);
+              xfer += iprot->readI64(this->listkey[_i30]);
             }
             xfer += iprot->readListEnd();
           }
@@ -659,10 +659,10 @@ uint32_t TDataService_getListData_args::write(::apache::thrift::protocol::TProto
   xfer += oprot->writeFieldBegin("listkey", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->listkey.size()));
-    std::vector<TKey> ::const_iterator _iter23;
-    for (_iter23 = this->listkey.begin(); _iter23 != this->listkey.end(); ++_iter23)
+    std::vector<TKey> ::const_iterator _iter31;
+    for (_iter31 = this->listkey.begin(); _iter31 != this->listkey.end(); ++_iter31)
     {
-      xfer += oprot->writeI64((*_iter23));
+      xfer += oprot->writeI64((*_iter31));
     }
     xfer += oprot->writeListEnd();
   }
@@ -686,10 +686,10 @@ uint32_t TDataService_getListData_pargs::write(::apache::thrift::protocol::TProt
   xfer += oprot->writeFieldBegin("listkey", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>((*(this->listkey)).size()));
-    std::vector<TKey> ::const_iterator _iter24;
-    for (_iter24 = (*(this->listkey)).begin(); _iter24 != (*(this->listkey)).end(); ++_iter24)
+    std::vector<TKey> ::const_iterator _iter32;
+    for (_iter32 = (*(this->listkey)).begin(); _iter32 != (*(this->listkey)).end(); ++_iter32)
     {
-      xfer += oprot->writeI64((*_iter24));
+      xfer += oprot->writeI64((*_iter32));
     }
     xfer += oprot->writeListEnd();
   }
