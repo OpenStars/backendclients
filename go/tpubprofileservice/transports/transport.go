@@ -25,7 +25,10 @@ func init() {
 
 //GetPubProfileServiceBinaryClient client by host:port
 func GetPubProfileServiceBinaryClient(aHost, aPort string) *thriftpoolv2.ThriftSocketClient {
-	client, _ := mPubProfileServiceBinaryMapPool.Get(aHost, aPort).Get()
+	client, err := mPubProfileServiceBinaryMapPool.Get(aHost, aPort).Get()
+	if err != nil {
+		log.Println("GetPubProfileServiceBinaryClient err", err)
+	}
 	return client
 }
 
