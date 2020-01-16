@@ -834,20 +834,10 @@ func (p *OwnerData) String() string {
 //  - UID
 //  - Content
 //  - ListMediaItems
-//  - Idbackground
-//  - Idfeeling
 //  - Privacy
-//  - Friendsexcept
-//  - Specificfriends
-//  - Tagusers
-//  - LocationId
 //  - Timestamps
 //  - Pubkey
-//  - Touid
-//  - Togroupid
 //  - ActionLinks
-//  - Poolid
-//  - Pageid
 //  - Extend
 //  - TotalReaction
 //  - TotalComment
@@ -860,22 +850,14 @@ type TPostItem struct {
   UID int64 `thrift:"uid,2" db:"uid" json:"uid"`
   Content string `thrift:"content,3" db:"content" json:"content"`
   ListMediaItems []*MediaItem `thrift:"listMediaItems,4" db:"listMediaItems" json:"listMediaItems,omitempty"`
-  Idbackground *string `thrift:"idbackground,5" db:"idbackground" json:"idbackground,omitempty"`
-  Idfeeling *string `thrift:"idfeeling,6" db:"idfeeling" json:"idfeeling,omitempty"`
+  // unused fields # 5 to 6
   Privacy int64 `thrift:"privacy,7" db:"privacy" json:"privacy"`
-  Friendsexcept []int64 `thrift:"friendsexcept,8" db:"friendsexcept" json:"friendsexcept,omitempty"`
-  Specificfriends []int64 `thrift:"specificfriends,9" db:"specificfriends" json:"specificfriends,omitempty"`
-  Tagusers []int64 `thrift:"tagusers,10" db:"tagusers" json:"tagusers,omitempty"`
-  LocationId *string `thrift:"locationId,11" db:"locationId" json:"locationId,omitempty"`
+  // unused fields # 8 to 11
   Timestamps int64 `thrift:"timestamps,12" db:"timestamps" json:"timestamps"`
   Pubkey string `thrift:"pubkey,13" db:"pubkey" json:"pubkey"`
-  // unused field # 14
-  Touid *int64 `thrift:"touid,15" db:"touid" json:"touid,omitempty"`
-  Togroupid *int64 `thrift:"togroupid,16" db:"togroupid" json:"togroupid,omitempty"`
+  // unused fields # 14 to 16
   ActionLinks []*ActionLink `thrift:"actionLinks,17" db:"actionLinks" json:"actionLinks,omitempty"`
-  // unused field # 18
-  Poolid *int64 `thrift:"poolid,19" db:"poolid" json:"poolid,omitempty"`
-  Pageid *int64 `thrift:"pageid,20" db:"pageid" json:"pageid,omitempty"`
+  // unused fields # 18 to 20
   Extend *string `thrift:"extend,21" db:"extend" json:"extend,omitempty"`
   TotalReaction int64 `thrift:"totalReaction,22" db:"totalReaction" json:"totalReaction"`
   TotalComment int64 `thrift:"totalComment,23" db:"totalComment" json:"totalComment"`
@@ -906,45 +888,9 @@ var TPostItem_ListMediaItems_DEFAULT []*MediaItem
 func (p *TPostItem) GetListMediaItems() []*MediaItem {
   return p.ListMediaItems
 }
-var TPostItem_Idbackground_DEFAULT string
-func (p *TPostItem) GetIdbackground() string {
-  if !p.IsSetIdbackground() {
-    return TPostItem_Idbackground_DEFAULT
-  }
-return *p.Idbackground
-}
-var TPostItem_Idfeeling_DEFAULT string
-func (p *TPostItem) GetIdfeeling() string {
-  if !p.IsSetIdfeeling() {
-    return TPostItem_Idfeeling_DEFAULT
-  }
-return *p.Idfeeling
-}
 
 func (p *TPostItem) GetPrivacy() int64 {
   return p.Privacy
-}
-var TPostItem_Friendsexcept_DEFAULT []int64
-
-func (p *TPostItem) GetFriendsexcept() []int64 {
-  return p.Friendsexcept
-}
-var TPostItem_Specificfriends_DEFAULT []int64
-
-func (p *TPostItem) GetSpecificfriends() []int64 {
-  return p.Specificfriends
-}
-var TPostItem_Tagusers_DEFAULT []int64
-
-func (p *TPostItem) GetTagusers() []int64 {
-  return p.Tagusers
-}
-var TPostItem_LocationId_DEFAULT string
-func (p *TPostItem) GetLocationId() string {
-  if !p.IsSetLocationId() {
-    return TPostItem_LocationId_DEFAULT
-  }
-return *p.LocationId
 }
 
 func (p *TPostItem) GetTimestamps() int64 {
@@ -954,38 +900,10 @@ func (p *TPostItem) GetTimestamps() int64 {
 func (p *TPostItem) GetPubkey() string {
   return p.Pubkey
 }
-var TPostItem_Touid_DEFAULT int64
-func (p *TPostItem) GetTouid() int64 {
-  if !p.IsSetTouid() {
-    return TPostItem_Touid_DEFAULT
-  }
-return *p.Touid
-}
-var TPostItem_Togroupid_DEFAULT int64
-func (p *TPostItem) GetTogroupid() int64 {
-  if !p.IsSetTogroupid() {
-    return TPostItem_Togroupid_DEFAULT
-  }
-return *p.Togroupid
-}
 var TPostItem_ActionLinks_DEFAULT []*ActionLink
 
 func (p *TPostItem) GetActionLinks() []*ActionLink {
   return p.ActionLinks
-}
-var TPostItem_Poolid_DEFAULT int64
-func (p *TPostItem) GetPoolid() int64 {
-  if !p.IsSetPoolid() {
-    return TPostItem_Poolid_DEFAULT
-  }
-return *p.Poolid
-}
-var TPostItem_Pageid_DEFAULT int64
-func (p *TPostItem) GetPageid() int64 {
-  if !p.IsSetPageid() {
-    return TPostItem_Pageid_DEFAULT
-  }
-return *p.Pageid
 }
 var TPostItem_Extend_DEFAULT string
 func (p *TPostItem) GetExtend() string {
@@ -1025,48 +943,8 @@ func (p *TPostItem) IsSetListMediaItems() bool {
   return p.ListMediaItems != nil
 }
 
-func (p *TPostItem) IsSetIdbackground() bool {
-  return p.Idbackground != nil
-}
-
-func (p *TPostItem) IsSetIdfeeling() bool {
-  return p.Idfeeling != nil
-}
-
-func (p *TPostItem) IsSetFriendsexcept() bool {
-  return p.Friendsexcept != nil
-}
-
-func (p *TPostItem) IsSetSpecificfriends() bool {
-  return p.Specificfriends != nil
-}
-
-func (p *TPostItem) IsSetTagusers() bool {
-  return p.Tagusers != nil
-}
-
-func (p *TPostItem) IsSetLocationId() bool {
-  return p.LocationId != nil
-}
-
-func (p *TPostItem) IsSetTouid() bool {
-  return p.Touid != nil
-}
-
-func (p *TPostItem) IsSetTogroupid() bool {
-  return p.Togroupid != nil
-}
-
 func (p *TPostItem) IsSetActionLinks() bool {
   return p.ActionLinks != nil
-}
-
-func (p *TPostItem) IsSetPoolid() bool {
-  return p.Poolid != nil
-}
-
-func (p *TPostItem) IsSetPageid() bool {
-  return p.Pageid != nil
 }
 
 func (p *TPostItem) IsSetExtend() bool {
@@ -1130,69 +1008,9 @@ func (p *TPostItem) Read(iprot thrift.TProtocol) error {
           return err
         }
       }
-    case 5:
-      if fieldTypeId == thrift.STRING {
-        if err := p.ReadField5(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
-    case 6:
-      if fieldTypeId == thrift.STRING {
-        if err := p.ReadField6(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
     case 7:
       if fieldTypeId == thrift.I64 {
         if err := p.ReadField7(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
-    case 8:
-      if fieldTypeId == thrift.LIST {
-        if err := p.ReadField8(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
-    case 9:
-      if fieldTypeId == thrift.LIST {
-        if err := p.ReadField9(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
-    case 10:
-      if fieldTypeId == thrift.LIST {
-        if err := p.ReadField10(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
-    case 11:
-      if fieldTypeId == thrift.STRING {
-        if err := p.ReadField11(iprot); err != nil {
           return err
         }
       } else {
@@ -1220,49 +1038,9 @@ func (p *TPostItem) Read(iprot thrift.TProtocol) error {
           return err
         }
       }
-    case 15:
-      if fieldTypeId == thrift.I64 {
-        if err := p.ReadField15(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
-    case 16:
-      if fieldTypeId == thrift.I64 {
-        if err := p.ReadField16(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
     case 17:
       if fieldTypeId == thrift.LIST {
         if err := p.ReadField17(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
-    case 19:
-      if fieldTypeId == thrift.I64 {
-        if err := p.ReadField19(iprot); err != nil {
-          return err
-        }
-      } else {
-        if err := iprot.Skip(fieldTypeId); err != nil {
-          return err
-        }
-      }
-    case 20:
-      if fieldTypeId == thrift.I64 {
-        if err := p.ReadField20(iprot); err != nil {
           return err
         }
       } else {
@@ -1403,104 +1181,11 @@ func (p *TPostItem)  ReadField4(iprot thrift.TProtocol) error {
   return nil
 }
 
-func (p *TPostItem)  ReadField5(iprot thrift.TProtocol) error {
-  if v, err := iprot.ReadString(); err != nil {
-  return thrift.PrependError("error reading field 5: ", err)
-} else {
-  p.Idbackground = &v
-}
-  return nil
-}
-
-func (p *TPostItem)  ReadField6(iprot thrift.TProtocol) error {
-  if v, err := iprot.ReadString(); err != nil {
-  return thrift.PrependError("error reading field 6: ", err)
-} else {
-  p.Idfeeling = &v
-}
-  return nil
-}
-
 func (p *TPostItem)  ReadField7(iprot thrift.TProtocol) error {
   if v, err := iprot.ReadI64(); err != nil {
   return thrift.PrependError("error reading field 7: ", err)
 } else {
   p.Privacy = v
-}
-  return nil
-}
-
-func (p *TPostItem)  ReadField8(iprot thrift.TProtocol) error {
-  _, size, err := iprot.ReadListBegin()
-  if err != nil {
-    return thrift.PrependError("error reading list begin: ", err)
-  }
-  tSlice := make([]int64, 0, size)
-  p.Friendsexcept =  tSlice
-  for i := 0; i < size; i ++ {
-var _elem3 int64
-    if v, err := iprot.ReadI64(); err != nil {
-    return thrift.PrependError("error reading field 0: ", err)
-} else {
-    _elem3 = v
-}
-    p.Friendsexcept = append(p.Friendsexcept, _elem3)
-  }
-  if err := iprot.ReadListEnd(); err != nil {
-    return thrift.PrependError("error reading list end: ", err)
-  }
-  return nil
-}
-
-func (p *TPostItem)  ReadField9(iprot thrift.TProtocol) error {
-  _, size, err := iprot.ReadListBegin()
-  if err != nil {
-    return thrift.PrependError("error reading list begin: ", err)
-  }
-  tSlice := make([]int64, 0, size)
-  p.Specificfriends =  tSlice
-  for i := 0; i < size; i ++ {
-var _elem4 int64
-    if v, err := iprot.ReadI64(); err != nil {
-    return thrift.PrependError("error reading field 0: ", err)
-} else {
-    _elem4 = v
-}
-    p.Specificfriends = append(p.Specificfriends, _elem4)
-  }
-  if err := iprot.ReadListEnd(); err != nil {
-    return thrift.PrependError("error reading list end: ", err)
-  }
-  return nil
-}
-
-func (p *TPostItem)  ReadField10(iprot thrift.TProtocol) error {
-  _, size, err := iprot.ReadListBegin()
-  if err != nil {
-    return thrift.PrependError("error reading list begin: ", err)
-  }
-  tSlice := make([]int64, 0, size)
-  p.Tagusers =  tSlice
-  for i := 0; i < size; i ++ {
-var _elem5 int64
-    if v, err := iprot.ReadI64(); err != nil {
-    return thrift.PrependError("error reading field 0: ", err)
-} else {
-    _elem5 = v
-}
-    p.Tagusers = append(p.Tagusers, _elem5)
-  }
-  if err := iprot.ReadListEnd(); err != nil {
-    return thrift.PrependError("error reading list end: ", err)
-  }
-  return nil
-}
-
-func (p *TPostItem)  ReadField11(iprot thrift.TProtocol) error {
-  if v, err := iprot.ReadString(); err != nil {
-  return thrift.PrependError("error reading field 11: ", err)
-} else {
-  p.LocationId = &v
 }
   return nil
 }
@@ -1523,24 +1208,6 @@ func (p *TPostItem)  ReadField13(iprot thrift.TProtocol) error {
   return nil
 }
 
-func (p *TPostItem)  ReadField15(iprot thrift.TProtocol) error {
-  if v, err := iprot.ReadI64(); err != nil {
-  return thrift.PrependError("error reading field 15: ", err)
-} else {
-  p.Touid = &v
-}
-  return nil
-}
-
-func (p *TPostItem)  ReadField16(iprot thrift.TProtocol) error {
-  if v, err := iprot.ReadI64(); err != nil {
-  return thrift.PrependError("error reading field 16: ", err)
-} else {
-  p.Togroupid = &v
-}
-  return nil
-}
-
 func (p *TPostItem)  ReadField17(iprot thrift.TProtocol) error {
   _, size, err := iprot.ReadListBegin()
   if err != nil {
@@ -1549,33 +1216,15 @@ func (p *TPostItem)  ReadField17(iprot thrift.TProtocol) error {
   tSlice := make([]*ActionLink, 0, size)
   p.ActionLinks =  tSlice
   for i := 0; i < size; i ++ {
-    _elem6 := &ActionLink{}
-    if err := _elem6.Read(iprot); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem6), err)
+    _elem3 := &ActionLink{}
+    if err := _elem3.Read(iprot); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem3), err)
     }
-    p.ActionLinks = append(p.ActionLinks, _elem6)
+    p.ActionLinks = append(p.ActionLinks, _elem3)
   }
   if err := iprot.ReadListEnd(); err != nil {
     return thrift.PrependError("error reading list end: ", err)
   }
-  return nil
-}
-
-func (p *TPostItem)  ReadField19(iprot thrift.TProtocol) error {
-  if v, err := iprot.ReadI64(); err != nil {
-  return thrift.PrependError("error reading field 19: ", err)
-} else {
-  p.Poolid = &v
-}
-  return nil
-}
-
-func (p *TPostItem)  ReadField20(iprot thrift.TProtocol) error {
-  if v, err := iprot.ReadI64(); err != nil {
-  return thrift.PrependError("error reading field 20: ", err)
-} else {
-  p.Pageid = &v
-}
   return nil
 }
 
@@ -1640,19 +1289,19 @@ func (p *TPostItem)  ReadField27(iprot thrift.TProtocol) error {
   tMap := make(map[string]string, size)
   p.MapExtend =  tMap
   for i := 0; i < size; i ++ {
-var _key7 string
+var _key4 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    _key7 = v
+    _key4 = v
 }
-var _val8 string
+var _val5 string
     if v, err := iprot.ReadString(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
-    _val8 = v
+    _val5 = v
 }
-    p.MapExtend[_key7] = _val8
+    p.MapExtend[_key4] = _val5
   }
   if err := iprot.ReadMapEnd(); err != nil {
     return thrift.PrependError("error reading map end: ", err)
@@ -1668,20 +1317,10 @@ func (p *TPostItem) Write(oprot thrift.TProtocol) error {
     if err := p.writeField2(oprot); err != nil { return err }
     if err := p.writeField3(oprot); err != nil { return err }
     if err := p.writeField4(oprot); err != nil { return err }
-    if err := p.writeField5(oprot); err != nil { return err }
-    if err := p.writeField6(oprot); err != nil { return err }
     if err := p.writeField7(oprot); err != nil { return err }
-    if err := p.writeField8(oprot); err != nil { return err }
-    if err := p.writeField9(oprot); err != nil { return err }
-    if err := p.writeField10(oprot); err != nil { return err }
-    if err := p.writeField11(oprot); err != nil { return err }
     if err := p.writeField12(oprot); err != nil { return err }
     if err := p.writeField13(oprot); err != nil { return err }
-    if err := p.writeField15(oprot); err != nil { return err }
-    if err := p.writeField16(oprot); err != nil { return err }
     if err := p.writeField17(oprot); err != nil { return err }
-    if err := p.writeField19(oprot); err != nil { return err }
-    if err := p.writeField20(oprot); err != nil { return err }
     if err := p.writeField21(oprot); err != nil { return err }
     if err := p.writeField22(oprot); err != nil { return err }
     if err := p.writeField23(oprot); err != nil { return err }
@@ -1748,30 +1387,6 @@ func (p *TPostItem) writeField4(oprot thrift.TProtocol) (err error) {
   return err
 }
 
-func (p *TPostItem) writeField5(oprot thrift.TProtocol) (err error) {
-  if p.IsSetIdbackground() {
-    if err := oprot.WriteFieldBegin("idbackground", thrift.STRING, 5); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 5:idbackground: ", p), err) }
-    if err := oprot.WriteString(string(*p.Idbackground)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.idbackground (5) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 5:idbackground: ", p), err) }
-  }
-  return err
-}
-
-func (p *TPostItem) writeField6(oprot thrift.TProtocol) (err error) {
-  if p.IsSetIdfeeling() {
-    if err := oprot.WriteFieldBegin("idfeeling", thrift.STRING, 6); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:idfeeling: ", p), err) }
-    if err := oprot.WriteString(string(*p.Idfeeling)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.idfeeling (6) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 6:idfeeling: ", p), err) }
-  }
-  return err
-}
-
 func (p *TPostItem) writeField7(oprot thrift.TProtocol) (err error) {
   if err := oprot.WriteFieldBegin("privacy", thrift.I64, 7); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write field begin error 7:privacy: ", p), err) }
@@ -1779,78 +1394,6 @@ func (p *TPostItem) writeField7(oprot thrift.TProtocol) (err error) {
   return thrift.PrependError(fmt.Sprintf("%T.privacy (7) field write error: ", p), err) }
   if err := oprot.WriteFieldEnd(); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write field end error 7:privacy: ", p), err) }
-  return err
-}
-
-func (p *TPostItem) writeField8(oprot thrift.TProtocol) (err error) {
-  if p.IsSetFriendsexcept() {
-    if err := oprot.WriteFieldBegin("friendsexcept", thrift.LIST, 8); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:friendsexcept: ", p), err) }
-    if err := oprot.WriteListBegin(thrift.I64, len(p.Friendsexcept)); err != nil {
-      return thrift.PrependError("error writing list begin: ", err)
-    }
-    for _, v := range p.Friendsexcept {
-      if err := oprot.WriteI64(int64(v)); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
-    }
-    if err := oprot.WriteListEnd(); err != nil {
-      return thrift.PrependError("error writing list end: ", err)
-    }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 8:friendsexcept: ", p), err) }
-  }
-  return err
-}
-
-func (p *TPostItem) writeField9(oprot thrift.TProtocol) (err error) {
-  if p.IsSetSpecificfriends() {
-    if err := oprot.WriteFieldBegin("specificfriends", thrift.LIST, 9); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:specificfriends: ", p), err) }
-    if err := oprot.WriteListBegin(thrift.I64, len(p.Specificfriends)); err != nil {
-      return thrift.PrependError("error writing list begin: ", err)
-    }
-    for _, v := range p.Specificfriends {
-      if err := oprot.WriteI64(int64(v)); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
-    }
-    if err := oprot.WriteListEnd(); err != nil {
-      return thrift.PrependError("error writing list end: ", err)
-    }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 9:specificfriends: ", p), err) }
-  }
-  return err
-}
-
-func (p *TPostItem) writeField10(oprot thrift.TProtocol) (err error) {
-  if p.IsSetTagusers() {
-    if err := oprot.WriteFieldBegin("tagusers", thrift.LIST, 10); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:tagusers: ", p), err) }
-    if err := oprot.WriteListBegin(thrift.I64, len(p.Tagusers)); err != nil {
-      return thrift.PrependError("error writing list begin: ", err)
-    }
-    for _, v := range p.Tagusers {
-      if err := oprot.WriteI64(int64(v)); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
-    }
-    if err := oprot.WriteListEnd(); err != nil {
-      return thrift.PrependError("error writing list end: ", err)
-    }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 10:tagusers: ", p), err) }
-  }
-  return err
-}
-
-func (p *TPostItem) writeField11(oprot thrift.TProtocol) (err error) {
-  if p.IsSetLocationId() {
-    if err := oprot.WriteFieldBegin("locationId", thrift.STRING, 11); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 11:locationId: ", p), err) }
-    if err := oprot.WriteString(string(*p.LocationId)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.locationId (11) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 11:locationId: ", p), err) }
-  }
   return err
 }
 
@@ -1874,30 +1417,6 @@ func (p *TPostItem) writeField13(oprot thrift.TProtocol) (err error) {
   return err
 }
 
-func (p *TPostItem) writeField15(oprot thrift.TProtocol) (err error) {
-  if p.IsSetTouid() {
-    if err := oprot.WriteFieldBegin("touid", thrift.I64, 15); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 15:touid: ", p), err) }
-    if err := oprot.WriteI64(int64(*p.Touid)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.touid (15) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 15:touid: ", p), err) }
-  }
-  return err
-}
-
-func (p *TPostItem) writeField16(oprot thrift.TProtocol) (err error) {
-  if p.IsSetTogroupid() {
-    if err := oprot.WriteFieldBegin("togroupid", thrift.I64, 16); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 16:togroupid: ", p), err) }
-    if err := oprot.WriteI64(int64(*p.Togroupid)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.togroupid (16) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 16:togroupid: ", p), err) }
-  }
-  return err
-}
-
 func (p *TPostItem) writeField17(oprot thrift.TProtocol) (err error) {
   if p.IsSetActionLinks() {
     if err := oprot.WriteFieldBegin("actionLinks", thrift.LIST, 17); err != nil {
@@ -1915,30 +1434,6 @@ func (p *TPostItem) writeField17(oprot thrift.TProtocol) (err error) {
     }
     if err := oprot.WriteFieldEnd(); err != nil {
       return thrift.PrependError(fmt.Sprintf("%T write field end error 17:actionLinks: ", p), err) }
-  }
-  return err
-}
-
-func (p *TPostItem) writeField19(oprot thrift.TProtocol) (err error) {
-  if p.IsSetPoolid() {
-    if err := oprot.WriteFieldBegin("poolid", thrift.I64, 19); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 19:poolid: ", p), err) }
-    if err := oprot.WriteI64(int64(*p.Poolid)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.poolid (19) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 19:poolid: ", p), err) }
-  }
-  return err
-}
-
-func (p *TPostItem) writeField20(oprot thrift.TProtocol) (err error) {
-  if p.IsSetPageid() {
-    if err := oprot.WriteFieldBegin("pageid", thrift.I64, 20); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field begin error 20:pageid: ", p), err) }
-    if err := oprot.WriteI64(int64(*p.Pageid)); err != nil {
-    return thrift.PrependError(fmt.Sprintf("%T.pageid (20) field write error: ", p), err) }
-    if err := oprot.WriteFieldEnd(); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T write field end error 20:pageid: ", p), err) }
   }
   return err
 }
@@ -2256,11 +1751,11 @@ func (p *TListDataResult_)  ReadField2(iprot thrift.TProtocol) error {
   tSlice := make([]*TPostItem, 0, size)
   p.ListDatas =  tSlice
   for i := 0; i < size; i ++ {
-    _elem9 := &TPostItem{}
-    if err := _elem9.Read(iprot); err != nil {
-      return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem9), err)
+    _elem6 := &TPostItem{}
+    if err := _elem6.Read(iprot); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T error reading struct: ", _elem6), err)
     }
-    p.ListDatas = append(p.ListDatas, _elem9)
+    p.ListDatas = append(p.ListDatas, _elem6)
   }
   if err := iprot.ReadListEnd(); err != nil {
     return thrift.PrependError("error reading list end: ", err)
@@ -2352,13 +1847,13 @@ func (p *TDataServiceRClient) Client_() thrift.TClient {
 // Parameters:
 //  - Key
 func (p *TDataServiceRClient) GetData(ctx context.Context, key TKey) (r *TDataResult_, err error) {
-  var _args10 TDataServiceRGetDataArgs
-  _args10.Key = key
-  var _result11 TDataServiceRGetDataResult
-  if err = p.Client_().Call(ctx, "getData", &_args10, &_result11); err != nil {
+  var _args7 TDataServiceRGetDataArgs
+  _args7.Key = key
+  var _result8 TDataServiceRGetDataResult
+  if err = p.Client_().Call(ctx, "getData", &_args7, &_result8); err != nil {
     return
   }
-  return _result11.GetSuccess(), nil
+  return _result8.GetSuccess(), nil
 }
 
 type TDataServiceRProcessor struct {
@@ -2381,9 +1876,9 @@ func (p *TDataServiceRProcessor) ProcessorMap() map[string]thrift.TProcessorFunc
 
 func NewTDataServiceRProcessor(handler TDataServiceR) *TDataServiceRProcessor {
 
-  self12 := &TDataServiceRProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
-  self12.processorMap["getData"] = &tDataServiceRProcessorGetData{handler:handler}
-return self12
+  self9 := &TDataServiceRProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
+  self9.processorMap["getData"] = &tDataServiceRProcessorGetData{handler:handler}
+return self9
 }
 
 func (p *TDataServiceRProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2394,12 +1889,12 @@ func (p *TDataServiceRProcessor) Process(ctx context.Context, iprot, oprot thrif
   }
   iprot.Skip(thrift.STRUCT)
   iprot.ReadMessageEnd()
-  x13 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
+  x10 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
   oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-  x13.Write(oprot)
+  x10.Write(oprot)
   oprot.WriteMessageEnd()
   oprot.Flush(ctx)
-  return false, x13
+  return false, x10
 
 }
 
@@ -2691,51 +2186,51 @@ func (p *TDataServiceClient) Client_() thrift.TClient {
 // Parameters:
 //  - Key
 func (p *TDataServiceClient) GetData(ctx context.Context, key TKey) (r *TDataResult_, err error) {
-  var _args15 TDataServiceGetDataArgs
-  _args15.Key = key
-  var _result16 TDataServiceGetDataResult
-  if err = p.Client_().Call(ctx, "getData", &_args15, &_result16); err != nil {
+  var _args12 TDataServiceGetDataArgs
+  _args12.Key = key
+  var _result13 TDataServiceGetDataResult
+  if err = p.Client_().Call(ctx, "getData", &_args12, &_result13); err != nil {
     return
   }
-  return _result16.GetSuccess(), nil
+  return _result13.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Key
 //  - Data
 func (p *TDataServiceClient) PutData(ctx context.Context, key TKey, data *TPostItem) (r TErrorCode, err error) {
-  var _args17 TDataServicePutDataArgs
-  _args17.Key = key
-  _args17.Data = data
-  var _result18 TDataServicePutDataResult
-  if err = p.Client_().Call(ctx, "putData", &_args17, &_result18); err != nil {
+  var _args14 TDataServicePutDataArgs
+  _args14.Key = key
+  _args14.Data = data
+  var _result15 TDataServicePutDataResult
+  if err = p.Client_().Call(ctx, "putData", &_args14, &_result15); err != nil {
     return
   }
-  return _result18.GetSuccess(), nil
+  return _result15.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Key
 func (p *TDataServiceClient) RemoveData(ctx context.Context, key TKey) (r TErrorCode, err error) {
-  var _args19 TDataServiceRemoveDataArgs
-  _args19.Key = key
-  var _result20 TDataServiceRemoveDataResult
-  if err = p.Client_().Call(ctx, "removeData", &_args19, &_result20); err != nil {
+  var _args16 TDataServiceRemoveDataArgs
+  _args16.Key = key
+  var _result17 TDataServiceRemoveDataResult
+  if err = p.Client_().Call(ctx, "removeData", &_args16, &_result17); err != nil {
     return
   }
-  return _result20.GetSuccess(), nil
+  return _result17.GetSuccess(), nil
 }
 
 // Parameters:
 //  - Listkey
 func (p *TDataServiceClient) GetListDatas(ctx context.Context, listkey []TKey) (r *TListDataResult_, err error) {
-  var _args21 TDataServiceGetListDatasArgs
-  _args21.Listkey = listkey
-  var _result22 TDataServiceGetListDatasResult
-  if err = p.Client_().Call(ctx, "getListDatas", &_args21, &_result22); err != nil {
+  var _args18 TDataServiceGetListDatasArgs
+  _args18.Listkey = listkey
+  var _result19 TDataServiceGetListDatasResult
+  if err = p.Client_().Call(ctx, "getListDatas", &_args18, &_result19); err != nil {
     return
   }
-  return _result22.GetSuccess(), nil
+  return _result19.GetSuccess(), nil
 }
 
 type TDataServiceProcessor struct {
@@ -2758,12 +2253,12 @@ func (p *TDataServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunct
 
 func NewTDataServiceProcessor(handler TDataService) *TDataServiceProcessor {
 
-  self23 := &TDataServiceProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
-  self23.processorMap["getData"] = &tDataServiceProcessorGetData{handler:handler}
-  self23.processorMap["putData"] = &tDataServiceProcessorPutData{handler:handler}
-  self23.processorMap["removeData"] = &tDataServiceProcessorRemoveData{handler:handler}
-  self23.processorMap["getListDatas"] = &tDataServiceProcessorGetListDatas{handler:handler}
-return self23
+  self20 := &TDataServiceProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
+  self20.processorMap["getData"] = &tDataServiceProcessorGetData{handler:handler}
+  self20.processorMap["putData"] = &tDataServiceProcessorPutData{handler:handler}
+  self20.processorMap["removeData"] = &tDataServiceProcessorRemoveData{handler:handler}
+  self20.processorMap["getListDatas"] = &tDataServiceProcessorGetListDatas{handler:handler}
+return self20
 }
 
 func (p *TDataServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2774,12 +2269,12 @@ func (p *TDataServiceProcessor) Process(ctx context.Context, iprot, oprot thrift
   }
   iprot.Skip(thrift.STRUCT)
   iprot.ReadMessageEnd()
-  x24 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
+  x21 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
   oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-  x24.Write(oprot)
+  x21.Write(oprot)
   oprot.WriteMessageEnd()
   oprot.Flush(ctx)
-  return false, x24
+  return false, x21
 
 }
 
@@ -3659,14 +3154,14 @@ func (p *TDataServiceGetListDatasArgs)  ReadField1(iprot thrift.TProtocol) error
   tSlice := make([]TKey, 0, size)
   p.Listkey =  tSlice
   for i := 0; i < size; i ++ {
-var _elem25 TKey
+var _elem22 TKey
     if v, err := iprot.ReadI64(); err != nil {
     return thrift.PrependError("error reading field 0: ", err)
 } else {
     temp := TKey(v)
-    _elem25 = temp
+    _elem22 = temp
 }
-    p.Listkey = append(p.Listkey, _elem25)
+    p.Listkey = append(p.Listkey, _elem22)
   }
   if err := iprot.ReadListEnd(); err != nil {
     return thrift.PrependError("error reading list end: ", err)
@@ -3839,8 +3334,8 @@ type TPostStorageServiceProcessor struct {
 }
 
 func NewTPostStorageServiceProcessor(handler TPostStorageService) *TPostStorageServiceProcessor {
-  self41 := &TPostStorageServiceProcessor{NewTDataServiceProcessor(handler)}
-  return self41
+  self38 := &TPostStorageServiceProcessor{NewTDataServiceProcessor(handler)}
+  return self38
 }
 
 
