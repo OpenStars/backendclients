@@ -834,6 +834,7 @@ func (p *OwnerData) String() string {
 //  - UID
 //  - Content
 //  - ListMediaItems
+//  - Idfeeling
 //  - Privacy
 //  - Timestamps
 //  - Pubkey
@@ -850,7 +851,8 @@ type TPostItem struct {
   UID int64 `thrift:"uid,2" db:"uid" json:"uid"`
   Content string `thrift:"content,3" db:"content" json:"content"`
   ListMediaItems []*MediaItem `thrift:"listMediaItems,4" db:"listMediaItems" json:"listMediaItems,omitempty"`
-  // unused fields # 5 to 6
+  // unused field # 5
+  Idfeeling *string `thrift:"idfeeling,6" db:"idfeeling" json:"idfeeling,omitempty"`
   Privacy int64 `thrift:"privacy,7" db:"privacy" json:"privacy"`
   // unused fields # 8 to 11
   Timestamps int64 `thrift:"timestamps,12" db:"timestamps" json:"timestamps"`
@@ -887,6 +889,13 @@ var TPostItem_ListMediaItems_DEFAULT []*MediaItem
 
 func (p *TPostItem) GetListMediaItems() []*MediaItem {
   return p.ListMediaItems
+}
+var TPostItem_Idfeeling_DEFAULT string
+func (p *TPostItem) GetIdfeeling() string {
+  if !p.IsSetIdfeeling() {
+    return TPostItem_Idfeeling_DEFAULT
+  }
+return *p.Idfeeling
 }
 
 func (p *TPostItem) GetPrivacy() int64 {
@@ -941,6 +950,10 @@ func (p *TPostItem) GetMapExtend() map[string]string {
 }
 func (p *TPostItem) IsSetListMediaItems() bool {
   return p.ListMediaItems != nil
+}
+
+func (p *TPostItem) IsSetIdfeeling() bool {
+  return p.Idfeeling != nil
 }
 
 func (p *TPostItem) IsSetActionLinks() bool {
@@ -1001,6 +1014,16 @@ func (p *TPostItem) Read(iprot thrift.TProtocol) error {
     case 4:
       if fieldTypeId == thrift.LIST {
         if err := p.ReadField4(iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 6:
+      if fieldTypeId == thrift.STRING {
+        if err := p.ReadField6(iprot); err != nil {
           return err
         }
       } else {
@@ -1181,6 +1204,15 @@ func (p *TPostItem)  ReadField4(iprot thrift.TProtocol) error {
   return nil
 }
 
+func (p *TPostItem)  ReadField6(iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadString(); err != nil {
+  return thrift.PrependError("error reading field 6: ", err)
+} else {
+  p.Idfeeling = &v
+}
+  return nil
+}
+
 func (p *TPostItem)  ReadField7(iprot thrift.TProtocol) error {
   if v, err := iprot.ReadI64(); err != nil {
   return thrift.PrependError("error reading field 7: ", err)
@@ -1317,6 +1349,7 @@ func (p *TPostItem) Write(oprot thrift.TProtocol) error {
     if err := p.writeField2(oprot); err != nil { return err }
     if err := p.writeField3(oprot); err != nil { return err }
     if err := p.writeField4(oprot); err != nil { return err }
+    if err := p.writeField6(oprot); err != nil { return err }
     if err := p.writeField7(oprot); err != nil { return err }
     if err := p.writeField12(oprot); err != nil { return err }
     if err := p.writeField13(oprot); err != nil { return err }
@@ -1383,6 +1416,18 @@ func (p *TPostItem) writeField4(oprot thrift.TProtocol) (err error) {
     }
     if err := oprot.WriteFieldEnd(); err != nil {
       return thrift.PrependError(fmt.Sprintf("%T write field end error 4:listMediaItems: ", p), err) }
+  }
+  return err
+}
+
+func (p *TPostItem) writeField6(oprot thrift.TProtocol) (err error) {
+  if p.IsSetIdfeeling() {
+    if err := oprot.WriteFieldBegin("idfeeling", thrift.STRING, 6); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 6:idfeeling: ", p), err) }
+    if err := oprot.WriteString(string(*p.Idfeeling)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.idfeeling (6) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 6:idfeeling: ", p), err) }
   }
   return err
 }

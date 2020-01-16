@@ -48,7 +48,7 @@ struct TPostItem{
     3: string content, // content of this post
     4:optional list<MediaItem> listMediaItems, // list mediaUrls such as photo,video,audio,gift
 //    5:optional string idbackground, // background of post like facebook
-//    6:optional string idfeeling, // feeling or activity of user like facebook
+    6:optional string idfeeling, // feeling or activity of user like facebook
     7:i64 privacy,
 //    8:optional list<i64> friendsexcept , // list friends can not see this post
 //    9:optional list<i64> specificfriends, // list friends only see this post
