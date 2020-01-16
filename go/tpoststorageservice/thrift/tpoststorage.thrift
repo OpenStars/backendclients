@@ -33,6 +33,13 @@ struct MediaItem {
     5:i64 idpost,
     6:i64 timestamps,
     7:string extend,
+    8:map<string,string> mapExtend,
+}
+
+struct OwnerData {
+    1:string pubkey
+    2:string displayName
+    3:string avatar
 }
 
 struct TPostItem{
@@ -61,7 +68,8 @@ struct TPostItem{
     23:i64 totalComment,
     24:i64 totalShare,
     25:i64 originPostID,
-    
+    26:OwnerData ownerInfo,
+    27:map<string,string> mapExtend,
 }
 
 typedef TPostItem TData

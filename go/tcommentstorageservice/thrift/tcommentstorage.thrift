@@ -33,6 +33,7 @@ struct TCommentItem{
     9: optional list<string> uidTags,
     10: i64 timestamps,
     11: optional i64 parentcommentid,
+    12: map<string,string> mapExtend,
 }
 
 typedef TCommentItem TData
